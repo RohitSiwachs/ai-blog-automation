@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// Stores every topic that has been used or considered for blog generation.
+/// Supports pillar/cluster relationships for content strategy.
+model Topic {
+  id        Int      @id @default(autoincrement())
+  title     String
+  slug      String   @unique
+  keywords  String[]
+  cluster   String?
+  pillarId  Int?
+  usedAt    DateTime @default(now())
+  createdAt DateTime @default(now())
+  pillar    Topic?   @relation("TopicCluster", fields: [pillarId], references: [id])
+  children  Topic[]  @relation("TopicCluster")
+
+  @@index([slug])
+  @@index([cluster])
+  @@index([createdAt])
+}
+
+/// Logs every blog generation attempt — success or failure.
+/// Tracks the full lifecycle: topic selection → content → image → publish.
+model BlogLog {
+  id        Int      @id @default(autoincrement())
+  topicId   Int
+  title     String
+  slug      String
+  strapiId  Int?
+  imageId   Int?
+  status    String   @default("pending")
+  error     String?
+  attempts  Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+}
