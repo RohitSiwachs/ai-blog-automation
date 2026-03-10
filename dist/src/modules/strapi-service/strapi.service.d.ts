@@ -15,6 +15,15 @@ export interface StrapiBlogPayload {
     cover?: number;
     categoryId: number;
     authorId: number;
+    authorName?: string;
+}
+export interface StrapiAuthor {
+    id: number;
+    name: string;
+}
+export interface StrapiCategory {
+    id: number;
+    name: string;
 }
 export interface StrapiArticleEntry {
     id: number;
@@ -32,6 +41,8 @@ export declare class StrapiService {
     constructor(configService: ConfigService, logger: Logger);
     uploadImage(buffer: Buffer, filename: string): Promise<number>;
     createBlogPost(data: StrapiBlogPayload): Promise<number>;
+    fetchAuthors(): Promise<StrapiAuthor[]>;
+    fetchCategories(): Promise<StrapiCategory[]>;
     fetchRecentBlogs(limit?: number): Promise<StrapiArticleEntry[]>;
     private withRetry;
     private sleep;

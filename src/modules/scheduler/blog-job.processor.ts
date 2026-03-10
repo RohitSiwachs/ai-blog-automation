@@ -60,7 +60,23 @@ export class BlogJobProcessor extends WorkerHost {
       await job.updateProgress(10);
       this.logger.info(`BlogJob [${job.id}]: Step 1/4 — Generating content...`);
 
-      const blog = await this.blogGenerator.generateBlog(title, keywords);
+      // Fetch categories from Strapi for intelligent selection
+      const categoriesList = await this.strapiService.fetchCategories();
+      const categoryNames = categoriesList.map((c) => c.name);
+
+      const blog = await this.blogGenerator.generateBlog(
+        title,
+        keywords || [],
+        categoryNames,
+      );
+
+      // Map selected category name back to ID
+      const selectedCategory = categoriesList.find(
+        (c) => c.name.toLowerCase() === blog.category?.toLowerCase(),
+      );
+      const categoryId = selectedCategory ? selectedCategory.id : 1; // Default to ID 1 (Development)
+
+      this.logger.info(`BlogJob [${job.id}]: Selected Category — "${blog.category}" (ID: ${categoryId})`);
 
       await job.updateProgress(40);
       this.logger.info(
@@ -98,13 +114,13 @@ export class BlogJobProcessor extends WorkerHost {
       // --- Step 4: Create article in Strapi ---
       this.logger.info(`BlogJob [${job.id}]: Step 4/4 — Publishing article...`);
 
-      // Map topic cluster to Strapi category ID
-      const designClusters = ['design', 'ui-ux', 'designing'];
-      const categoryId = designClusters.includes(
-        job.data.cluster?.toLowerCase(),
-      )
-        ? 2 // Designing
-        : 1; // Development (default)
+      // Fetch authors and pick one randomly
+      const authors = await this.strapiService.fetchAuthors();
+      const randomAuthor = authors.length > 0 
+        ? authors[Math.floor(Math.random() * authors.length)]
+        : { id: 2, name: 'Nikhil Chauhan' }; // Fallback
+
+      this.logger.info(`BlogJob [${job.id}]: Selected author — "${randomAuthor.name}" (ID: ${randomAuthor.id})`);
 
       const strapiId = await this.strapiService.createBlogPost({
         title: blog.seoTitle,
@@ -119,7 +135,8 @@ export class BlogJobProcessor extends WorkerHost {
         keywords: job.data.keywords || [],
         tags: blog.tags,
         cover: mediaId,
-        authorId: 2, // Nikhil Chauhan
+        authorId: randomAuthor.id,
+        authorName: randomAuthor.name,
         categoryId,
       });
 

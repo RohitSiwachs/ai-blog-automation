@@ -85,7 +85,7 @@ let StrapiService = class StrapiService {
                     : `${this.siteUrl}/images/default-cover.jpg`,
                 author: {
                     '@type': 'Person',
-                    name: data.authorId === 1 ? 'Ansh' : 'Nikhil Chauhan',
+                    name: data.authorName || 'Innovaft Team',
                 },
                 publisher: {
                     '@type': 'Organization',
@@ -138,6 +138,30 @@ let StrapiService = class StrapiService {
             this.logger.info(`Strapi: Article created successfully — ID: ${articleId}, slug: "${data.slug}"`);
             return articleId;
         }, 'createBlogPost');
+    }
+    async fetchAuthors() {
+        this.logger.info(`Strapi: Fetching authors...`);
+        return this.withRetry(async () => {
+            const response = await this.client.get('/api/authors');
+            const authors = (response.data.data || []).map((entry) => ({
+                id: entry.id,
+                name: entry.name || 'Unknown Author',
+            }));
+            this.logger.info(`Strapi: Fetched ${authors.length} authors`);
+            return authors;
+        }, 'fetchAuthors');
+    }
+    async fetchCategories() {
+        this.logger.info(`Strapi: Fetching categories...`);
+        return this.withRetry(async () => {
+            const response = await this.client.get('/api/categories');
+            const categories = (response.data.data || []).map((entry) => ({
+                id: entry.id,
+                name: entry.name || 'Unknown Category',
+            }));
+            this.logger.info(`Strapi: Fetched ${categories.length} categories`);
+            return categories;
+        }, 'fetchCategories');
     }
     async fetchRecentBlogs(limit = 50) {
         this.logger.info(`Strapi: Fetching last ${limit} articles...`);

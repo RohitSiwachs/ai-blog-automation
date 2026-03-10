@@ -45,7 +45,12 @@ let BlogJobProcessor = class BlogJobProcessor extends bullmq_1.WorkerHost {
             });
             await job.updateProgress(10);
             this.logger.info(`BlogJob [${job.id}]: Step 1/4 — Generating content...`);
-            const blog = await this.blogGenerator.generateBlog(title, keywords);
+            const categoriesList = await this.strapiService.fetchCategories();
+            const categoryNames = categoriesList.map((c) => c.name);
+            const blog = await this.blogGenerator.generateBlog(title, keywords || [], categoryNames);
+            const selectedCategory = categoriesList.find((c) => c.name.toLowerCase() === blog.category?.toLowerCase());
+            const categoryId = selectedCategory ? selectedCategory.id : 1;
+            this.logger.info(`BlogJob [${job.id}]: Selected Category — "${blog.category}" (ID: ${categoryId})`);
             await job.updateProgress(40);
             this.logger.info(`BlogJob [${job.id}]: Content generated — "${blog.seoTitle}"`);
             this.logger.info(`BlogJob [${job.id}]: Step 2/4 — Generating banner image...`);
@@ -58,10 +63,11 @@ let BlogJobProcessor = class BlogJobProcessor extends bullmq_1.WorkerHost {
             await job.updateProgress(80);
             this.logger.info(`BlogJob [${job.id}]: Image uploaded — Media ID: ${mediaId}`);
             this.logger.info(`BlogJob [${job.id}]: Step 4/4 — Publishing article...`);
-            const designClusters = ['design', 'ui-ux', 'designing'];
-            const categoryId = designClusters.includes(job.data.cluster?.toLowerCase())
-                ? 2
-                : 1;
+            const authors = await this.strapiService.fetchAuthors();
+            const randomAuthor = authors.length > 0
+                ? authors[Math.floor(Math.random() * authors.length)]
+                : { id: 2, name: 'Nikhil Chauhan' };
+            this.logger.info(`BlogJob [${job.id}]: Selected author — "${randomAuthor.name}" (ID: ${randomAuthor.id})`);
             const strapiId = await this.strapiService.createBlogPost({
                 title: blog.seoTitle,
                 description: blog.description,
@@ -75,7 +81,8 @@ let BlogJobProcessor = class BlogJobProcessor extends bullmq_1.WorkerHost {
                 keywords: job.data.keywords || [],
                 tags: blog.tags,
                 cover: mediaId,
-                authorId: 2,
+                authorId: randomAuthor.id,
+                authorName: randomAuthor.name,
                 categoryId,
             });
             await job.updateProgress(100);

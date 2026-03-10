@@ -86,45 +86,58 @@ let ImageGeneratorService = class ImageGeneratorService {
     }
     async drawDynamicBackground(ctx, title) {
         try {
-            this.logger.info(`ImageGenerator: Fetching AI background for: ${title}`);
-            const cleanTitle = title.replace(/[^a-zA-Z0-9 ]/g, ' ');
-            const richPrompt = encodeURIComponent(`${cleanTitle}, modern 3d render, flat vector illustration, tech UI concept, vibrant dark theme, clean professional digital art, high resolution`);
-            const pollUrl = `https://image.pollinations.ai/prompt/${richPrompt}?width=${IMAGE_WIDTH}&height=${IMAGE_HEIGHT}&nologo=true&seed=${Math.floor(Math.random() * 100000)}`;
+            const pathPart = title.toLowerCase()
+                .replace(/[^a-z0-9 ]/g, '')
+                .trim()
+                .split(/\s+/)
+                .slice(0, 5)
+                .join('-');
+            const styleParams = encodeURIComponent('photorealistic, professional photography, real life scene, 8k, cinematic lighting');
+            const safeRandomSeed = Math.floor(Math.random() * 90000000) + 10000000;
+            const pollUrl = `https://image.pollinations.ai/prompt/${pathPart}?prompt=${styleParams}&width=${IMAGE_WIDTH}&height=${IMAGE_HEIGHT}&nologo=true&seed=${safeRandomSeed}&model=turbo`;
             try {
-                this.logger.info(`ImageGenerator: Stage 1 - Pollinations: ${pollUrl}`);
+                this.logger.info(`ImageGenerator: Requesting Banner from Pollinations: ${pollUrl}`);
                 const response = await axios_1.default.get(pollUrl, {
                     responseType: 'arraybuffer',
-                    timeout: 12000,
+                    timeout: 15000,
                     headers: { 'User-Agent': 'Mozilla/5.0' }
                 });
                 if (Buffer.from(response.data).length > 5000) {
                     const bgImage = await (0, canvas_1.loadImage)(Buffer.from(response.data));
                     ctx.drawImage(bgImage, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
-                    this.logger.info(`ImageGenerator: Pollinations image loaded successfully`);
+                    this.logger.info(`ImageGenerator: Banner image loaded successfully`);
                     return;
+                }
+                else {
+                    this.logger.warn(`ImageGenerator: Pollinations returned empty or too small image (${Buffer.from(response.data).length} bytes)`);
                 }
             }
             catch (pollError) {
-                this.logger.warn(`ImageGenerator: Pollinations failed, trying LoremFlickr. ${pollError.message}`);
+                this.logger.warn(`ImageGenerator: Pollinations Banner failed: ${pollUrl}. Error: ${pollError.message}`);
             }
-            const lfKeywords = 'technology,software,coding,office,computer';
-            const lfUrl = `https://loremflickr.com/${IMAGE_WIDTH}/${IMAGE_HEIGHT}/${lfKeywords}/all`;
-            this.logger.info(`ImageGenerator: Stage 2 - LoremFlickr: ${lfUrl}`);
-            const lfResponse = await axios_1.default.get(lfUrl, {
-                responseType: 'arraybuffer',
-                timeout: 8000
-            });
-            const lfBytes = Buffer.from(lfResponse.data);
-            if (lfBytes[0] === 0xFF && lfBytes[1] === 0xD8) {
-                const bgImage = await (0, canvas_1.loadImage)(lfBytes);
-                ctx.drawImage(bgImage, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
-                this.logger.info(`ImageGenerator: LoremFlickr tech image loaded successfully`);
-                return;
+            const lfKeywords = 'technology,laptop,computer,code';
+            const lfUrl = `https://loremflickr.com/${IMAGE_WIDTH}/${IMAGE_HEIGHT}/${lfKeywords}?random=${Math.floor(Math.random() * 100000)}`;
+            this.logger.info(`ImageGenerator: Stage 2 - Falling back to LoremFlickr: ${lfUrl}`);
+            try {
+                const lfResponse = await axios_1.default.get(lfUrl, {
+                    responseType: 'arraybuffer',
+                    timeout: 8000
+                });
+                const lfBytes = Buffer.from(lfResponse.data);
+                if (lfBytes[0] === 0xFF && lfBytes[1] === 0xD8) {
+                    const bgImage = await (0, canvas_1.loadImage)(lfBytes);
+                    ctx.drawImage(bgImage, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
+                    this.logger.info(`ImageGenerator: LoremFlickr banner loaded successfully`);
+                    return;
+                }
             }
-            throw new Error('Invalid image data from all providers');
+            catch (lfError) {
+                this.logger.error(`ImageGenerator: LoremFlickr also failed: ${lfError.message}`);
+            }
+            throw new Error('All banner providers failed');
         }
         catch (error) {
-            this.logger.warn(`ImageGenerator: All image providers failed, falling back to gradient. ${error.message}`);
+            this.logger.error(`ImageGenerator: Final fallback to gradient. Reason: ${error.message}`);
             const gradient = ctx.createLinearGradient(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
             gradient.addColorStop(0, '#0f172a');
             gradient.addColorStop(0.35, '#1e1b4b');

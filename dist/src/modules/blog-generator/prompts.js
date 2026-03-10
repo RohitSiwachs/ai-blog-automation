@@ -1,13 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.buildBlogPrompt = buildBlogPrompt;
-function buildBlogPrompt(title, keywords) {
+function buildBlogPrompt(title, keywords, categories) {
     const keywordList = keywords.join(', ');
+    const categoryList = categories.join(', ');
     const today = new Date().toISOString();
     return `You are an expert SEO content writer for a tech blog (blog.innovaft.com). Write a comprehensive, engaging, and SEO-optimized blog post.
 
 TOPIC: "${title}"
 TARGET KEYWORDS: ${keywordList}
+AVAILABLE CATEGORIES: ${categoryList}
 TODAY'S DATE: ${today}
 
 === CONTENT REQUIREMENTS ===
@@ -15,9 +17,10 @@ TODAY'S DATE: ${today}
 2. Formatted in MARKDOWN (use #, ##, ###, **bold**, *italic*, bullet lists, etc.).
 3. TONE & STYLE: Write like a passionate, experienced human expert talking directly to a friend. Use varied sentence lengths. Ask rhetorical questions. Include brief personal anecdotes or metaphors. 
 4. FORBIDDEN AI CLICHÉS: NEVER use phrases like "In today's fast-paced digital world", "Delve into", "Navigating the complexities", "In conclusion", or "A testament to".
-5. INLINE IMAGES: You MUST insert exactly 2-3 relevant images inside the body content (not at the very start) using this exact markdown format (keep the styling keywords at the end): 
-![Detailed descriptive alt text for UI rendering](https://api.airforce/imagine?prompt={extremely-detailed-visual-prompt-with-words-separated-by-hyphens}-modern-3d-tech-illustration-flat-vector-style-vibrant-colors)
-*Example inline image*: ![A futuristic robot doing marketing](https://api.airforce/imagine?prompt=a-futuristic-robot-analyzing-marketing-data-graphs-neon-lights-modern-3d-tech-illustration-flat-vector-style-vibrant-colors)
+5. INLINE IMAGES (CRITICAL): You MUST insert exactly 2 images into the markdown body content.
+Use this EXACT layout:
+![Image Description](https://image.pollinations.ai/prompt/two-or-three-words-photorealistic?width=800&height=400&nologo=true&model=flux)
+RULES FOR THE URL: The prompt part can ONLY contain hyphens (e.g., student-using-laptop). NO commas. NO spaces.
 6. Naturally incorporate the target keywords throughout
 7. NO filler content — every paragraph must provide value
 
@@ -29,8 +32,9 @@ TODAY'S DATE: ${today}
 - metaKeywords: comma-separated, 6-8 keywords
 - description: Short excerpt shown on blog listing, max 180 chars, no HTML
 
-=== TAGS REQUIREMENT ===
-Generate EXACTLY 2 short tags relevant to the topic (e.g. "AI", "Web Dev"). No more, no less.
+=== CATEGORY & TAGS REQUIREMENT ===
+1. Pick the best fitting category for this blog from the AVAILABLE CATEGORIES list: ${categoryList}. Return EXACTLY one of these names.
+2. Generate EXACTLY 2 short tags relevant to the topic (e.g. "AI", "Web Dev"). No more, no less.
 
 === OUTPUT FORMAT ===
 Respond with ONLY this JSON (no markdown fences, no extra text):
@@ -41,14 +45,22 @@ Respond with ONLY this JSON (no markdown fences, no extra text):
   "ogDescription": "150-200 char OG description",
   "metaKeywords": "keyword1, keyword2, keyword3, keyword4, keyword5",
   "description": "Short blog listing excerpt, max 180 chars",
-  "tags": ["Tag1", "Tag2", "Tag3"],
+  "category": "One name from the provided list",
+  "tags": ["Tag1", "Tag2"],
   "content": "# Your H1 Title Here\\n\\nFirst paragraph...\\n\\n## Section 1\\n\\nContent...\\n\\n## Section 2\\n\\nContent..."
 }
 
+=== JSON SAFETY & ESCAPING (CRITICAL) ===
+- In the "content" string:
+  - EVERY double quote (") MUST be escaped as \\". Example: He said \\"Hello\\".
+  - EVERY newline MUST be escaped as \\n.
+  - DO NOT use real newlines or unescaped quotes inside the JSON values.
+- If you fail to follow this, the parser will break. Be extremely careful.
+
 CRITICAL RULES:
 - Return ONLY valid JSON. No markdown code fences. No text before or after.
+- "category" MUST be exactly one of the items from AVAILABLE CATEGORIES.
 - "content" MUST be in Markdown format (not HTML).
-- In JSON strings, escape newlines as \\n and quotes as \\".
 - metaDescription MUST be 150-160 characters — count carefully.
 - Make content sound human-written, not AI-generated.`;
 }

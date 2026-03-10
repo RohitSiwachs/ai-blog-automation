@@ -35,9 +35,9 @@ let BlogGeneratorService = class BlogGeneratorService {
         this.modelName = this.configService.get('gemini.model');
         this.genAI = new generative_ai_1.GoogleGenerativeAI(apiKey);
     }
-    async generateBlog(title, keywords) {
+    async generateBlog(title, keywords, categories) {
         this.logger.info(`BlogGenerator: Generating content for "${title}"...`);
-        const prompt = (0, prompts_1.buildBlogPrompt)(title, keywords);
+        const prompt = (0, prompts_1.buildBlogPrompt)(title, keywords, categories);
         const model = this.genAI.getGenerativeModel({ model: this.modelName });
         try {
             const result = await model.generateContent(prompt);
@@ -57,9 +57,10 @@ let BlogGeneratorService = class BlogGeneratorService {
                 ogDescription: parsed.ogDescription || parsed.metaDescription,
                 metaKeywords: parsed.metaKeywords || keywords.join(', '),
                 description: this.truncate(parsed.description || parsed.metaDescription, 180),
+                category: parsed.category || categories[0] || 'Development',
                 tags: parsed.tags || [],
                 slug,
-                content: parsed.content,
+                content: this.randomizeInlineImages(parsed.content),
             };
             this.logger.info(`BlogGenerator: Content generated successfully — "${blog.seoTitle}" (${this.countWords(blog.content)} words)`);
             return blog;
@@ -71,13 +72,20 @@ let BlogGeneratorService = class BlogGeneratorService {
     }
     parseGeminiResponse(text) {
         let cleaned = text.trim();
-        if (cleaned.startsWith('```json'))
-            cleaned = cleaned.slice(7);
-        else if (cleaned.startsWith('```'))
-            cleaned = cleaned.slice(3);
-        if (cleaned.endsWith('```'))
-            cleaned = cleaned.slice(0, -3);
-        cleaned = cleaned.trim();
+        const startIdx = cleaned.indexOf('{');
+        const endIdx = cleaned.lastIndexOf('}');
+        if (startIdx !== -1 && endIdx !== -1 && endIdx > startIdx) {
+            cleaned = cleaned.substring(startIdx, endIdx + 1);
+        }
+        else {
+            if (cleaned.startsWith('```json'))
+                cleaned = cleaned.slice(7);
+            else if (cleaned.startsWith('```'))
+                cleaned = cleaned.slice(3);
+            if (cleaned.endsWith('```'))
+                cleaned = cleaned.slice(0, -3);
+            cleaned = cleaned.trim();
+        }
         try {
             const parsed = JSON.parse(cleaned);
             if (!parsed.seoTitle || !parsed.content) {
@@ -86,23 +94,45 @@ let BlogGeneratorService = class BlogGeneratorService {
             return parsed;
         }
         catch (parseError) {
-            this.logger.warn(`BlogGenerator: JSON parse failed, attempting fallback extraction...`);
-            const titleMatch = cleaned.match(/"seoTitle"\s*:\s*"([^"]+)"/);
-            const metaMatch = cleaned.match(/"metaDescription"\s*:\s*"([^"]+)"/);
-            const contentMatch = cleaned.match(/"content"\s*:\s*"([\s\S]+?)"\s*[,}]/);
-            if (titleMatch && contentMatch) {
+            this.logger.warn(`BlogGenerator: JSON parse failed, attempting super-robust brute-force extraction...`);
+            const extractFieldLoose = (key) => {
+                const standardRegex = new RegExp(`"${key}"\\s*:\\s*"([\\s\\S]*?)"(?=\\s*[,}]|\\s*$)`, 'i');
+                const match = cleaned.match(standardRegex);
+                if (match)
+                    return match[1].replace(/\\n/g, '\n').replace(/\\"/g, '"').trim();
+                const keys = ['seoTitle', 'metaDescription', 'ogTitle', 'ogDescription', 'metaKeywords', 'description', 'category', 'tags', 'content'];
+                const otherKeys = keys.filter(k => k !== key).join('|');
+                const looseRegex = new RegExp(`"${key}"\\s*:\\s*"([\\s\\S]*?)(?="\\s*(?:${otherKeys})|\\s*}$)`, 'i');
+                const looseMatch = cleaned.match(looseRegex);
+                if (looseMatch)
+                    return looseMatch[1].replace(/\\n/g, '\n').replace(/\\"/g, '"').trim();
+                return '';
+            };
+            const seoTitle = extractFieldLoose('seoTitle');
+            const content = extractFieldLoose('content');
+            if (seoTitle && content) {
+                this.logger.info(`BlogGenerator: Brute-force succeeded for "${seoTitle}"`);
+                const tagsMatch = cleaned.match(/"tags"\s*:\s*\[([^\]]+)\]/);
+                let extractedTags = [];
+                if (tagsMatch) {
+                    extractedTags = tagsMatch[1]
+                        .split(',')
+                        .map(t => t.replace(/"/g, '').trim())
+                        .filter(t => t.length > 0);
+                }
                 return {
-                    seoTitle: titleMatch[1],
-                    metaDescription: metaMatch ? metaMatch[1] : '',
-                    ogTitle: titleMatch[1],
-                    ogDescription: metaMatch ? metaMatch[1] : '',
-                    metaKeywords: '',
-                    description: metaMatch ? metaMatch[1] : '',
-                    tags: [],
-                    content: contentMatch[1].replace(/\\n/g, '\n').replace(/\\"/g, '"'),
+                    seoTitle,
+                    metaDescription: extractFieldLoose('metaDescription'),
+                    ogTitle: extractFieldLoose('ogTitle') || seoTitle,
+                    ogDescription: extractFieldLoose('ogDescription'),
+                    metaKeywords: extractFieldLoose('metaKeywords'),
+                    description: extractFieldLoose('description'),
+                    category: extractFieldLoose('category'),
+                    tags: extractedTags,
+                    content,
                 };
             }
-            throw new Error(`Failed to parse Gemini response: ${parseError.message}`);
+            throw new Error(`Super-robust parsing also failed. Please check AI logs for formatting issues.`);
         }
     }
     truncate(text, maxLen) {
@@ -111,6 +141,40 @@ let BlogGeneratorService = class BlogGeneratorService {
         const truncated = text.substring(0, maxLen - 3);
         const lastSpace = truncated.lastIndexOf(' ');
         return truncated.substring(0, lastSpace) + '...';
+    }
+    randomizeInlineImages(content) {
+        this.logger.info('BlogGenerator: Finalizing and randomizing seeds for inline images...');
+        const pollinationsRegex = /!\[([^\]]*)\]\((https?:\/\/(?:image\.)?pollinations\.ai\/prompt\/[^\?\)]+)(\?[^\)]+)?\)/g;
+        const count = (content.match(pollinationsRegex) || []).length;
+        this.logger.info(`BlogGenerator: Found ${count} Pollinations images in content`);
+        return content.replace(pollinationsRegex, (match, alt, rawBaseUrl, query) => {
+            const promptMatch = rawBaseUrl.match(/\/prompt\/([^\/]+)/);
+            let promptText = promptMatch ? promptMatch[1] : 'tech-innovation';
+            const pathPart = promptText.toLowerCase()
+                .replace(/[^a-z0-9 ]/g, ' ')
+                .trim()
+                .split(/\s+/)
+                .slice(0, 5)
+                .join('-');
+            const secureBaseUrl = `https://image.pollinations.ai/prompt/${pathPart || 'blog-image'}`;
+            const styleParams = 'photorealistic,professional-photography,real-life-scene,8k,cinematic-lighting';
+            const uniqueSeed = Math.floor(Math.random() * 90000000) + 10000000;
+            let newQuery = query || '?width=1024&height=1024&nologo=true';
+            if (newQuery.includes('seed=')) {
+                newQuery = newQuery.replace(/seed=[^&]*/, `seed=${uniqueSeed}`);
+            }
+            else {
+                newQuery += (newQuery.includes('?') ? '&' : '?') + `seed=${uniqueSeed}`;
+            }
+            newQuery = newQuery.replace(/model=[^&]*/, 'model=turbo');
+            if (!newQuery.includes('model='))
+                newQuery += '&model=turbo';
+            if (!newQuery.includes('prompt='))
+                newQuery += `&prompt=${styleParams}`;
+            const finalUrl = `${secureBaseUrl}${newQuery.replace(/\?&/g, '?')}`;
+            this.logger.info(`BlogGenerator: Standardized URL for "${alt}": ${finalUrl}`);
+            return `![${alt}](${finalUrl})`;
+        });
     }
     countWords(markdown) {
         const text = markdown
