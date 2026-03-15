@@ -19,7 +19,7 @@ TODAY'S DATE: ${today}
 4. FORBIDDEN AI CLICHÉS: NEVER use phrases like "In today's fast-paced digital world", "Delve into", "Navigating the complexities", "In conclusion", or "A testament to".
 5. INLINE IMAGES (CRITICAL): You MUST insert exactly 2 images into the markdown body content.
 Use this EXACT layout:
-![Image Description](https://image.pollinations.ai/prompt/two-or-three-words-photorealistic?width=800&height=400&nologo=true&model=flux)
+![Image Description](https://image.pollinations.ai/prompt/descriptive-hyphenated-prompt?width=1024&height=1024&nologo=true&model=flux)
 RULES FOR THE URL: The prompt part can ONLY contain hyphens (e.g., student-using-laptop). NO commas. NO spaces.
 6. Naturally incorporate the target keywords throughout
 7. NO filler content — every paragraph must provide value

@@ -21,6 +21,7 @@ export declare class BlogGeneratorService {
     generateBlog(title: string, keywords: string[], categories: string[]): Promise<GeneratedBlog>;
     private parseGeminiResponse;
     private truncate;
-    private randomizeInlineImages;
+    private enrichInlineImages;
+    private generateInlineSmartPrompt;
     private countWords;
 }

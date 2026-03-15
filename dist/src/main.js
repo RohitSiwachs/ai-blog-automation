@@ -10,7 +10,7 @@ async function bootstrap() {
     app.useLogger(app.get(nest_winston_1.WINSTON_MODULE_NEST_PROVIDER));
     app.enableShutdownHooks();
     app.enableCors();
-    const port = process.env.PORT || 3001;
+    const port = process.env.PORT || 3002;
     await app.listen(port);
     const logger = app.get(nest_winston_1.WINSTON_MODULE_NEST_PROVIDER);
     logger.log(`🚀 AI Blog Automation Engine running on port ${port}`);

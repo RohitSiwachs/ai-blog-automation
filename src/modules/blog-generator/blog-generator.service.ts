@@ -86,7 +86,7 @@ export class BlogGeneratorService {
         category: parsed.category || categories[0] || 'Development',
         tags: parsed.tags || [],
         slug,
-        content: this.randomizeInlineImages(parsed.content),
+        content: await this.enrichInlineImages(parsed.content),
       };
 
       this.logger.info(
@@ -200,59 +200,84 @@ export class BlogGeneratorService {
   }
 
   /**
-   * Scans markdown for image URLs and replaces/adds a unique seed to each one.
-   * This ensures no two images are identical in the same blog post.
+   * Scans markdown for image URLs and uses Gemini to engineer professional prompts for them.
+   * This ensures inline images match the banner quality (human subjects, realistic).
    */
-  private randomizeInlineImages(content: string): string {
-    this.logger.info('BlogGenerator: Finalizing and randomizing seeds for inline images...');
+  private async enrichInlineImages(content: string): Promise<string> {
+    this.logger.info('BlogGenerator: Finalizing and enriching inline images with Gemini...');
     
     // Match markdown image syntax with pollinations URLs
     const pollinationsRegex = /!\[([^\]]*)\]\((https?:\/\/(?:image\.)?pollinations\.ai\/prompt\/[^\?\)]+)(\?[^\)]+)?\)/g;
+    const matches = Array.from(content.matchAll(pollinationsRegex));
     
-    const count = (content.match(pollinationsRegex) || []).length;
-    this.logger.info(`BlogGenerator: Found ${count} Pollinations images in content`);
+    if (matches.length === 0) {
+      this.logger.info('BlogGenerator: No Pollinations images found in content.');
+      return content;
+    }
 
-    return content.replace(pollinationsRegex, (match, alt, rawBaseUrl, query) => {
-      // Extract the original prompt part from the path
-      const promptMatch = rawBaseUrl.match(/\/prompt\/([^\/]+)/);
-      let promptText = promptMatch ? promptMatch[1] : 'tech-innovation';
+    this.logger.info(`BlogGenerator: Found ${matches.length} Pollinations images to enrich.`);
+
+    let enrichedContent = content;
+    for (const match of matches) {
+      const [fullMatch, alt, rawBaseUrl] = match;
       
-      // Clean and shorten the path part (max 5 words)
-      const pathPart = promptText.toLowerCase()
+      // Extract original intent from URL or alt text
+      const promptMatch = rawBaseUrl.match(/\/prompt\/([^\/]+)/);
+      const originalIntent = promptMatch 
+        ? promptMatch[1].replace(/-/g, ' ') 
+        : (alt || 'professional technology');
+
+      // 1. Generate a "Pro" prompt using Gemini
+      this.logger.info(`BlogGenerator: Engineering prompt for inline image: "${originalIntent.substring(0, 30)}..."`);
+      const smartPrompt = await this.generateInlineSmartPrompt(originalIntent);
+      
+      // 2. Standardize path and build forced subject URL
+      const pathPart = originalIntent.toLowerCase()
         .replace(/[^a-z0-9 ]/g, ' ')
         .trim()
         .split(/\s+/)
         .slice(0, 5)
         .join('-');
       
-      const secureBaseUrl = `https://image.pollinations.ai/prompt/${pathPart || 'blog-image'}`;
-      
-      // Style params: photorealistic focus
-      const styleParams = 'photorealistic,professional-photography,real-life-scene,8k,cinematic-lighting';
-      
-      // Create a truly random 8-digit seed
+      const forcedSubject = "Realistic photo of a professional person, ";
       const uniqueSeed = Math.floor(Math.random() * 90000000) + 10000000;
       
-      // Clean query string with safety width/height
-      let newQuery = query || '?width=1024&height=1024&nologo=true';
+      // Flux is high quality and free, perfect for multiple inline images
+      const finalUrl = `https://image.pollinations.ai/prompt/${pathPart}?prompt=${encodeURIComponent(forcedSubject + smartPrompt)}&width=1024&height=1024&nologo=true&seed=${uniqueSeed}&model=flux`;
       
-      // Inject seed and swap to turbo model for speed/reliability
-      if (newQuery.includes('seed=')) {
-        newQuery = newQuery.replace(/seed=[^&]*/, `seed=${uniqueSeed}`);
-      } else {
-        newQuery += (newQuery.includes('?') ? '&' : '?') + `seed=${uniqueSeed}`;
-      }
+      this.logger.info(`BlogGenerator: Inline image enriched for "${alt}"`);
       
-      // Force turbo model and style params
-      newQuery = newQuery.replace(/model=[^&]*/, 'model=turbo');
-      if (!newQuery.includes('model=')) newQuery += '&model=turbo';
-      if (!newQuery.includes('prompt=')) newQuery += `&prompt=${styleParams}`;
+      // Replace the specific match in the content
+      enrichedContent = enrichedContent.replace(fullMatch, `![${alt}](${finalUrl})`);
+    }
 
-      const finalUrl = `${secureBaseUrl}${newQuery.replace(/\?&/g, '?')}`;
-      this.logger.info(`BlogGenerator: Standardized URL for "${alt}": ${finalUrl}`);
+    return enrichedContent;
+  }
+
+  /**
+   * Helper to generate a professional image prompt for inline images.
+   */
+  private async generateInlineSmartPrompt(intent: string): Promise<string> {
+    try {
+      const model = this.genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const prompt = `You are a professional image prompt engineer. 
+      Create a detailed, ultra-realistic prompt for a blog image.
+      Context: "${intent}".
       
-      return `![${alt}](${finalUrl})`;
-    });
+      MANDATORY Rules:
+      1. SUBJECT: Include a person (e.g. an Indian student, an IT professional, or a freelancer) interacting with technology or in a modern setting.
+      2. LOOK: Cinematic photography, realistic skin textures, high resolution.
+      3. BAN: No text, no logos, no fake-looking 3D renders.
+      4. START: Begin with "A high-resolution photo of [subject]..."
+      
+      Output ONLY the description (50-70 words).`;
+
+      const result = await model.generateContent(prompt);
+      return result.response.text().trim();
+    } catch (e) {
+      this.logger.warn(`BlogGenerator: Inline prompt engineering failed: ${e.message}`);
+      return `${intent}. photorealistic, professional lighting, cinematic`;
+    }
   }
 
   /** Count words in Markdown text */

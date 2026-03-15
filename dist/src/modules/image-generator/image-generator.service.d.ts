@@ -4,13 +4,12 @@ export declare class ImageGeneratorService {
     private readonly configService;
     private readonly logger;
     private brandName;
+    private openai;
+    private genAI;
     constructor(configService: ConfigService, logger: Logger);
     generateBannerImage(title: string): Promise<Buffer>;
     private drawDynamicBackground;
-    private drawDecorativeElements;
-    private drawTitleText;
-    private drawBrandWatermark;
-    private drawBorder;
-    private wrapText;
+    private generateSmartPrompt;
     private tryRegisterFont;
+    private wrapText;
 }

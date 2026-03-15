@@ -60,7 +60,7 @@ let BlogGeneratorService = class BlogGeneratorService {
                 category: parsed.category || categories[0] || 'Development',
                 tags: parsed.tags || [],
                 slug,
-                content: this.randomizeInlineImages(parsed.content),
+                content: await this.enrichInlineImages(parsed.content),
             };
             this.logger.info(`BlogGenerator: Content generated successfully — "${blog.seoTitle}" (${this.countWords(blog.content)} words)`);
             return blog;
@@ -142,39 +142,59 @@ let BlogGeneratorService = class BlogGeneratorService {
         const lastSpace = truncated.lastIndexOf(' ');
         return truncated.substring(0, lastSpace) + '...';
     }
-    randomizeInlineImages(content) {
-        this.logger.info('BlogGenerator: Finalizing and randomizing seeds for inline images...');
+    async enrichInlineImages(content) {
+        this.logger.info('BlogGenerator: Finalizing and enriching inline images with Gemini...');
         const pollinationsRegex = /!\[([^\]]*)\]\((https?:\/\/(?:image\.)?pollinations\.ai\/prompt\/[^\?\)]+)(\?[^\)]+)?\)/g;
-        const count = (content.match(pollinationsRegex) || []).length;
-        this.logger.info(`BlogGenerator: Found ${count} Pollinations images in content`);
-        return content.replace(pollinationsRegex, (match, alt, rawBaseUrl, query) => {
+        const matches = Array.from(content.matchAll(pollinationsRegex));
+        if (matches.length === 0) {
+            this.logger.info('BlogGenerator: No Pollinations images found in content.');
+            return content;
+        }
+        this.logger.info(`BlogGenerator: Found ${matches.length} Pollinations images to enrich.`);
+        let enrichedContent = content;
+        for (const match of matches) {
+            const [fullMatch, alt, rawBaseUrl] = match;
             const promptMatch = rawBaseUrl.match(/\/prompt\/([^\/]+)/);
-            let promptText = promptMatch ? promptMatch[1] : 'tech-innovation';
-            const pathPart = promptText.toLowerCase()
+            const originalIntent = promptMatch
+                ? promptMatch[1].replace(/-/g, ' ')
+                : (alt || 'professional technology');
+            this.logger.info(`BlogGenerator: Engineering prompt for inline image: "${originalIntent.substring(0, 30)}..."`);
+            const smartPrompt = await this.generateInlineSmartPrompt(originalIntent);
+            const pathPart = originalIntent.toLowerCase()
                 .replace(/[^a-z0-9 ]/g, ' ')
                 .trim()
                 .split(/\s+/)
                 .slice(0, 5)
                 .join('-');
-            const secureBaseUrl = `https://image.pollinations.ai/prompt/${pathPart || 'blog-image'}`;
-            const styleParams = 'photorealistic,professional-photography,real-life-scene,8k,cinematic-lighting';
+            const forcedSubject = "Realistic photo of a professional person, ";
             const uniqueSeed = Math.floor(Math.random() * 90000000) + 10000000;
-            let newQuery = query || '?width=1024&height=1024&nologo=true';
-            if (newQuery.includes('seed=')) {
-                newQuery = newQuery.replace(/seed=[^&]*/, `seed=${uniqueSeed}`);
-            }
-            else {
-                newQuery += (newQuery.includes('?') ? '&' : '?') + `seed=${uniqueSeed}`;
-            }
-            newQuery = newQuery.replace(/model=[^&]*/, 'model=turbo');
-            if (!newQuery.includes('model='))
-                newQuery += '&model=turbo';
-            if (!newQuery.includes('prompt='))
-                newQuery += `&prompt=${styleParams}`;
-            const finalUrl = `${secureBaseUrl}${newQuery.replace(/\?&/g, '?')}`;
-            this.logger.info(`BlogGenerator: Standardized URL for "${alt}": ${finalUrl}`);
-            return `![${alt}](${finalUrl})`;
-        });
+            const finalUrl = `https://image.pollinations.ai/prompt/${pathPart}?prompt=${encodeURIComponent(forcedSubject + smartPrompt)}&width=1024&height=1024&nologo=true&seed=${uniqueSeed}&model=flux`;
+            this.logger.info(`BlogGenerator: Inline image enriched for "${alt}"`);
+            enrichedContent = enrichedContent.replace(fullMatch, `![${alt}](${finalUrl})`);
+        }
+        return enrichedContent;
+    }
+    async generateInlineSmartPrompt(intent) {
+        try {
+            const model = this.genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+            const prompt = `You are a professional image prompt engineer. 
+      Create a detailed, ultra-realistic prompt for a blog image.
+      Context: "${intent}".
+      
+      MANDATORY Rules:
+      1. SUBJECT: Include a person (e.g. an Indian student, an IT professional, or a freelancer) interacting with technology or in a modern setting.
+      2. LOOK: Cinematic photography, realistic skin textures, high resolution.
+      3. BAN: No text, no logos, no fake-looking 3D renders.
+      4. START: Begin with "A high-resolution photo of [subject]..."
+      
+      Output ONLY the description (50-70 words).`;
+            const result = await model.generateContent(prompt);
+            return result.response.text().trim();
+        }
+        catch (e) {
+            this.logger.warn(`BlogGenerator: Inline prompt engineering failed: ${e.message}`);
+            return `${intent}. photorealistic, professional lighting, cinematic`;
+        }
     }
     countWords(markdown) {
         const text = markdown
