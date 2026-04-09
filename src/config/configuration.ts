@@ -17,6 +17,12 @@ export default () => ({
     model: process.env.GEMINI_MODEL || 'gemini-2.0-flash',
   },
 
+  // --- NVIDIA NIM ---
+  nvidia: {
+    apiKey: process.env.NVIDIA_NIM_API_KEY || '',
+    endpoint: 'https://ai.api.nvidia.com/v1/genai/stabilityai/stable-diffusion-3-medium',
+  },
+
   // --- Redis ---
   redis: {
     host: process.env.REDIS_HOST || 'localhost',
