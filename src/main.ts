@@ -20,6 +20,9 @@ async function bootstrap() {
   // Enable graceful shutdown hooks
   app.enableShutdownHooks();
 
+  // Set global prefix
+  app.setGlobalPrefix('api');
+
   // CORS (optional, useful if you want to trigger via frontend)
   app.enableCors();
 
