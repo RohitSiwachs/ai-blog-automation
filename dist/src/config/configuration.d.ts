@@ -20,6 +20,8 @@ declare const _default: () => {
     redis: {
         host: string;
         port: number;
+        password: string | undefined;
+        tls: boolean;
     };
     database: {
         url: string;

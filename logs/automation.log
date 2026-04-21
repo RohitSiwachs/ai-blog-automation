@@ -6631,3 +6631,76 @@
 {"level":"info","message":"Strapi: Creating article \"Data Analytics Careers: A Guide for Indians\"...","timestamp":"2026-04-21T10:36:48.338Z"}
 {"level":"info","message":"Strapi: Article created successfully — ID: 208, slug: \"data-analytics-careers-a-guide-for-indians\"","timestamp":"2026-04-21T10:36:49.526Z"}
 {"level":"info","message":"✅ BlogJob [93]: Successfully published — Strapi ID: 208, slug: \"data-analytics-careers-a-guide-for-indians\"","timestamp":"2026-04-21T10:36:49.568Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-04-21T10:58:28.542Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:","timestamp":"2026-04-21T10:58:28.547Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/health, GET} route","timestamp":"2026-04-21T10:58:28.549Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/trigger, POST} route","timestamp":"2026-04-21T10:58:28.550Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 7 * * *\", Posts/day: 1","timestamp":"2026-04-21T10:58:28.594Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-04-21T10:58:28.594Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-04-21T10:58:28.601Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-04-21T10:58:28.610Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/health","timestamp":"2026-04-21T10:58:28.611Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/trigger?count=1","timestamp":"2026-04-21T10:58:28.611Z"}
+{"level":"info","message":"Manual trigger received — count: 1","timestamp":"2026-04-21T10:58:44.387Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-04-21T10:58:44.389Z"}
+{"level":"info","message":"🔄 Scheduler: Starting daily batch — 2026-04-21T10:58:44.389Z","timestamp":"2026-04-21T10:58:44.391Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-04-21T10:58:44.392Z"}
+{"level":"info","message":"TopicEngine: Generating 1 new topics...","timestamp":"2026-04-21T10:58:44.396Z"}
+{"level":"info","message":"TopicEngine: Syncing recent topics from Strapi...","timestamp":"2026-04-21T10:58:44.399Z"}
+{"level":"info","message":"Strapi: Fetching last 50 articles...","timestamp":"2026-04-21T10:58:44.401Z"}
+{"level":"info","message":"Strapi: Fetched 11 recent articles","timestamp":"2026-04-21T10:58:45.228Z"}
+{"level":"info","message":"TopicEngine: Strapi sync complete","timestamp":"2026-04-21T10:58:45.303Z"}
+{"level":"info","message":"TopicEngine: Static pool exhausted. Using AI to generate 1 fresh topics...","timestamp":"2026-04-21T10:58:45.315Z"}
+{"level":"info","message":"TopicEngine: AI generated topic — \"WordPress Customization Beyond Themes: A Developer-Free Guide\" [wordpress]","timestamp":"2026-04-21T10:58:46.491Z"}
+{"level":"info","message":"TopicEngine: Successfully generated 1 topics","timestamp":"2026-04-21T10:58:46.497Z"}
+{"level":"info","message":"Scheduler: Generated 1 topics, enqueuing jobs...","timestamp":"2026-04-21T10:58:46.497Z"}
+{"level":"info","message":"Scheduler: Enqueued job 1 — \"WordPress Customization Beyond Themes: A Developer-Free Guide\" [delay: 0s]","timestamp":"2026-04-21T10:58:46.594Z"}
+{"level":"info","message":"✅ Scheduler: Batch complete — 1 jobs enqueued","timestamp":"2026-04-21T10:58:46.595Z"}
+{"level":"info","message":"🚀 BlogJob [1]: Starting processing — \"WordPress Customization Beyond Themes: A Developer-Free Guide\"","timestamp":"2026-04-21T10:58:46.632Z"}
+{"level":"info","message":"BlogJob [1]: Step 1/4 — Generating content...","timestamp":"2026-04-21T10:58:46.675Z"}
+{"level":"info","message":"Strapi: Fetching categories...","timestamp":"2026-04-21T10:58:46.675Z"}
+{"level":"info","message":"Strapi: Fetched 4 categories","timestamp":"2026-04-21T10:58:46.850Z"}
+{"level":"info","message":"BlogGenerator: Generating content for \"WordPress Customization Beyond Themes: A Developer-Free Guide\" using NVIDIA...","timestamp":"2026-04-21T10:58:46.851Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA response received, parsing...","timestamp":"2026-04-21T10:59:16.079Z"}
+{"level":"info","message":"BlogGenerator: Finalizing and enriching inline images with Gemini...","timestamp":"2026-04-21T10:59:16.080Z"}
+{"level":"info","message":"BlogGenerator: Found 2 Pollinations images to enrich.","timestamp":"2026-04-21T10:59:16.081Z"}
+{"level":"info","message":"BlogGenerator: Engineering prompt for inline image: \"student using laptop...\"","timestamp":"2026-04-21T10:59:16.081Z"}
+{"level":"warn","message":"BlogGenerator: Inline prompt engineering failed: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\nPlease retry in 42.387799142s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\",\"quotaId\":\"GenerateContentInputTokensPerModelPerMinute-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"42s\"}]","timestamp":"2026-04-21T10:59:16.866Z"}
+{"level":"info","message":"BlogGenerator: Inline image enriched for \"Person using a laptop with WordPress interface\"","timestamp":"2026-04-21T10:59:16.866Z"}
+{"level":"info","message":"BlogGenerator: Engineering prompt for inline image: \"responsive website on phone...\"","timestamp":"2026-04-21T10:59:16.867Z"}
+{"level":"warn","message":"BlogGenerator: Inline prompt engineering failed: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\nPlease retry in 42.068687962s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\",\"quotaId\":\"GenerateContentInputTokensPerModelPerMinute-FreeTier\",\"quotaDimensions\":{\"model\":\"gemini-2.0-flash\",\"location\":\"global\"}}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"42s\"}]","timestamp":"2026-04-21T10:59:17.727Z"}
+{"level":"info","message":"BlogGenerator: Inline image enriched for \"Mobile phone displaying a responsive website\"","timestamp":"2026-04-21T10:59:17.728Z"}
+{"level":"info","message":"BlogGenerator: Content generated successfully — \"WordPress Customization: No Code Needed!\" (933 words)","timestamp":"2026-04-21T10:59:17.728Z"}
+{"level":"info","message":"BlogJob [1]: Step 1.5/4 — Enriching inline images with NVIDIA NIM...","timestamp":"2026-04-21T10:59:17.729Z"}
+{"level":"info","message":"BlogJob [1]: Found 2 inline images to replace with NVIDIA...","timestamp":"2026-04-21T10:59:17.729Z"}
+{"level":"info","message":"BlogJob [1]: Generating NVIDIA image 1/2 for \"Person using a laptop with WordPress interface\"...","timestamp":"2026-04-21T10:59:17.730Z"}
+{"level":"info","message":"Strapi: Uploading image \"inline-1-0.jpg\"...","timestamp":"2026-04-21T10:59:20.139Z"}
+{"level":"info","message":"Strapi: Image uploaded successfully — ID: 84, filename: \"inline-1-0.jpg\"","timestamp":"2026-04-21T10:59:24.190Z"}
+{"level":"info","message":"BlogJob [1]: Inline image 1 replaced successfully.","timestamp":"2026-04-21T10:59:24.298Z"}
+{"level":"info","message":"BlogJob [1]: Generating NVIDIA image 2/2 for \"Mobile phone displaying a responsive website\"...","timestamp":"2026-04-21T10:59:24.298Z"}
+{"level":"info","message":"Strapi: Uploading image \"inline-1-1.jpg\"...","timestamp":"2026-04-21T10:59:25.732Z"}
+{"level":"info","message":"Strapi: Image uploaded successfully — ID: 85, filename: \"inline-1-1.jpg\"","timestamp":"2026-04-21T10:59:27.388Z"}
+{"level":"info","message":"BlogJob [1]: Inline image 2 replaced successfully.","timestamp":"2026-04-21T10:59:27.483Z"}
+{"level":"info","message":"BlogJob [1]: Selected Category — \"Development\" (ID: 1)","timestamp":"2026-04-21T10:59:27.483Z"}
+{"level":"info","message":"BlogJob [1]: Content generated — \"WordPress Customization: No Code Needed!\"","timestamp":"2026-04-21T10:59:27.518Z"}
+{"level":"info","message":"BlogJob [1]: Step 2/4 — Generating banner image...","timestamp":"2026-04-21T10:59:27.518Z"}
+{"level":"info","message":"ImageGenerator: Creating professional banner for \"WordPress Customization: No Code Needed!\"...","timestamp":"2026-04-21T10:59:27.519Z"}
+{"level":"info","message":"ImageGenerator: Using Gemini to engineer a professional prompt...","timestamp":"2026-04-21T10:59:27.781Z"}
+{"level":"warn","message":"ImageGenerator: Gemini prompt engineering failed, using basic prompt.","timestamp":"2026-04-21T10:59:27.963Z"}
+{"level":"info","message":"ImageGenerator: Tier 1 - Requesting NVIDIA NIM for \"WordPress Customization: No Code Needed!\"...","timestamp":"2026-04-21T10:59:27.963Z"}
+{"level":"info","message":"ImageGenerator: NVIDIA NIM success","timestamp":"2026-04-21T10:59:29.534Z"}
+{"level":"info","message":"ImageGenerator: Banner created successfully (97.4 KB)","timestamp":"2026-04-21T10:59:29.562Z"}
+{"level":"info","message":"BlogJob [1]: Banner image generated","timestamp":"2026-04-21T10:59:29.618Z"}
+{"level":"info","message":"📸 PREVIEW SAVED: file:///C:/Users/ROHIT/Desktop/innoaft/ai-automation/previews/wordpress-customization-no-code-needed.md","timestamp":"2026-04-21T10:59:29.620Z"}
+{"level":"info","message":"🖼️ BANNER SAVED: file:///C:/Users/ROHIT/Desktop/innoaft/ai-automation/previews/wordpress-customization-no-code-needed-banner.jpg","timestamp":"2026-04-21T10:59:29.620Z"}
+{"level":"info","message":"BlogJob [1]: Step 3/4 — Uploading image to Strapi...","timestamp":"2026-04-21T10:59:29.620Z"}
+{"level":"info","message":"Strapi: Uploading image \"wordpress-customization-beyond-themes-a-developer-free-guide-banner.jpg\"...","timestamp":"2026-04-21T10:59:29.620Z"}
+{"level":"info","message":"Strapi: Image uploaded successfully — ID: 86, filename: \"wordpress-customization-beyond-themes-a-developer-free-guide-banner.jpg\"","timestamp":"2026-04-21T10:59:31.341Z"}
+{"level":"info","message":"BlogJob [1]: Image uploaded — Media ID: 86","timestamp":"2026-04-21T10:59:31.376Z"}
+{"level":"info","message":"BlogJob [1]: Step 4/4 — Publishing article...","timestamp":"2026-04-21T10:59:31.376Z"}
+{"level":"info","message":"Strapi: Fetching authors...","timestamp":"2026-04-21T10:59:31.377Z"}
+{"level":"info","message":"Strapi: Fetched 3 authors: [Ansh, Nikhil Chauhan, Sharukh]","timestamp":"2026-04-21T10:59:31.543Z"}
+{"level":"info","message":"BlogJob [1]: Selected author — \"Sharukh\" (ID: 3)","timestamp":"2026-04-21T10:59:31.543Z"}
+{"level":"info","message":"Strapi: Creating article \"WordPress Customization: No Code Needed!\"...","timestamp":"2026-04-21T10:59:31.544Z"}
+{"level":"info","message":"Strapi: Article created successfully — ID: 210, slug: \"wordpress-customization-no-code-needed\"","timestamp":"2026-04-21T10:59:32.656Z"}
+{"level":"info","message":"✅ BlogJob [1]: Successfully published — Strapi ID: 210, slug: \"wordpress-customization-no-code-needed\"","timestamp":"2026-04-21T10:59:32.726Z"}
