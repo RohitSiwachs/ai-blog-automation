@@ -86,6 +86,8 @@ let BlogJobProcessor = class BlogJobProcessor extends bullmq_1.WorkerHost {
             const categoriesList = await this.strapiService.fetchCategories();
             const categoryNames = categoriesList.map((c) => c.name);
             const blog = await this.blogGenerator.generateBlog(title, keywords || [], categoryNames);
+            this.logger.info(`BlogJob [${job.id}]: Step 1.5/4 — Enriching inline images with NVIDIA NIM...`);
+            blog.content = await this.processInlineImages(blog.content, job.id?.toString() || 'unknown');
             const selectedCategory = categoriesList.find((c) => c.name.toLowerCase() === blog.category?.toLowerCase());
             const categoryId = selectedCategory ? selectedCategory.id : 1;
             this.logger.info(`BlogJob [${job.id}]: Selected Category — "${blog.category}" (ID: ${categoryId})`);
@@ -156,6 +158,38 @@ let BlogJobProcessor = class BlogJobProcessor extends bullmq_1.WorkerHost {
             });
             throw error;
         }
+    }
+    async processInlineImages(content, jobId) {
+        const imageRegex = /!\[([^\]]*)\]\((https?:\/\/[^\)]+)\)/g;
+        const matches = Array.from(content.matchAll(imageRegex));
+        if (matches.length === 0)
+            return content;
+        this.logger.info(`BlogJob [${jobId}]: Found ${matches.length} inline images to replace with NVIDIA...`);
+        let updatedContent = content;
+        for (let i = 0; i < matches.length; i++) {
+            const [fullMatch, alt, url] = matches[i];
+            try {
+                const promptMatch = url.match(/\/prompt\/([^?&]+)/);
+                const nvidiaPrompt = promptMatch
+                    ? decodeURIComponent(promptMatch[1]).replace(/-/g, ' ')
+                    : alt || 'professional office technology';
+                this.logger.info(`BlogJob [${jobId}]: Generating NVIDIA image ${i + 1}/${matches.length} for "${alt}"...`);
+                const imageBuffer = await this.imageGenerator.generateNvidiaImage(nvidiaPrompt);
+                if (imageBuffer) {
+                    const filename = `inline-${jobId}-${i}.jpg`;
+                    const mediaId = await this.strapiService.uploadImage(imageBuffer, filename);
+                    const mediaUrl = await this.strapiService.getMediaUrl(mediaId);
+                    if (mediaUrl) {
+                        updatedContent = updatedContent.replace(fullMatch, `![${alt}](${mediaUrl})`);
+                        this.logger.info(`BlogJob [${jobId}]: Inline image ${i + 1} replaced successfully.`);
+                    }
+                }
+            }
+            catch (err) {
+                this.logger.warn(`BlogJob [${jobId}]: Failed to process inline image ${i + 1}: ${err.message}. Keeping original.`);
+            }
+        }
+        return updatedContent;
     }
     async updateBlogLog(id, data) {
         try {

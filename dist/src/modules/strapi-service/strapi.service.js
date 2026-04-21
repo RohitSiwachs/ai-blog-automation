@@ -76,6 +76,17 @@ let StrapiService = class StrapiService {
             return mediaId;
         }, 'uploadImage');
     }
+    async getMediaUrl(id) {
+        if (this.isBypass || id === 0)
+            return 'https://via.placeholder.com/1200x630.png?text=Bypass+Mode';
+        return this.withRetry(async () => {
+            const response = await this.client.get(`/api/upload/files/${id}`);
+            const url = response.data.url;
+            const baseUrl = this.configService.get('strapi.baseUrl') || '';
+            const fullUrl = url.startsWith('http') ? url : `${baseUrl}${url}`;
+            return fullUrl;
+        }, 'getMediaUrl');
+    }
     async createBlogPost(data) {
         if (this.isBypass) {
             this.logger.info(`Strapi: BYPASS - Mocking blog post creation for "${data.title}"`);
@@ -164,9 +175,10 @@ let StrapiService = class StrapiService {
             const response = await this.client.get('/api/authors');
             const authors = (response.data.data || []).map((entry) => ({
                 id: entry.id,
-                name: entry.name || 'Unknown Author',
+                name: entry.attributes?.name || entry.name || 'Unknown Author',
             }));
-            this.logger.info(`Strapi: Fetched ${authors.length} authors`);
+            const authorNames = authors.map(a => a.name).join(', ');
+            this.logger.info(`Strapi: Fetched ${authors.length} authors: [${authorNames}]`);
             return authors;
         }, 'fetchAuthors');
     }

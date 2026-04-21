@@ -117,7 +117,7 @@ let SchedulerService = class SchedulerService {
 };
 exports.SchedulerService = SchedulerService;
 __decorate([
-    (0, schedule_1.Cron)('0 6 * * *', { name: 'daily-blog-batch' }),
+    (0, schedule_1.Cron)('0 7 * * *', { name: 'daily-blog-batch' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)

@@ -11,7 +11,7 @@ export declare class ImageGeneratorService {
     constructor(configService: ConfigService, logger: Logger);
     generateBannerImage(title: string): Promise<Buffer>;
     private drawDynamicBackground;
-    private generateNvidiaImage;
+    generateNvidiaImage(prompt: string): Promise<Buffer | null>;
     private generateSmartPrompt;
     private tryRegisterFont;
     private wrapText;

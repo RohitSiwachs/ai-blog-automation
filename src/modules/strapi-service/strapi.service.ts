@@ -121,6 +121,22 @@ export class StrapiService {
   }
 
   /**
+   * Fetch the full URL for a media ID from Strapi.
+   */
+  async getMediaUrl(id: number): Promise<string | null> {
+    if (this.isBypass || id === 0) return 'https://via.placeholder.com/1200x630.png?text=Bypass+Mode';
+    
+    return this.withRetry(async () => {
+      const response = await this.client.get(`/api/upload/files/${id}`);
+      const url = response.data.url;
+      // Ensure it's a full URL
+      const baseUrl = this.configService.get<string>('strapi.baseUrl') || '';
+      const fullUrl = url.startsWith('http') ? url : `${baseUrl}${url}`;
+      return fullUrl;
+    }, 'getMediaUrl');
+  }
+
+  /**
    * Create a new article in Strapi (blog.innovaft.com schema).
    */
   async createBlogPost(data: StrapiBlogPayload): Promise<number> {
@@ -228,11 +244,12 @@ export class StrapiService {
       const authors: StrapiAuthor[] = (response.data.data || []).map(
         (entry: any) => ({
           id: entry.id,
-          name: entry.name || 'Unknown Author',
+          name: entry.attributes?.name || entry.name || 'Unknown Author',
         }),
       );
 
-      this.logger.info(`Strapi: Fetched ${authors.length} authors`);
+      const authorNames = authors.map(a => a.name).join(', ');
+      this.logger.info(`Strapi: Fetched ${authors.length} authors: [${authorNames}]`);
       return authors;
     }, 'fetchAuthors');
   }

@@ -41,6 +41,7 @@ export declare class StrapiService {
     private readonly isBypass;
     constructor(configService: ConfigService, logger: Logger);
     uploadImage(buffer: Buffer, filename: string): Promise<number>;
+    getMediaUrl(id: number): Promise<string | null>;
     createBlogPost(data: StrapiBlogPayload): Promise<number>;
     fetchAuthors(): Promise<StrapiAuthor[]>;
     fetchCategories(): Promise<StrapiCategory[]>;

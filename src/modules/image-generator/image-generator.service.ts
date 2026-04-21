@@ -228,10 +228,10 @@ export class ImageGeneratorService {
   }
 
   /**
-   * Directly call NVIDIA NIM Stable Diffusion 3 Medium API.
+   * Directly call NVIDIA NIM Image API.
    * Returns a Buffer containing the image data.
    */
-  private async generateNvidiaImage(prompt: string): Promise<Buffer | null> {
+  public async generateNvidiaImage(prompt: string): Promise<Buffer | null> {
     try {
       const response = await axios.post(
         this.nvidiaEndpoint,

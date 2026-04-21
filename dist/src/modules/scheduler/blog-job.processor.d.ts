@@ -22,5 +22,6 @@ export declare class BlogJobProcessor extends WorkerHost {
     private readonly logger;
     constructor(blogGenerator: BlogGeneratorService, imageGenerator: ImageGeneratorService, strapiService: StrapiService, prisma: PrismaService, configService: ConfigService, logger: Logger);
     process(job: Job<BlogJobData>): Promise<void>;
+    private processInlineImages;
     private updateBlogLog;
 }

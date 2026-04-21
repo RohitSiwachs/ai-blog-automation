@@ -297,7 +297,7 @@ let TopicEngineService = class TopicEngineService {
         }
     }
     async generateAITopics(cluster, count, usedSlugs) {
-        const prompt = `You are a blog topic generator for "Innovaft", a professional IT and Digital Skills agency in Hisar, Haryana.
+        const prompt = `You are a blog topic generator for "Innovaft", a professional IT and Digital Skills agency.
       The cluster is: "${cluster.cluster}".
       Pillar topic: "${cluster.pillar}".
       
@@ -308,7 +308,10 @@ let TopicEngineService = class TopicEngineService {
       ${usedSlugs.slice(-30).join('\n')}
       
       Generate ${count * 2} (extra for filtering) NEW, unique, and highly engaging blog post titles for this cluster.
-      The titles should be SEO-friendly and relevant to Indian students, small business owners in Haryana, or aspiring freelancers.
+      The titles should be SEO-friendly and relevant to modern Indian students, small business owners, and aspiring freelancers.
+      IMPORTANT RULES:
+      1. DO NOT repeatedly use the word "Haryana" or "Hisar" in every title.
+      2. Keep the titles broad, professional, and globally appealing, while still being relevant to an Indian audience.
       
       Output only the titles, one per line. No numbers, no extra text, no markdown fences.`;
         try {

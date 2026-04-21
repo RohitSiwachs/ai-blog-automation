@@ -74,6 +74,10 @@ export class BlogJobProcessor extends WorkerHost {
         categoryNames,
       );
 
+      // --- Step 1.5: Enrich Inline Images with NVIDIA ---
+      this.logger.info(`BlogJob [${job.id}]: Step 1.5/4 — Enriching inline images with NVIDIA NIM...`);
+      blog.content = await this.processInlineImages(blog.content, job.id?.toString() || 'unknown');
+
       // Map selected category name back to ID
       const selectedCategory = categoriesList.find(
         (c) => c.name.toLowerCase() === blog.category?.toLowerCase(),
@@ -193,6 +197,58 @@ export class BlogJobProcessor extends WorkerHost {
       // Re-throw to let BullMQ handle retries
       throw error;
     }
+  }
+
+  /**
+   * Scans content for Pollinations/Placeholder images, generates them via NVIDIA,
+   * uploads them to Strapi, and replaces the URLs.
+   */
+  private async processInlineImages(content: string, jobId: string): Promise<string> {
+    // Regex to find markdown images (specifically those generated as placeholders)
+    const imageRegex = /!\[([^\]]*)\]\((https?:\/\/[^\)]+)\)/g;
+    const matches = Array.from(content.matchAll(imageRegex));
+    
+    if (matches.length === 0) return content;
+
+    this.logger.info(`BlogJob [${jobId}]: Found ${matches.length} inline images to replace with NVIDIA...`);
+
+    let updatedContent = content;
+    
+    for (let i = 0; i < matches.length; i++) {
+      const [fullMatch, alt, url] = matches[i];
+      
+      try {
+        // Use the alt text or prompt from URL as the NVIDIA prompt
+        // Pollinations URLs often have the prompt in the path
+        const promptMatch = url.match(/\/prompt\/([^?&]+)/);
+        const nvidiaPrompt = promptMatch 
+          ? decodeURIComponent(promptMatch[1]).replace(/-/g, ' ')
+          : alt || 'professional office technology';
+
+        this.logger.info(`BlogJob [${jobId}]: Generating NVIDIA image ${i+1}/${matches.length} for "${alt}"...`);
+        
+        // 1. Generate with NVIDIA
+        const imageBuffer = await this.imageGenerator.generateNvidiaImage(nvidiaPrompt);
+        
+        if (imageBuffer) {
+          // 2. Upload to Strapi
+          const filename = `inline-${jobId}-${i}.jpg`;
+          const mediaId = await this.strapiService.uploadImage(imageBuffer, filename);
+          
+          // 3. Get the actual Strapi URL for this image
+          const mediaUrl = await this.strapiService.getMediaUrl(mediaId);
+          
+          if (mediaUrl) {
+            updatedContent = updatedContent.replace(fullMatch, `![${alt}](${mediaUrl})`);
+            this.logger.info(`BlogJob [${jobId}]: Inline image ${i+1} replaced successfully.`);
+          }
+        }
+      } catch (err) {
+        this.logger.warn(`BlogJob [${jobId}]: Failed to process inline image ${i+1}: ${err.message}. Keeping original.`);
+      }
+    }
+
+    return updatedContent;
   }
 
   /**
