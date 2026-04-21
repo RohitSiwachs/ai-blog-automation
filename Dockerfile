@@ -34,4 +34,4 @@ RUN npm run build
 EXPOSE 3002
 
 # Run migrations and start
-CMD export DATABASE_URL=$(echo $DATABASE_URL | tr -d '\n\r ') && if [ -z "$DATABASE_URL" ]; then echo "❌ ERROR: DATABASE_URL is NOT set!"; else echo "✅ DATABASE_URL sanitized (Length: ${#DATABASE_URL})"; fi && npx prisma db push && npm run start:prod
+CMD export DATABASE_URL=$(echo $DATABASE_URL | tr -d '\n\r ') && echo "Running Prisma DB Push..." && DEBUG=prisma:* npx prisma db push --accept-data-loss && npm run start:prod
