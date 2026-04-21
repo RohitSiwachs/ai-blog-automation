@@ -27,7 +27,7 @@ RUN npm run build
 # Production stage
 FROM node:20-slim
 
-# Install runtime dependencies for node-canvas
+# Install runtime dependencies for node-canvas and Prisma
 RUN apt-get update && apt-get install -y \
     libcairo2 \
     libpango-1.0-0 \
@@ -35,6 +35,8 @@ RUN apt-get update && apt-get install -y \
     libjpeg62-turbo \
     libgif7 \
     librsvg2-2 \
+    openssl \
+    ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
