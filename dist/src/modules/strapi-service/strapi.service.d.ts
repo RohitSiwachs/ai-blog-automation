@@ -38,6 +38,7 @@ export declare class StrapiService {
     private readonly maxRetries;
     private readonly retryBaseDelay;
     private readonly siteUrl;
+    private readonly isBypass;
     constructor(configService: ConfigService, logger: Logger);
     uploadImage(buffer: Buffer, filename: string): Promise<number>;
     createBlogPost(data: StrapiBlogPayload): Promise<number>;

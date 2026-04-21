@@ -74,10 +74,10 @@ let SchedulerService = class SchedulerService {
                     cluster: topic.cluster,
                     blogLogId: blogLog.id,
                 }, {
-                    attempts: 3,
+                    attempts: 5,
                     backoff: {
                         type: 'exponential',
-                        delay: 5000,
+                        delay: 30000,
                     },
                     removeOnComplete: {
                         age: 86400,
@@ -86,9 +86,9 @@ let SchedulerService = class SchedulerService {
                     removeOnFail: {
                         age: 604800,
                     },
-                    delay: i * 30000,
+                    delay: i * 60000,
                 });
-                this.logger.info(`Scheduler: Enqueued job ${job.id} — "${topic.title}" [delay: ${i * 30}s]`);
+                this.logger.info(`Scheduler: Enqueued job ${job.id} — "${topic.title}" [delay: ${i * 60}s]`);
             }
             this.logger.info(`✅ Scheduler: Batch complete — ${topics.length} jobs enqueued`);
         }

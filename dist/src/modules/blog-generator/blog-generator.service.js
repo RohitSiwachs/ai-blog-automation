@@ -20,6 +20,7 @@ const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const nest_winston_1 = require("nest-winston");
 const winston_1 = require("winston");
+const axios_1 = __importDefault(require("axios"));
 const generative_ai_1 = require("@google/generative-ai");
 const slugify_1 = __importDefault(require("slugify"));
 const prompts_1 = require("./prompts");
@@ -27,24 +28,35 @@ let BlogGeneratorService = class BlogGeneratorService {
     configService;
     logger;
     genAI;
-    modelName;
+    geminiModel;
+    nvidiaApiKey;
+    nvidiaModel;
+    nvidiaEndpoint;
+    aiProvider;
     constructor(configService, logger) {
         this.configService = configService;
         this.logger = logger;
-        const apiKey = this.configService.get('gemini.apiKey');
-        this.modelName = this.configService.get('gemini.model');
-        this.genAI = new generative_ai_1.GoogleGenerativeAI(apiKey);
+        const geminiApiKey = this.configService.get('gemini.apiKey');
+        this.geminiModel = this.configService.get('gemini.model');
+        this.genAI = new generative_ai_1.GoogleGenerativeAI(geminiApiKey);
+        this.nvidiaApiKey = this.configService.get('nvidia.apiKey');
+        this.nvidiaModel = this.configService.get('nvidia.model');
+        this.nvidiaEndpoint = this.configService.get('nvidia.chatEndpoint');
+        this.aiProvider = this.configService.get('aiProvider') || 'gemini';
     }
     async generateBlog(title, keywords, categories) {
-        this.logger.info(`BlogGenerator: Generating content for "${title}"...`);
+        this.logger.info(`BlogGenerator: Generating content for "${title}" using ${this.aiProvider.toUpperCase()}...`);
         const prompt = (0, prompts_1.buildBlogPrompt)(title, keywords, categories);
-        const model = this.genAI.getGenerativeModel({ model: this.modelName });
+        let rawText;
         try {
-            const result = await model.generateContent(prompt);
-            const response = result.response;
-            const text = response.text();
-            this.logger.info('BlogGenerator: Gemini response received, parsing...');
-            const parsed = this.parseGeminiResponse(text);
+            if (this.aiProvider === 'nvidia') {
+                rawText = await this.generateWithNvidia(prompt);
+            }
+            else {
+                rawText = await this.generateWithGemini(prompt);
+            }
+            this.logger.info(`BlogGenerator: ${this.aiProvider.toUpperCase()} response received, parsing...`);
+            const parsed = this.parseAIResponse(rawText);
             const slug = (0, slugify_1.default)(parsed.seoTitle, {
                 lower: true,
                 strict: true,
@@ -66,11 +78,54 @@ let BlogGeneratorService = class BlogGeneratorService {
             return blog;
         }
         catch (error) {
-            this.logger.error(`BlogGenerator: Gemini API failed — ${error.message}`);
+            this.logger.error(`BlogGenerator: ${this.aiProvider.toUpperCase()} API failed — ${error.message}`);
             throw new Error(`Blog generation failed: ${error.message}`);
         }
     }
-    parseGeminiResponse(text) {
+    async generateWithGemini(prompt) {
+        const model = this.genAI.getGenerativeModel({ model: this.geminiModel });
+        const result = await model.generateContent(prompt);
+        return result.response.text();
+    }
+    async generateWithNvidia(prompt) {
+        const payload = {
+            model: this.nvidiaModel,
+            messages: [{ role: 'user', content: prompt }],
+            max_tokens: 4096,
+            temperature: 0.7,
+            top_p: 0.9,
+            stream: false,
+        };
+        if (this.nvidiaModel.includes('gemma-4')) {
+            payload.chat_template_kwargs = { enable_thinking: true };
+        }
+        const maxRetries = 2;
+        let lastError;
+        for (let attempt = 1; attempt <= maxRetries; attempt++) {
+            try {
+                const response = await axios_1.default.post(this.nvidiaEndpoint, payload, {
+                    headers: {
+                        Authorization: `Bearer ${this.nvidiaApiKey}`,
+                        Accept: 'application/json',
+                    },
+                    timeout: 600000,
+                });
+                return response.data.choices[0].message.content;
+            }
+            catch (error) {
+                lastError = error;
+                const statusCode = error.response?.status;
+                if (statusCode === 504 && attempt < maxRetries) {
+                    this.logger.warn(`BlogGenerator: NVIDIA 504 Timeout (Attempt ${attempt}/${maxRetries}). Retrying in 5s...`);
+                    await new Promise(resolve => setTimeout(resolve, 5000));
+                    continue;
+                }
+                throw error;
+            }
+        }
+        throw lastError;
+    }
+    parseAIResponse(text) {
         let cleaned = text.trim();
         const startIdx = cleaned.indexOf('{');
         const endIdx = cleaned.lastIndexOf('}');
@@ -176,7 +231,7 @@ let BlogGeneratorService = class BlogGeneratorService {
     }
     async generateInlineSmartPrompt(intent) {
         try {
-            const model = this.genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+            const model = this.genAI.getGenerativeModel({ model: this.geminiModel });
             const prompt = `You are a professional image prompt engineer. 
       Create a detailed, ultra-realistic prompt for a blog image.
       Context: "${intent}".

@@ -14,6 +14,9 @@ import { PrismaService } from '../../prisma/prisma.service';
 import { BlogGeneratorService } from '../blog-generator/blog-generator.service';
 import { ImageGeneratorService } from '../image-generator/image-generator.service';
 import { StrapiService } from '../strapi-service/strapi.service';
+import { ConfigService } from '@nestjs/config';
+import * as fs from 'fs';
+import * as path from 'path';
 
 /** Job data shape */
 export interface BlogJobData {
@@ -33,6 +36,7 @@ export class BlogJobProcessor extends WorkerHost {
     private readonly imageGenerator: ImageGeneratorService,
     private readonly strapiService: StrapiService,
     private readonly prisma: PrismaService,
+    private readonly configService: ConfigService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
   ) {
     super();
@@ -94,6 +98,27 @@ export class BlogJobProcessor extends WorkerHost {
 
       await job.updateProgress(60);
       this.logger.info(`BlogJob [${job.id}]: Banner image generated`);
+
+
+      // --- Special Step: Save local preview if in bypass mode ---
+      const isBypass = this.configService.get<boolean>('BYPASS_STRAPI') || false;
+      if (isBypass) {
+        const previewDir = path.join(process.cwd(), 'previews');
+        if (!fs.existsSync(previewDir)) {
+          fs.mkdirSync(previewDir, { recursive: true });
+        }
+
+        // Save blog content
+        const contentPath = path.join(previewDir, `${blog.slug}.md`);
+        fs.writeFileSync(contentPath, blog.content);
+
+        // Save banner image
+        const imagePath = path.join(previewDir, `${blog.slug}-banner.jpg`);
+        fs.writeFileSync(imagePath, imageBuffer);
+
+        this.logger.info(`📸 PREVIEW SAVED: file:///${contentPath.replace(/\\/g, '/')}`);
+        this.logger.info(`🖼️ BANNER SAVED: file:///${imagePath.replace(/\\/g, '/')}`);
+      }
 
       // --- Step 3: Upload image to Strapi ---
       this.logger.info(

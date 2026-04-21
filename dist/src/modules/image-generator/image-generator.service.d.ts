@@ -6,9 +6,12 @@ export declare class ImageGeneratorService {
     private brandName;
     private openai;
     private genAI;
+    private nvidiaApiKey;
+    private nvidiaEndpoint;
     constructor(configService: ConfigService, logger: Logger);
     generateBannerImage(title: string): Promise<Buffer>;
     private drawDynamicBackground;
+    private generateNvidiaImage;
     private generateSmartPrompt;
     private tryRegisterFont;
     private wrapText;

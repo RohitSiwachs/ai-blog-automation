@@ -67,6 +67,8 @@ let ImageGeneratorService = class ImageGeneratorService {
     brandName;
     openai;
     genAI;
+    nvidiaApiKey;
+    nvidiaEndpoint;
     constructor(configService, logger) {
         this.configService = configService;
         this.logger = logger;
@@ -75,6 +77,8 @@ let ImageGeneratorService = class ImageGeneratorService {
             apiKey: this.configService.get('OPENAI_API_KEY'),
         });
         this.genAI = new generative_ai_1.GoogleGenerativeAI(this.configService.get('gemini.apiKey') || '');
+        this.nvidiaApiKey = this.configService.get('nvidia.imageApiKey') || '';
+        this.nvidiaEndpoint = this.configService.get('nvidia.imageEndpoint') || '';
         this.tryRegisterFont();
     }
     async generateBannerImage(title) {
@@ -83,6 +87,24 @@ let ImageGeneratorService = class ImageGeneratorService {
             const canvas = (0, canvas_1.createCanvas)(IMAGE_WIDTH, IMAGE_HEIGHT);
             const ctx = canvas.getContext('2d');
             await this.drawDynamicBackground(ctx, title);
+            const gradient = ctx.createLinearGradient(0, IMAGE_HEIGHT * 0.5, 0, IMAGE_HEIGHT);
+            gradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
+            gradient.addColorStop(1, 'rgba(0, 0, 0, 0.8)');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, IMAGE_HEIGHT * 0.5, IMAGE_WIDTH, IMAGE_HEIGHT * 0.5);
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 50px Inter';
+            ctx.textAlign = 'left';
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+            ctx.shadowBlur = 10;
+            const lines = this.wrapText(ctx, title.toUpperCase(), IMAGE_WIDTH - 100, 3);
+            const startY = IMAGE_HEIGHT - (lines.length * 60) - 60;
+            lines.forEach((line, i) => {
+                ctx.fillText(line, 50, startY + (i * 65));
+            });
+            ctx.font = 'bold 24px Inter';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+            ctx.fillText(this.brandName.toUpperCase(), 50, IMAGE_HEIGHT - 30);
             const buffer = canvas.toBuffer('image/jpeg', { quality: 0.9 });
             this.logger.info(`ImageGenerator: Banner created successfully (${(buffer.length / 1024).toFixed(1)} KB)`);
             return buffer;
@@ -93,8 +115,27 @@ let ImageGeneratorService = class ImageGeneratorService {
         }
     }
     async drawDynamicBackground(ctx, title) {
+        const smartPrompt = await this.generateSmartPrompt(title);
+        if (this.nvidiaApiKey) {
+            try {
+                this.logger.info(`ImageGenerator: Tier 1 - Requesting NVIDIA NIM for "${title}"...`);
+                const imageBuffer = await this.generateNvidiaImage(smartPrompt);
+                if (imageBuffer) {
+                    const bgImage = await (0, canvas_1.loadImage)(imageBuffer);
+                    const scale = Math.max(IMAGE_WIDTH / bgImage.width, IMAGE_HEIGHT / bgImage.height);
+                    const x = (IMAGE_WIDTH / 2) - (bgImage.width / 2) * scale;
+                    const y = (IMAGE_HEIGHT / 2) - (bgImage.height / 2) * scale;
+                    ctx.drawImage(bgImage, x, y, bgImage.width * scale, bgImage.height * scale);
+                    this.logger.info(`ImageGenerator: NVIDIA NIM success`);
+                    return;
+                }
+            }
+            catch (nvidiaErr) {
+                this.logger.warn(`ImageGenerator: Tier 1 (NVIDIA) failed (${nvidiaErr.message}). Moving to Tier 2...`);
+            }
+        }
         try {
-            this.logger.info(`ImageGenerator: Tier 1 - Requesting DALL-E 3 for "${title}"...`);
+            this.logger.info(`ImageGenerator: Tier 2 - Requesting DALL-E 3 for "${title}"...`);
             const response = await this.openai.images.generate({
                 model: "dall-e-3",
                 prompt: `A professional, high-quality, photorealistic cinematic background for a blog post titled "${title}". Modern, minimalist, studio lighting. 8k, no text, no watermarks.`,
@@ -114,15 +155,13 @@ let ImageGeneratorService = class ImageGeneratorService {
             }
         }
         catch (dalleError) {
-            this.logger.warn(`ImageGenerator: Tier 1 failed (${dalleError.message}). Moving to Tier 2 (Gemini + Flux)...`);
+            this.logger.warn(`ImageGenerator: Tier 2 failed (${dalleError.message}). Moving to Tier 3 (Flux)...`);
         }
-        const smartPrompt = await this.generateSmartPrompt(title);
         const safeTitleId = title.toLowerCase().replace(/[^a-z0-9]/g, '-').substring(0, 30);
         for (let attempt = 1; attempt <= 2; attempt++) {
             try {
                 this.logger.info(`ImageGenerator: Tier 2 - Requesting Flux (Attempt ${attempt})...`);
-                const forcedSubject = "Realistic photo of a professional person, ";
-                const fluxUrl = `https://image.pollinations.ai/prompt/${safeTitleId}?prompt=${encodeURIComponent(forcedSubject + smartPrompt)}&width=${IMAGE_WIDTH}&height=${IMAGE_HEIGHT}&nologo=true&seed=${Math.floor(Math.random() * 1000000)}&model=flux`;
+                const fluxUrl = `https://image.pollinations.ai/prompt/${safeTitleId}?prompt=${encodeURIComponent(smartPrompt)}&width=${IMAGE_WIDTH}&height=${IMAGE_HEIGHT}&nologo=true&seed=${Math.floor(Math.random() * 1000000)}&model=flux`;
                 const response = await axios_1.default.get(fluxUrl, { responseType: 'arraybuffer', timeout: attempt === 1 ? 30000 : 50000 });
                 if (Buffer.from(response.data).length > 20000) {
                     const bgImage = await (0, canvas_1.loadImage)(Buffer.from(response.data));
@@ -139,8 +178,7 @@ let ImageGeneratorService = class ImageGeneratorService {
         }
         try {
             this.logger.info(`ImageGenerator: Tier 3 - Requesting Turbo...`);
-            const forcedSubject = "Detailed photo of a professional human, ";
-            const turboUrl = `https://image.pollinations.ai/prompt/${safeTitleId}?prompt=${encodeURIComponent(forcedSubject + smartPrompt)}&width=${IMAGE_WIDTH}&height=${IMAGE_HEIGHT}&nologo=true&seed=${Math.floor(Math.random() * 1000000)}&model=turbo`;
+            const turboUrl = `https://image.pollinations.ai/prompt/${safeTitleId}?prompt=${encodeURIComponent(smartPrompt)}&width=${IMAGE_WIDTH}&height=${IMAGE_HEIGHT}&nologo=true&seed=${Math.floor(Math.random() * 1000000)}&model=turbo`;
             const response = await axios_1.default.get(turboUrl, { responseType: 'arraybuffer', timeout: 20000 });
             if (Buffer.from(response.data).length > 15000) {
                 const bgImage = await (0, canvas_1.loadImage)(Buffer.from(response.data));
@@ -181,23 +219,59 @@ let ImageGeneratorService = class ImageGeneratorService {
             ctx.fillRect(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
         }
     }
+    async generateNvidiaImage(prompt) {
+        try {
+            const response = await axios_1.default.post(this.nvidiaEndpoint, {
+                prompt,
+                seed: 0
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${this.nvidiaApiKey}`,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                timeout: 120000,
+            });
+            const imageBase64 = response.data?.artifacts?.[0]?.base64 || response.data?.image;
+            if (imageBase64) {
+                return Buffer.from(imageBase64, 'base64');
+            }
+            this.logger.error('ImageGenerator: NVIDIA NIM returned no image data');
+            return null;
+        }
+        catch (error) {
+            const errorMsg = error.response?.data?.error || error.response?.data || error.message;
+            this.logger.error(`ImageGenerator: NVIDIA NIM API error — ${JSON.stringify(errorMsg)}`);
+            throw new Error(`NVIDIA NIM failed: ${JSON.stringify(errorMsg)}`);
+        }
+    }
     async generateSmartPrompt(title) {
         try {
             this.logger.info(`ImageGenerator: Using Gemini to engineer a professional prompt...`);
-            const model = this.genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+            const model = this.genAI.getGenerativeModel({
+                model: this.configService.get('gemini.model') || 'gemini-2.0-flash'
+            });
             const prompt = `You are a professional DALL-E 3 prompt engineer. 
-      Create a highly detailed, professional, and ultra-realistic image generation prompt for a tech blog banner.
+      Create a highly detailed, professional, and visually stunning image generation prompt for a blog banner.
       The blog title is: "${title}".
       
-      CRITICAL FOCUS:
-      - The central subject MUST be a person (e.g., a professional man/woman, student, or freelancer).
-      - The person must be in the foreground, taking up a significant part of the frame.
-      - Use descriptors like "Indian professional", "Smiling face", "Focused eyes", "Hand gestures".
-      - Background should be secondary (office, coworking, or study desk). 
-      - DO NOT describe just a laptop. The laptop should be something the person IS USING.
-      - NO TEXT, NO LOGOS.
+      TONE & STYLE:
+      1. Determine if the topic is HUMAN-CENTRIC (Management, Career, Lifestyle) or TECH-CENTRAL (AI, Hardware, Coding, Cloud).
       
-      Start the prompt with: "A high-resolution professional photo of [the subject]..."`;
+      IF TECH-CENTRAL:
+      - Focus on high-tech conceptual art, futuristic 3D renders, glowing circuitry, or abstract digital landscapes.
+      - Use keywords: "Cybernetic", "Quantum glow", "Holographic interface", "8k octane render", "Cinematic lighting".
+      - SUBJECT: Can be a sleek robot, a glowing AI brain, a futuristic server room, or digital data streams.
+      
+      IF HUMAN-CENTRIC:
+      - Focus on a professional subject (e.g., an Indian professional, focused eyes, confident posture).
+      - Background: Modern minimalist office or coworking space.
+      
+      GENERAL RULES:
+      - NO TEXT, NO WATERMARKS, NO LOGOS.
+      - Ensure high contrast and vibrant, premium colors.
+      
+      Output ONLY the final prompt. Do not explain your choice.`;
             const result = await model.generateContent(prompt);
             const smartPrompt = result.response.text().trim();
             this.logger.info(`ImageGenerator: Gemini Prompt Engineering complete. Prompt: "${smartPrompt.substring(0, 100)}..."`);
@@ -205,7 +279,7 @@ let ImageGeneratorService = class ImageGeneratorService {
         }
         catch (e) {
             this.logger.warn(`ImageGenerator: Gemini prompt engineering failed, using basic prompt.`);
-            return `${title}. photorealistic, high dynamic range, 8k, professional lighting, cinematic`;
+            return `${title}. photorealistic, high-tech, futuristic, cinematic lighting, 8k`;
         }
     }
     tryRegisterFont() {

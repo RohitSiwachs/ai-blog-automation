@@ -39,8 +39,8 @@ export class ImageGeneratorService {
     this.genAI = new GoogleGenerativeAI(
       this.configService.get<string>('gemini.apiKey') || '',
     );
-    this.nvidiaApiKey = this.configService.get<string>('nvidia.apiKey') || '';
-    this.nvidiaEndpoint = this.configService.get<string>('nvidia.endpoint') || '';
+    this.nvidiaApiKey = this.configService.get<string>('nvidia.imageApiKey') || '';
+    this.nvidiaEndpoint = this.configService.get<string>('nvidia.imageEndpoint') || '';
 
     // Attempt to register a custom font if available
     this.tryRegisterFont();
@@ -237,8 +237,7 @@ export class ImageGeneratorService {
         this.nvidiaEndpoint,
         {
           prompt,
-          seed: 0,
-          steps: 30
+          seed: 0
         },
         {
           headers: {
@@ -246,11 +245,11 @@ export class ImageGeneratorService {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
-          timeout: 60000,
+          timeout: 120000,
         }
       );
 
-      const imageBase64 = response.data?.image;
+      const imageBase64 = response.data?.artifacts?.[0]?.base64 || response.data?.image;
       if (imageBase64) {
         return Buffer.from(imageBase64, 'base64');
       }
@@ -271,7 +270,9 @@ export class ImageGeneratorService {
   private async generateSmartPrompt(title: string): Promise<string> {
     try {
       this.logger.info(`ImageGenerator: Using Gemini to engineer a professional prompt...`);
-      const model = this.genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const model = this.genAI.getGenerativeModel({ 
+        model: this.configService.get<string>('gemini.model') || 'gemini-2.0-flash' 
+      });
       
       const prompt = `You are a professional DALL-E 3 prompt engineer. 
       Create a highly detailed, professional, and visually stunning image generation prompt for a blog banner.

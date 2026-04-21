@@ -107,10 +107,10 @@ export class SchedulerService implements OnModuleInit {
             blogLogId: blogLog.id,
           },
           {
-            attempts: 3,
+            attempts: 5, // Increased attempts to give more room for quota reset
             backoff: {
               type: 'exponential',
-              delay: 5000, // Start with 5s, then 10s, then 20s
+              delay: 30000, // Start with 30s, then 60s, etc.
             },
             removeOnComplete: {
               age: 86400, // Keep completed jobs for 24 hours
@@ -119,12 +119,12 @@ export class SchedulerService implements OnModuleInit {
             removeOnFail: {
               age: 604800, // Keep failed jobs for 7 days
             },
-            delay: i * 30000, // Stagger jobs 30 seconds apart to avoid rate limits
+            delay: i * 60000, // Stagger jobs 1 minute apart to avoid rate limits
           },
         );
 
         this.logger.info(
-          `Scheduler: Enqueued job ${job.id} — "${topic.title}" [delay: ${i * 30}s]`,
+          `Scheduler: Enqueued job ${job.id} — "${topic.title}" [delay: ${i * 60}s]`,
         );
       }
 
