@@ -4,13 +4,15 @@ export declare class ImageGeneratorService {
     private readonly configService;
     private readonly logger;
     private brandName;
+    private openai;
+    private genAI;
+    private nvidiaApiKey;
+    private nvidiaEndpoint;
     constructor(configService: ConfigService, logger: Logger);
     generateBannerImage(title: string): Promise<Buffer>;
     private drawDynamicBackground;
-    private drawDecorativeElements;
-    private drawTitleText;
-    private drawBrandWatermark;
-    private drawBorder;
-    private wrapText;
+    generateNvidiaImage(prompt: string): Promise<Buffer | null>;
+    private generateSmartPrompt;
     private tryRegisterFont;
+    private wrapText;
 }

@@ -31,6 +31,19 @@ export interface StrapiBlogPayload {
   cover?: number; // Strapi media ID
   categoryId: number; // Relation to Category
   authorId: number; // Relation to Author
+  authorName?: string; // For SEO structured data
+}
+
+/** Shape of an author entry from Strapi */
+export interface StrapiAuthor {
+  id: number;
+  name: string;
+}
+
+/** Shape of a category entry from Strapi */
+export interface StrapiCategory {
+  id: number;
+  name: string;
 }
 
 /** Shape of an article entry returned from Strapi */
@@ -47,6 +60,7 @@ export class StrapiService {
   private readonly maxRetries = 3;
   private readonly retryBaseDelay = 1000;
   private readonly siteUrl: string;
+  private readonly isBypass: boolean;
 
   constructor(
     private readonly configService: ConfigService,
@@ -58,6 +72,8 @@ export class StrapiService {
       this.configService.get<string>('strapi.siteUrl') ||
       'https://blog.innovaft.com';
 
+    this.isBypass = this.configService.get<boolean>('strapi.bypassMode') || false;
+
     this.client = axios.create({
       baseURL: baseUrl,
       headers: {
@@ -66,13 +82,21 @@ export class StrapiService {
       timeout: 30000,
     });
 
-    this.logger.info(`StrapiService: Initialized with base URL — ${baseUrl}`);
+    if (this.isBypass) {
+      this.logger.warn('⚠️ Strapi: BYPASS MODE ACTIVE — Real API calls will be skipped.');
+    } else {
+      this.logger.info(`StrapiService: Initialized with base URL — ${baseUrl}`);
+    }
   }
 
   /**
    * Upload an image buffer to Strapi media library.
    */
   async uploadImage(buffer: Buffer, filename: string): Promise<number> {
+    if (this.isBypass) {
+      this.logger.info(`Strapi: BYPASS - Mocking image upload for "${filename}"`);
+      return 0;
+    }
     this.logger.info(`Strapi: Uploading image "${filename}"...`);
 
     return this.withRetry(async () => {
@@ -97,9 +121,29 @@ export class StrapiService {
   }
 
   /**
+   * Fetch the full URL for a media ID from Strapi.
+   */
+  async getMediaUrl(id: number): Promise<string | null> {
+    if (this.isBypass || id === 0) return 'https://via.placeholder.com/1200x630.png?text=Bypass+Mode';
+    
+    return this.withRetry(async () => {
+      const response = await this.client.get(`/api/upload/files/${id}`);
+      const url = response.data.url;
+      // Ensure it's a full URL
+      const baseUrl = this.configService.get<string>('strapi.baseUrl') || '';
+      const fullUrl = url.startsWith('http') ? url : `${baseUrl}${url}`;
+      return fullUrl;
+    }, 'getMediaUrl');
+  }
+
+  /**
    * Create a new article in Strapi (blog.innovaft.com schema).
    */
   async createBlogPost(data: StrapiBlogPayload): Promise<number> {
+    if (this.isBypass) {
+      this.logger.info(`Strapi: BYPASS - Mocking blog post creation for "${data.title}"`);
+      return 0;
+    }
     this.logger.info(`Strapi: Creating article "${data.title}"...`);
 
     return this.withRetry(async () => {
@@ -123,7 +167,7 @@ export class StrapiService {
           : `${this.siteUrl}/images/default-cover.jpg`,
         author: {
           '@type': 'Person',
-          name: data.authorId === 1 ? 'Ansh' : 'Nikhil Chauhan',
+          name: data.authorName || 'Innovaft Team',
         },
         publisher: {
           '@type': 'Organization',
@@ -186,9 +230,62 @@ export class StrapiService {
   }
 
   /**
+   * Fetch all available authors from Strapi.
+   */
+  async fetchAuthors(): Promise<StrapiAuthor[]> {
+    if (this.isBypass) {
+      this.logger.info(`Strapi: BYPASS - Returning mock authors`);
+      return [{ id: 2, name: 'Nikhil Chauhan (MOCK)' }];
+    }
+    this.logger.info(`Strapi: Fetching authors...`);
+
+    return this.withRetry(async () => {
+      const response = await this.client.get('/api/authors');
+      const authors: StrapiAuthor[] = (response.data.data || []).map(
+        (entry: any) => ({
+          id: entry.id,
+          name: entry.attributes?.name || entry.name || 'Unknown Author',
+        }),
+      );
+
+      const authorNames = authors.map(a => a.name).join(', ');
+      this.logger.info(`Strapi: Fetched ${authors.length} authors: [${authorNames}]`);
+      return authors;
+    }, 'fetchAuthors');
+  }
+
+  /**
+   * Fetch all available categories from Strapi.
+   */
+  async fetchCategories(): Promise<StrapiCategory[]> {
+    if (this.isBypass) {
+      this.logger.info(`Strapi: BYPASS - Returning mock categories`);
+      return [{ id: 1, name: 'Development' }, { id: 2, name: 'Marketing' }];
+    }
+    this.logger.info(`Strapi: Fetching categories...`);
+
+    return this.withRetry(async () => {
+      const response = await this.client.get('/api/categories');
+      const categories: StrapiCategory[] = (response.data.data || []).map(
+        (entry: any) => ({
+          id: entry.id,
+          name: entry.name || 'Unknown Category',
+        }),
+      );
+
+      this.logger.info(`Strapi: Fetched ${categories.length} categories`);
+      return categories;
+    }, 'fetchCategories');
+  }
+
+  /**
    * Fetch recent articles from Strapi for topic deduplication.
    */
   async fetchRecentBlogs(limit: number = 50): Promise<StrapiArticleEntry[]> {
+    if (this.isBypass) {
+      this.logger.info(`Strapi: BYPASS - Returning empty recent blogs list`);
+      return [];
+    }
     this.logger.info(`Strapi: Fetching last ${limit} articles...`);
 
     return this.withRetry(async () => {

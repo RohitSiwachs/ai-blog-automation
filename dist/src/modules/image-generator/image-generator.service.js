@@ -57,24 +57,54 @@ const canvas_1 = require("canvas");
 const path = __importStar(require("path"));
 const fs = __importStar(require("fs"));
 const axios_1 = __importDefault(require("axios"));
+const openai_1 = __importDefault(require("openai"));
+const generative_ai_1 = require("@google/generative-ai");
 const IMAGE_WIDTH = 1200;
 const IMAGE_HEIGHT = 630;
 let ImageGeneratorService = class ImageGeneratorService {
     configService;
     logger;
     brandName;
+    openai;
+    genAI;
+    nvidiaApiKey;
+    nvidiaEndpoint;
     constructor(configService, logger) {
         this.configService = configService;
         this.logger = logger;
         this.brandName = this.configService.get('brand.name') || 'TechBlog';
+        this.openai = new openai_1.default({
+            apiKey: this.configService.get('OPENAI_API_KEY'),
+        });
+        this.genAI = new generative_ai_1.GoogleGenerativeAI(this.configService.get('gemini.apiKey') || '');
+        this.nvidiaApiKey = this.configService.get('nvidia.imageApiKey') || '';
+        this.nvidiaEndpoint = this.configService.get('nvidia.imageEndpoint') || '';
         this.tryRegisterFont();
     }
     async generateBannerImage(title) {
-        this.logger.info(`ImageGenerator: Creating banner for "${title}"...`);
+        this.logger.info(`ImageGenerator: Creating professional banner for "${title}"...`);
         try {
             const canvas = (0, canvas_1.createCanvas)(IMAGE_WIDTH, IMAGE_HEIGHT);
             const ctx = canvas.getContext('2d');
             await this.drawDynamicBackground(ctx, title);
+            const gradient = ctx.createLinearGradient(0, IMAGE_HEIGHT * 0.5, 0, IMAGE_HEIGHT);
+            gradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
+            gradient.addColorStop(1, 'rgba(0, 0, 0, 0.8)');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, IMAGE_HEIGHT * 0.5, IMAGE_WIDTH, IMAGE_HEIGHT * 0.5);
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 50px Inter';
+            ctx.textAlign = 'left';
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+            ctx.shadowBlur = 10;
+            const lines = this.wrapText(ctx, title.toUpperCase(), IMAGE_WIDTH - 100, 3);
+            const startY = IMAGE_HEIGHT - (lines.length * 60) - 60;
+            lines.forEach((line, i) => {
+                ctx.fillText(line, 50, startY + (i * 65));
+            });
+            ctx.font = 'bold 24px Inter';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+            ctx.fillText(this.brandName.toUpperCase(), 50, IMAGE_HEIGHT - 30);
             const buffer = canvas.toBuffer('image/jpeg', { quality: 0.9 });
             this.logger.info(`ImageGenerator: Banner created successfully (${(buffer.length / 1024).toFixed(1)} KB)`);
             return buffer;
@@ -85,139 +115,184 @@ let ImageGeneratorService = class ImageGeneratorService {
         }
     }
     async drawDynamicBackground(ctx, title) {
-        try {
-            this.logger.info(`ImageGenerator: Fetching AI background for: ${title}`);
-            const cleanTitle = title.replace(/[^a-zA-Z0-9 ]/g, ' ');
-            const richPrompt = encodeURIComponent(`${cleanTitle}, modern 3d render, flat vector illustration, tech UI concept, vibrant dark theme, clean professional digital art, high resolution`);
-            const pollUrl = `https://image.pollinations.ai/prompt/${richPrompt}?width=${IMAGE_WIDTH}&height=${IMAGE_HEIGHT}&nologo=true&seed=${Math.floor(Math.random() * 100000)}`;
+        const smartPrompt = await this.generateSmartPrompt(title);
+        if (this.nvidiaApiKey) {
             try {
-                this.logger.info(`ImageGenerator: Stage 1 - Pollinations: ${pollUrl}`);
-                const response = await axios_1.default.get(pollUrl, {
-                    responseType: 'arraybuffer',
-                    timeout: 12000,
-                    headers: { 'User-Agent': 'Mozilla/5.0' }
-                });
-                if (Buffer.from(response.data).length > 5000) {
-                    const bgImage = await (0, canvas_1.loadImage)(Buffer.from(response.data));
-                    ctx.drawImage(bgImage, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
-                    this.logger.info(`ImageGenerator: Pollinations image loaded successfully`);
+                this.logger.info(`ImageGenerator: Tier 1 - Requesting NVIDIA NIM for "${title}"...`);
+                const imageBuffer = await this.generateNvidiaImage(smartPrompt);
+                if (imageBuffer) {
+                    const bgImage = await (0, canvas_1.loadImage)(imageBuffer);
+                    const scale = Math.max(IMAGE_WIDTH / bgImage.width, IMAGE_HEIGHT / bgImage.height);
+                    const x = (IMAGE_WIDTH / 2) - (bgImage.width / 2) * scale;
+                    const y = (IMAGE_HEIGHT / 2) - (bgImage.height / 2) * scale;
+                    ctx.drawImage(bgImage, x, y, bgImage.width * scale, bgImage.height * scale);
+                    this.logger.info(`ImageGenerator: NVIDIA NIM success`);
                     return;
                 }
             }
-            catch (pollError) {
-                this.logger.warn(`ImageGenerator: Pollinations failed, trying LoremFlickr. ${pollError.message}`);
+            catch (nvidiaErr) {
+                this.logger.warn(`ImageGenerator: Tier 1 (NVIDIA) failed (${nvidiaErr.message}). Moving to Tier 2...`);
             }
-            const lfKeywords = 'technology,software,coding,office,computer';
-            const lfUrl = `https://loremflickr.com/${IMAGE_WIDTH}/${IMAGE_HEIGHT}/${lfKeywords}/all`;
-            this.logger.info(`ImageGenerator: Stage 2 - LoremFlickr: ${lfUrl}`);
-            const lfResponse = await axios_1.default.get(lfUrl, {
-                responseType: 'arraybuffer',
-                timeout: 8000
+        }
+        try {
+            this.logger.info(`ImageGenerator: Tier 2 - Requesting DALL-E 3 for "${title}"...`);
+            const response = await this.openai.images.generate({
+                model: "dall-e-3",
+                prompt: `A professional, high-quality, photorealistic cinematic background for a blog post titled "${title}". Modern, minimalist, studio lighting. 8k, no text, no watermarks.`,
+                n: 1,
+                size: "1024x1024",
             });
-            const lfBytes = Buffer.from(lfResponse.data);
-            if (lfBytes[0] === 0xFF && lfBytes[1] === 0xD8) {
-                const bgImage = await (0, canvas_1.loadImage)(lfBytes);
-                ctx.drawImage(bgImage, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
-                this.logger.info(`ImageGenerator: LoremFlickr tech image loaded successfully`);
+            const imageUrl = response?.data?.[0]?.url;
+            if (imageUrl) {
+                const imageResponse = await axios_1.default.get(imageUrl, { responseType: 'arraybuffer', timeout: 30000 });
+                const bgImage = await (0, canvas_1.loadImage)(Buffer.from(imageResponse.data));
+                const scale = Math.max(IMAGE_WIDTH / bgImage.width, IMAGE_HEIGHT / bgImage.height);
+                const x = (IMAGE_WIDTH / 2) - (bgImage.width / 2) * scale;
+                const y = (IMAGE_HEIGHT / 2) - (bgImage.height / 2) * scale;
+                ctx.drawImage(bgImage, x, y, bgImage.width * scale, bgImage.height * scale);
+                this.logger.info(`ImageGenerator: DALL-E 3 success`);
                 return;
             }
-            throw new Error('Invalid image data from all providers');
         }
-        catch (error) {
-            this.logger.warn(`ImageGenerator: All image providers failed, falling back to gradient. ${error.message}`);
+        catch (dalleError) {
+            this.logger.warn(`ImageGenerator: Tier 2 failed (${dalleError.message}). Moving to Tier 3 (Flux)...`);
+        }
+        const safeTitleId = title.toLowerCase().replace(/[^a-z0-9]/g, '-').substring(0, 30);
+        for (let attempt = 1; attempt <= 2; attempt++) {
+            try {
+                this.logger.info(`ImageGenerator: Tier 2 - Requesting Flux (Attempt ${attempt})...`);
+                const fluxUrl = `https://image.pollinations.ai/prompt/${safeTitleId}?prompt=${encodeURIComponent(smartPrompt)}&width=${IMAGE_WIDTH}&height=${IMAGE_HEIGHT}&nologo=true&seed=${Math.floor(Math.random() * 1000000)}&model=flux`;
+                const response = await axios_1.default.get(fluxUrl, { responseType: 'arraybuffer', timeout: attempt === 1 ? 30000 : 50000 });
+                if (Buffer.from(response.data).length > 20000) {
+                    const bgImage = await (0, canvas_1.loadImage)(Buffer.from(response.data));
+                    ctx.drawImage(bgImage, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
+                    this.logger.info(`ImageGenerator: Flux success`);
+                    return;
+                }
+            }
+            catch (fluxErr) {
+                this.logger.warn(`ImageGenerator: Flux attempt ${attempt} failed: ${fluxErr.message}`);
+                if (attempt === 1)
+                    await new Promise(r => setTimeout(r, 2000));
+            }
+        }
+        try {
+            this.logger.info(`ImageGenerator: Tier 3 - Requesting Turbo...`);
+            const turboUrl = `https://image.pollinations.ai/prompt/${safeTitleId}?prompt=${encodeURIComponent(smartPrompt)}&width=${IMAGE_WIDTH}&height=${IMAGE_HEIGHT}&nologo=true&seed=${Math.floor(Math.random() * 1000000)}&model=turbo`;
+            const response = await axios_1.default.get(turboUrl, { responseType: 'arraybuffer', timeout: 20000 });
+            if (Buffer.from(response.data).length > 15000) {
+                const bgImage = await (0, canvas_1.loadImage)(Buffer.from(response.data));
+                ctx.drawImage(bgImage, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
+                this.logger.info(`ImageGenerator: Turbo success`);
+                return;
+            }
+        }
+        catch (turboErr) {
+            this.logger.warn(`ImageGenerator: Tier 3 failed.`);
+        }
+        const fallbacks = [
+            'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&h=630&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&h=630&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?q=80&w=1200&h=630&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&h=630&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&h=630&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1200&h=630&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200&h=630&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&h=630&auto=format&fit=crop'
+        ];
+        const fallbackUrl = fallbacks[Math.floor(Math.random() * fallbacks.length)];
+        try {
+            this.logger.info(`ImageGenerator: Tier 4 - Using Curated Fallback: ${fallbackUrl}`);
+            const fbResponse = await axios_1.default.get(fallbackUrl, { responseType: 'arraybuffer', timeout: 15000 });
+            const bgImage = await (0, canvas_1.loadImage)(Buffer.from(fbResponse.data));
+            ctx.drawImage(bgImage, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
+            this.logger.info(`ImageGenerator: Curated static fallback success`);
+            return;
+        }
+        catch (fbErr) {
+            this.logger.error(`ImageGenerator: All image providers failed. Using branded gradient.`);
             const gradient = ctx.createLinearGradient(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
             gradient.addColorStop(0, '#0f172a');
-            gradient.addColorStop(0.35, '#1e1b4b');
-            gradient.addColorStop(0.65, '#312e81');
+            gradient.addColorStop(0.5, '#1e1b4b');
             gradient.addColorStop(1, '#0f172a');
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
         }
     }
-    drawDecorativeElements(ctx) {
-        const circles = [
-            { x: 100, y: 80, r: 60, color: 'rgba(139, 92, 246, 0.12)' },
-            { x: 1100, y: 550, r: 80, color: 'rgba(59, 130, 246, 0.10)' },
-            { x: 900, y: 100, r: 45, color: 'rgba(236, 72, 153, 0.08)' },
-            { x: 200, y: 500, r: 50, color: 'rgba(34, 211, 238, 0.10)' },
-        ];
-        for (const circle of circles) {
-            ctx.beginPath();
-            ctx.arc(circle.x, circle.y, circle.r, 0, Math.PI * 2);
-            ctx.fillStyle = circle.color;
-            ctx.fill();
+    async generateNvidiaImage(prompt) {
+        try {
+            const response = await axios_1.default.post(this.nvidiaEndpoint, {
+                prompt,
+                seed: 0
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${this.nvidiaApiKey}`,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                timeout: 120000,
+            });
+            const imageBase64 = response.data?.artifacts?.[0]?.base64 || response.data?.image;
+            if (imageBase64) {
+                return Buffer.from(imageBase64, 'base64');
+            }
+            this.logger.error('ImageGenerator: NVIDIA NIM returned no image data');
+            return null;
         }
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.03)';
-        for (let x = 30; x < IMAGE_WIDTH; x += 40) {
-            for (let y = 30; y < IMAGE_HEIGHT; y += 40) {
-                ctx.beginPath();
-                ctx.arc(x, y, 1.5, 0, Math.PI * 2);
-                ctx.fill();
+        catch (error) {
+            const errorMsg = error.response?.data?.error || error.response?.data || error.message;
+            this.logger.error(`ImageGenerator: NVIDIA NIM API error — ${JSON.stringify(errorMsg)}`);
+            throw new Error(`NVIDIA NIM failed: ${JSON.stringify(errorMsg)}`);
+        }
+    }
+    async generateSmartPrompt(title) {
+        try {
+            this.logger.info(`ImageGenerator: Using Gemini to engineer a professional prompt...`);
+            const model = this.genAI.getGenerativeModel({
+                model: this.configService.get('gemini.model') || 'gemini-2.0-flash'
+            });
+            const prompt = `You are a professional DALL-E 3 prompt engineer. 
+      Create a highly detailed, professional, and visually stunning image generation prompt for a blog banner.
+      The blog title is: "${title}".
+      
+      TONE & STYLE:
+      1. Determine if the topic is HUMAN-CENTRIC (Management, Career, Lifestyle) or TECH-CENTRAL (AI, Hardware, Coding, Cloud).
+      
+      IF TECH-CENTRAL:
+      - Focus on high-tech conceptual art, futuristic 3D renders, glowing circuitry, or abstract digital landscapes.
+      - Use keywords: "Cybernetic", "Quantum glow", "Holographic interface", "8k octane render", "Cinematic lighting".
+      - SUBJECT: Can be a sleek robot, a glowing AI brain, a futuristic server room, or digital data streams.
+      
+      IF HUMAN-CENTRIC:
+      - Focus on a professional subject (e.g., an Indian professional, focused eyes, confident posture).
+      - Background: Modern minimalist office or coworking space.
+      
+      GENERAL RULES:
+      - NO TEXT, NO WATERMARKS, NO LOGOS.
+      - Ensure high contrast and vibrant, premium colors.
+      
+      Output ONLY the final prompt. Do not explain your choice.`;
+            const result = await model.generateContent(prompt);
+            const smartPrompt = result.response.text().trim();
+            this.logger.info(`ImageGenerator: Gemini Prompt Engineering complete. Prompt: "${smartPrompt.substring(0, 100)}..."`);
+            return smartPrompt;
+        }
+        catch (e) {
+            this.logger.warn(`ImageGenerator: Gemini prompt engineering failed, using basic prompt.`);
+            return `${title}. photorealistic, high-tech, futuristic, cinematic lighting, 8k`;
+        }
+    }
+    tryRegisterFont() {
+        try {
+            const fontPath = path.join(process.cwd(), 'assets', 'fonts', 'Inter-Bold.ttf');
+            if (fs.existsSync(fontPath)) {
+                (0, canvas_1.registerFont)(fontPath, { family: 'Inter', weight: 'bold' });
+                this.logger.info('ImageGenerator: Custom font "Inter" registered');
             }
         }
-        ctx.strokeStyle = 'rgba(139, 92, 246, 0.15)';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(0, IMAGE_HEIGHT * 0.7);
-        ctx.lineTo(IMAGE_WIDTH * 0.3, IMAGE_HEIGHT * 0.5);
-        ctx.stroke();
-        ctx.strokeStyle = 'rgba(59, 130, 246, 0.12)';
-        ctx.beginPath();
-        ctx.moveTo(IMAGE_WIDTH * 0.7, 0);
-        ctx.lineTo(IMAGE_WIDTH, IMAGE_HEIGHT * 0.3);
-        ctx.stroke();
-    }
-    drawTitleText(ctx, title) {
-        const maxWidth = IMAGE_WIDTH - 160;
-        const lineHeight = 52;
-        const maxLines = 4;
-        const startY = IMAGE_HEIGHT * 0.32;
-        ctx.font = 'bold 40px "Inter", "Segoe UI", "Arial", sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'top';
-        const lines = this.wrapText(ctx, title, maxWidth, maxLines);
-        const totalTextHeight = lines.length * lineHeight;
-        const yOffset = startY - totalTextHeight / 2 + IMAGE_HEIGHT * 0.18;
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
-        lines.forEach((line, i) => {
-            ctx.fillText(line, IMAGE_WIDTH / 2 + 2, yOffset + i * lineHeight + 2);
-        });
-        ctx.fillStyle = '#ffffff';
-        lines.forEach((line, i) => {
-            ctx.fillText(line, IMAGE_WIDTH / 2, yOffset + i * lineHeight);
-        });
-        const underlineY = yOffset + lines.length * lineHeight + 20;
-        const underlineGradient = ctx.createLinearGradient(IMAGE_WIDTH * 0.35, underlineY, IMAGE_WIDTH * 0.65, underlineY);
-        underlineGradient.addColorStop(0, 'rgba(139, 92, 246, 0)');
-        underlineGradient.addColorStop(0.5, 'rgba(139, 92, 246, 0.8)');
-        underlineGradient.addColorStop(1, 'rgba(139, 92, 246, 0)');
-        ctx.strokeStyle = underlineGradient;
-        ctx.lineWidth = 3;
-        ctx.beginPath();
-        ctx.moveTo(IMAGE_WIDTH * 0.3, underlineY);
-        ctx.lineTo(IMAGE_WIDTH * 0.7, underlineY);
-        ctx.stroke();
-    }
-    drawBrandWatermark(ctx) {
-        ctx.font = 'bold 18px "Inter", "Segoe UI", "Arial", sans-serif';
-        ctx.textAlign = 'right';
-        ctx.textBaseline = 'bottom';
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
-        ctx.fillText(this.brandName, IMAGE_WIDTH - 29, IMAGE_HEIGHT - 19);
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
-        ctx.fillText(this.brandName, IMAGE_WIDTH - 30, IMAGE_HEIGHT - 20);
-        ctx.font = '12px "Inter", "Segoe UI", "Arial", sans-serif';
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
-        ctx.fillText('BLOG', IMAGE_WIDTH - 30, IMAGE_HEIGHT - 42);
-    }
-    drawBorder(ctx) {
-        const borderGradient = ctx.createLinearGradient(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
-        borderGradient.addColorStop(0, 'rgba(139, 92, 246, 0.3)');
-        borderGradient.addColorStop(0.5, 'rgba(59, 130, 246, 0.2)');
-        borderGradient.addColorStop(1, 'rgba(236, 72, 153, 0.3)');
-        ctx.strokeStyle = borderGradient;
-        ctx.lineWidth = 2;
-        ctx.strokeRect(1, 1, IMAGE_WIDTH - 2, IMAGE_HEIGHT - 2);
+        catch {
+            this.logger.info('ImageGenerator: Using system sans-serif font');
+        }
     }
     wrapText(ctx, text, maxWidth, maxLines) {
         const words = text.split(' ');
@@ -238,27 +313,9 @@ let ImageGeneratorService = class ImageGeneratorService {
                 currentLine = testLine;
             }
         }
-        if (currentLine) {
-            if (lines.length >= maxLines) {
-                lines[lines.length - 1] = lines[lines.length - 1] + '...';
-            }
-            else {
-                lines.push(currentLine);
-            }
-        }
+        if (currentLine)
+            lines.push(currentLine);
         return lines;
-    }
-    tryRegisterFont() {
-        try {
-            const fontPath = path.join(process.cwd(), 'assets', 'fonts', 'Inter-Bold.ttf');
-            if (fs.existsSync(fontPath)) {
-                (0, canvas_1.registerFont)(fontPath, { family: 'Inter', weight: 'bold' });
-                this.logger.info('ImageGenerator: Custom font "Inter" registered');
-            }
-        }
-        catch {
-            this.logger.info('ImageGenerator: Using system sans-serif font (custom font not found)');
-        }
     }
 };
 exports.ImageGeneratorService = ImageGeneratorService;

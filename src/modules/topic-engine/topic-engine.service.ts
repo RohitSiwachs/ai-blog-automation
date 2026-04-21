@@ -10,11 +10,10 @@ import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
 import { PrismaService } from '../../prisma/prisma.service';
 import { StrapiService } from '../strapi-service/strapi.service';
+import axios from 'axios';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import slugify from 'slugify';
 
-// ============================================================
-// Pillar-cluster strategy: each pillar has supporting sub-topics
-// ============================================================
 const TOPIC_CLUSTERS = [
   {
     cluster: 'web-design',
@@ -140,12 +139,32 @@ export interface GeneratedTopic {
 
 @Injectable()
 export class TopicEngineService {
+  private genAI: GoogleGenerativeAI;
+  private geminiModel: string;
+  private nvidiaApiKey: string;
+  private nvidiaModel: string;
+  private nvidiaEndpoint: string;
+  private aiProvider: string;
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly strapiService: StrapiService,
     private readonly configService: ConfigService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
-  ) {}
+  ) {
+    // Gemini Config
+    const geminiApiKey = this.configService.get<string>('gemini.apiKey')!;
+    this.geminiModel = this.configService.get<string>('gemini.model')!;
+    this.genAI = new GoogleGenerativeAI(geminiApiKey);
+
+    // NVIDIA Config
+    this.nvidiaApiKey = this.configService.get<string>('nvidia.apiKey')!;
+    this.nvidiaModel = this.configService.get<string>('nvidia.model')!;
+    this.nvidiaEndpoint = this.configService.get<string>('nvidia.chatEndpoint')!;
+
+    // Provider choice
+    this.aiProvider = this.configService.get<string>('aiProvider') || 'gemini';
+  }
 
   /**
    * Main entry: generate N fresh, deduplicated topics for daily batch.
@@ -154,7 +173,12 @@ export class TopicEngineService {
     this.logger.info(`TopicEngine: Generating ${count} new topics...`);
 
     // Step 1: Sync recent blogs from Strapi into local DB
-    await this.syncStrapiTopics();
+    const isBypass = this.configService.get<boolean>('strapi.bypassMode') || false;
+    if (!isBypass) {
+      await this.syncStrapiTopics();
+    } else {
+      this.logger.info('TopicEngine: Skipping Strapi sync (BYPASS MODE)');
+    }
 
     // Step 2: Load all used slugs and title keywords for dedup
     const usedTopics = await this.prisma.topic.findMany({
@@ -219,6 +243,80 @@ export class TopicEngineService {
       attempts++;
     }
 
+    // Step 3.5: If still need more topics, use AI to generate them
+    if (freshTopics.length < count) {
+      const remainingCount = count - freshTopics.length;
+      this.logger.info(
+        `TopicEngine: Static pool exhausted. Using AI to generate ${remainingCount} fresh topics...`,
+      );
+
+      try {
+        // Pick a random cluster for context
+        const randomCluster =
+          TOPIC_CLUSTERS[Math.floor(Math.random() * TOPIC_CLUSTERS.length)];
+        
+        const aiTitles = await this.generateAITopics(
+          randomCluster,
+          remainingCount,
+          Array.from(usedSlugs),
+        );
+
+        for (const title of aiTitles) {
+          const slug = slugify(title, { lower: true, strict: true });
+          
+          // Final sanity check for duplicates (though AI is told to avoid them)
+          if (usedSlugs.has(slug)) continue;
+
+          const keywords = this.getKeywordsForCluster(randomCluster.cluster);
+          freshTopics.push({
+            title,
+            slug,
+            keywords,
+            cluster: randomCluster.cluster,
+          });
+          usedSlugs.add(slug);
+          
+          this.logger.info(
+            `TopicEngine: AI generated topic — "${title}" [${randomCluster.cluster}]`,
+          );
+        }
+      } catch (e) {
+        this.logger.error(`TopicEngine: AI generation failed — ${e.message}`);
+      }
+    }
+
+    // Step 3.6: FINAL FALLBACK — Reuse static topics if still needed
+    if (freshTopics.length < count) {
+      const remainingCount = count - freshTopics.length;
+      this.logger.warn(
+        `TopicEngine: CRITICAL FALLBACK — Reusing ${remainingCount} existing topics with unique suffixes.`,
+      );
+
+      let reuseAttempts = 0;
+      let clusterIdx = Math.floor(Math.random() * TOPIC_CLUSTERS.length);
+
+      while (freshTopics.length < count && reuseAttempts < TOPIC_CLUSTERS.length * 5) {
+        const cluster = TOPIC_CLUSTERS[clusterIdx % TOPIC_CLUSTERS.length];
+        const topicPool = [cluster.pillar, ...cluster.topics];
+        const rawTitle = topicPool[Math.floor(Math.random() * topicPool.length)];
+        
+        const title = rawTitle.replace(/\{year\}/g, year);
+        // Add a random suffix to make it unique in DB and Strapi
+        const suffix = Math.random().toString(36).substring(7);
+        const slug = `${slugify(title, { lower: true, strict: true })}-${suffix}`;
+
+        if (!usedSlugs.has(slug)) {
+          const keywords = this.getKeywordsForCluster(cluster.cluster);
+          freshTopics.push({ title, slug, keywords, cluster: cluster.cluster });
+          usedSlugs.add(slug);
+          this.logger.info(`TopicEngine: REUSED topic — "${title}" (suffix: ${suffix})`);
+        }
+        
+        clusterIdx++;
+        reuseAttempts++;
+      }
+    }
+
     // Step 4: Persist selected topics to local DB
     for (const topic of freshTopics) {
       await this.prisma.topic.create({
@@ -273,6 +371,89 @@ export class TopicEngineService {
         `TopicEngine: Failed to sync from Strapi — ${error.message}. Continuing with local data.`,
       );
     }
+  }
+
+  /**
+   * Use AI to generate NEW topics for a cluster.
+   */
+  private async generateAITopics(
+    cluster: any,
+    count: number,
+    usedSlugs: string[],
+  ): Promise<string[]> {
+    const prompt = `You are a blog topic generator for "Innovaft", a professional IT and Digital Skills agency.
+      The cluster is: "${cluster.cluster}".
+      Pillar topic: "${cluster.pillar}".
+      
+      Existing topics in this cluster:
+      ${cluster.topics.join('\n')}
+      
+      Recently used topics (DO NOT DUPLICATE OR BE TOO SIMILAR TO THESE):
+      ${usedSlugs.slice(-30).join('\n')}
+      
+      Generate ${count * 2} (extra for filtering) NEW, unique, and highly engaging blog post titles for this cluster.
+      The titles should be SEO-friendly and relevant to modern Indian students, small business owners, and aspiring freelancers.
+      IMPORTANT RULES:
+      1. DO NOT repeatedly use the word "Haryana" or "Hisar" in every title.
+      2. Keep the titles broad, professional, and globally appealing, while still being relevant to an Indian audience.
+      
+      Output only the titles, one per line. No numbers, no extra text, no markdown fences.`;
+
+    try {
+      let text: string;
+
+      if (this.aiProvider === 'nvidia') {
+        text = await this.generateAITopicsWithNvidia(prompt);
+      } else {
+        text = await this.generateAITopicsWithGemini(prompt);
+      }
+
+      return text
+        .split('\n')
+        .map((t) => t.trim())
+        .filter((t) => t.length > 10 && t.length < 100)
+        .slice(0, count);
+    } catch (error) {
+      this.logger.error(`TopicEngine: AI topic generation failed using ${this.aiProvider.toUpperCase()} — ${error.message}`);
+      return [];
+    }
+  }
+
+  /**
+   * Topics via Gemini
+   */
+  private async generateAITopicsWithGemini(prompt: string): Promise<string> {
+    const model = this.genAI.getGenerativeModel({ model: this.geminiModel });
+    const result = await model.generateContent(prompt);
+    return result.response.text();
+  }
+
+  /**
+   * Topics via NVIDIA
+   */
+  private async generateAITopicsWithNvidia(prompt: string): Promise<string> {
+    const payload: any = {
+      model: this.nvidiaModel,
+      messages: [{ role: 'user', content: prompt }],
+      max_tokens: 4096,
+      temperature: 0.8,
+      top_p: 0.9,
+      stream: false,
+    };
+
+    // Gemma 4 requires thinking kwargs as per user provided snippet
+    if (this.nvidiaModel.includes('gemma-4')) {
+      payload.chat_template_kwargs = { enable_thinking: true };
+    }
+
+    const response = await axios.post(this.nvidiaEndpoint, payload, {
+      headers: {
+        Authorization: `Bearer ${this.nvidiaApiKey}`,
+        Accept: 'application/json',
+      },
+    });
+
+    return response.data.choices[0].message.content;
   }
 
   /**

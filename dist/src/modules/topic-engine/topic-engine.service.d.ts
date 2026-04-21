@@ -13,9 +13,18 @@ export declare class TopicEngineService {
     private readonly strapiService;
     private readonly configService;
     private readonly logger;
+    private genAI;
+    private geminiModel;
+    private nvidiaApiKey;
+    private nvidiaModel;
+    private nvidiaEndpoint;
+    private aiProvider;
     constructor(prisma: PrismaService, strapiService: StrapiService, configService: ConfigService, logger: Logger);
     generateTopics(count: number): Promise<GeneratedTopic[]>;
     private syncStrapiTopics;
+    private generateAITopics;
+    private generateAITopicsWithGemini;
+    private generateAITopicsWithNvidia;
     private extractKeywords;
     private calculateOverlap;
     private getKeywordsForCluster;

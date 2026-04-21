@@ -44,14 +44,14 @@ export class SchedulerService implements OnModuleInit {
 
   /**
    * Daily cron job — runs at the configured time.
-   * Default: 6:00 AM daily.
+   * Default: 7:00 AM daily.
    *
    * NOTE: The @Cron decorator requires a static expression.
    * For runtime-configurable cron, we use SchedulerRegistry in onModuleInit.
    * Here we use a common default; override via DAILY_CRON env variable
    * by using the dynamic scheduling approach below.
    */
-  @Cron('0 6 * * *', { name: 'daily-blog-batch' })
+  @Cron('0 7 * * *', { name: 'daily-blog-batch' })
   async handleDailyBatch(): Promise<void> {
     await this.scheduleDailyBatch();
   }
@@ -107,10 +107,10 @@ export class SchedulerService implements OnModuleInit {
             blogLogId: blogLog.id,
           },
           {
-            attempts: 3,
+            attempts: 5, // Increased attempts to give more room for quota reset
             backoff: {
               type: 'exponential',
-              delay: 5000, // Start with 5s, then 10s, then 20s
+              delay: 30000, // Start with 30s, then 60s, etc.
             },
             removeOnComplete: {
               age: 86400, // Keep completed jobs for 24 hours
@@ -119,12 +119,12 @@ export class SchedulerService implements OnModuleInit {
             removeOnFail: {
               age: 604800, // Keep failed jobs for 7 days
             },
-            delay: i * 30000, // Stagger jobs 30 seconds apart to avoid rate limits
+            delay: i * 60000, // Stagger jobs 1 minute apart to avoid rate limits
           },
         );
 
         this.logger.info(
-          `Scheduler: Enqueued job ${job.id} — "${topic.title}" [delay: ${i * 30}s]`,
+          `Scheduler: Enqueued job ${job.id} — "${topic.title}" [delay: ${i * 60}s]`,
         );
       }
 

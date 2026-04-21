@@ -7,6 +7,7 @@ export interface GeneratedBlog {
     ogDescription: string;
     metaKeywords: string;
     description: string;
+    category: string;
     tags: string[];
     slug: string;
     content: string;
@@ -15,10 +16,18 @@ export declare class BlogGeneratorService {
     private readonly configService;
     private readonly logger;
     private genAI;
-    private modelName;
+    private geminiModel;
+    private nvidiaApiKey;
+    private nvidiaModel;
+    private nvidiaEndpoint;
+    private aiProvider;
     constructor(configService: ConfigService, logger: Logger);
-    generateBlog(title: string, keywords: string[]): Promise<GeneratedBlog>;
-    private parseGeminiResponse;
+    generateBlog(title: string, keywords: string[], categories: string[]): Promise<GeneratedBlog>;
+    private generateWithGemini;
+    private generateWithNvidia;
+    private parseAIResponse;
     private truncate;
+    private enrichInlineImages;
+    private generateInlineSmartPrompt;
     private countWords;
 }

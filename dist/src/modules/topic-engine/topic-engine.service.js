@@ -22,6 +22,8 @@ const nest_winston_1 = require("nest-winston");
 const winston_1 = require("winston");
 const prisma_service_1 = require("../../prisma/prisma.service");
 const strapi_service_1 = require("../strapi-service/strapi.service");
+const axios_1 = __importDefault(require("axios"));
+const generative_ai_1 = require("@google/generative-ai");
 const slugify_1 = __importDefault(require("slugify"));
 const TOPIC_CLUSTERS = [
     {
@@ -142,15 +144,34 @@ let TopicEngineService = class TopicEngineService {
     strapiService;
     configService;
     logger;
+    genAI;
+    geminiModel;
+    nvidiaApiKey;
+    nvidiaModel;
+    nvidiaEndpoint;
+    aiProvider;
     constructor(prisma, strapiService, configService, logger) {
         this.prisma = prisma;
         this.strapiService = strapiService;
         this.configService = configService;
         this.logger = logger;
+        const geminiApiKey = this.configService.get('gemini.apiKey');
+        this.geminiModel = this.configService.get('gemini.model');
+        this.genAI = new generative_ai_1.GoogleGenerativeAI(geminiApiKey);
+        this.nvidiaApiKey = this.configService.get('nvidia.apiKey');
+        this.nvidiaModel = this.configService.get('nvidia.model');
+        this.nvidiaEndpoint = this.configService.get('nvidia.chatEndpoint');
+        this.aiProvider = this.configService.get('aiProvider') || 'gemini';
     }
     async generateTopics(count) {
         this.logger.info(`TopicEngine: Generating ${count} new topics...`);
-        await this.syncStrapiTopics();
+        const isBypass = this.configService.get('strapi.bypassMode') || false;
+        if (!isBypass) {
+            await this.syncStrapiTopics();
+        }
+        else {
+            this.logger.info('TopicEngine: Skipping Strapi sync (BYPASS MODE)');
+        }
         const usedTopics = await this.prisma.topic.findMany({
             select: { slug: true, title: true, keywords: true },
         });
@@ -187,6 +208,53 @@ let TopicEngineService = class TopicEngineService {
             }
             clusterIndex++;
             attempts++;
+        }
+        if (freshTopics.length < count) {
+            const remainingCount = count - freshTopics.length;
+            this.logger.info(`TopicEngine: Static pool exhausted. Using AI to generate ${remainingCount} fresh topics...`);
+            try {
+                const randomCluster = TOPIC_CLUSTERS[Math.floor(Math.random() * TOPIC_CLUSTERS.length)];
+                const aiTitles = await this.generateAITopics(randomCluster, remainingCount, Array.from(usedSlugs));
+                for (const title of aiTitles) {
+                    const slug = (0, slugify_1.default)(title, { lower: true, strict: true });
+                    if (usedSlugs.has(slug))
+                        continue;
+                    const keywords = this.getKeywordsForCluster(randomCluster.cluster);
+                    freshTopics.push({
+                        title,
+                        slug,
+                        keywords,
+                        cluster: randomCluster.cluster,
+                    });
+                    usedSlugs.add(slug);
+                    this.logger.info(`TopicEngine: AI generated topic — "${title}" [${randomCluster.cluster}]`);
+                }
+            }
+            catch (e) {
+                this.logger.error(`TopicEngine: AI generation failed — ${e.message}`);
+            }
+        }
+        if (freshTopics.length < count) {
+            const remainingCount = count - freshTopics.length;
+            this.logger.warn(`TopicEngine: CRITICAL FALLBACK — Reusing ${remainingCount} existing topics with unique suffixes.`);
+            let reuseAttempts = 0;
+            let clusterIdx = Math.floor(Math.random() * TOPIC_CLUSTERS.length);
+            while (freshTopics.length < count && reuseAttempts < TOPIC_CLUSTERS.length * 5) {
+                const cluster = TOPIC_CLUSTERS[clusterIdx % TOPIC_CLUSTERS.length];
+                const topicPool = [cluster.pillar, ...cluster.topics];
+                const rawTitle = topicPool[Math.floor(Math.random() * topicPool.length)];
+                const title = rawTitle.replace(/\{year\}/g, year);
+                const suffix = Math.random().toString(36).substring(7);
+                const slug = `${(0, slugify_1.default)(title, { lower: true, strict: true })}-${suffix}`;
+                if (!usedSlugs.has(slug)) {
+                    const keywords = this.getKeywordsForCluster(cluster.cluster);
+                    freshTopics.push({ title, slug, keywords, cluster: cluster.cluster });
+                    usedSlugs.add(slug);
+                    this.logger.info(`TopicEngine: REUSED topic — "${title}" (suffix: ${suffix})`);
+                }
+                clusterIdx++;
+                reuseAttempts++;
+            }
         }
         for (const topic of freshTopics) {
             await this.prisma.topic.create({
@@ -227,6 +295,68 @@ let TopicEngineService = class TopicEngineService {
         catch (error) {
             this.logger.warn(`TopicEngine: Failed to sync from Strapi — ${error.message}. Continuing with local data.`);
         }
+    }
+    async generateAITopics(cluster, count, usedSlugs) {
+        const prompt = `You are a blog topic generator for "Innovaft", a professional IT and Digital Skills agency.
+      The cluster is: "${cluster.cluster}".
+      Pillar topic: "${cluster.pillar}".
+      
+      Existing topics in this cluster:
+      ${cluster.topics.join('\n')}
+      
+      Recently used topics (DO NOT DUPLICATE OR BE TOO SIMILAR TO THESE):
+      ${usedSlugs.slice(-30).join('\n')}
+      
+      Generate ${count * 2} (extra for filtering) NEW, unique, and highly engaging blog post titles for this cluster.
+      The titles should be SEO-friendly and relevant to modern Indian students, small business owners, and aspiring freelancers.
+      IMPORTANT RULES:
+      1. DO NOT repeatedly use the word "Haryana" or "Hisar" in every title.
+      2. Keep the titles broad, professional, and globally appealing, while still being relevant to an Indian audience.
+      
+      Output only the titles, one per line. No numbers, no extra text, no markdown fences.`;
+        try {
+            let text;
+            if (this.aiProvider === 'nvidia') {
+                text = await this.generateAITopicsWithNvidia(prompt);
+            }
+            else {
+                text = await this.generateAITopicsWithGemini(prompt);
+            }
+            return text
+                .split('\n')
+                .map((t) => t.trim())
+                .filter((t) => t.length > 10 && t.length < 100)
+                .slice(0, count);
+        }
+        catch (error) {
+            this.logger.error(`TopicEngine: AI topic generation failed using ${this.aiProvider.toUpperCase()} — ${error.message}`);
+            return [];
+        }
+    }
+    async generateAITopicsWithGemini(prompt) {
+        const model = this.genAI.getGenerativeModel({ model: this.geminiModel });
+        const result = await model.generateContent(prompt);
+        return result.response.text();
+    }
+    async generateAITopicsWithNvidia(prompt) {
+        const payload = {
+            model: this.nvidiaModel,
+            messages: [{ role: 'user', content: prompt }],
+            max_tokens: 4096,
+            temperature: 0.8,
+            top_p: 0.9,
+            stream: false,
+        };
+        if (this.nvidiaModel.includes('gemma-4')) {
+            payload.chat_template_kwargs = { enable_thinking: true };
+        }
+        const response = await axios_1.default.post(this.nvidiaEndpoint, payload, {
+            headers: {
+                Authorization: `Bearer ${this.nvidiaApiKey}`,
+                Accept: 'application/json',
+            },
+        });
+        return response.data.choices[0].message.content;
     }
     extractKeywords(title) {
         const stopWords = new Set([

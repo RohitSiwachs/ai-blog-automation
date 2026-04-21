@@ -3,14 +3,25 @@ declare const _default: () => {
         baseUrl: string;
         apiToken: string;
         siteUrl: string;
+        bypassMode: boolean;
     };
+    aiProvider: string;
     gemini: {
         apiKey: string;
         model: string;
     };
+    nvidia: {
+        apiKey: string;
+        imageApiKey: string;
+        model: string;
+        chatEndpoint: string;
+        imageEndpoint: string;
+    };
     redis: {
         host: string;
         port: number;
+        password: string | undefined;
+        tls: boolean;
     };
     database: {
         url: string;
