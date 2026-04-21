@@ -46,4 +46,4 @@ COPY --from=builder /app/prisma ./prisma
 
 EXPOSE 3002
 
-CMD ["npm", "run", "start:prod"]
+CMD npx prisma db push && npm run start:prod
