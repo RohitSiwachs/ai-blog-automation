@@ -32,9 +32,19 @@ async function bootstrap() {
   const logger = app.get(WINSTON_MODULE_NEST_PROVIDER);
   const baseUrl = process.env.RENDER_EXTERNAL_URL || `http://localhost:${port}`;
 
-  logger.log(`🚀 AI Blog Automation Engine running on port ${port}`);
-  logger.log(`📋 Health check: ${baseUrl}/api/health`);
-  logger.log(`🔧 Manual trigger: POST ${baseUrl}/api/trigger?count=1`);
+  const startupMsg = `🚀 AI Blog Automation Engine running on port ${port}`;
+  const healthMsg = `📋 Health check: ${baseUrl}/api/health`;
+  const triggerMsg = `🔧 Manual trigger: POST ${baseUrl}/api/trigger?count=1`;
+
+  logger.log(startupMsg);
+  logger.log(healthMsg);
+  logger.log(triggerMsg);
+
+  // Fallback to plain console for Render logs visibility
+  console.log('--- Startup Summary ---');
+  console.log(startupMsg);
+  console.log(healthMsg);
+  console.log(triggerMsg);
 }
 
 bootstrap();

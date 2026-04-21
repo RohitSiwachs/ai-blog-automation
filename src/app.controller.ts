@@ -16,6 +16,19 @@ export class AppController {
   ) {}
 
   /**
+   * Root endpoint.
+   * Redirects or informs the user about the API prefix.
+   */
+  @Get()
+  index() {
+    return {
+      message: 'AI Blog Automation Engine is running!',
+      documentation: '/api/health',
+      trigger: '/api/trigger?count=1',
+    };
+  }
+
+  /**
    * Health check endpoint.
    * GET /health
    */
