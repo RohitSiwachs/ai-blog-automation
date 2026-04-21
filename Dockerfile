@@ -34,4 +34,4 @@ RUN npm run build
 EXPOSE 3002
 
 # Run migrations and start
-CMD export DATABASE_URL=$(echo $DATABASE_URL | tr -d '\n\r ') && echo "Running Prisma DB Push..." && DEBUG=prisma:* npx prisma db push --accept-data-loss && npm run start:prod
+CMD npx prisma db push --accept-data-loss && npm run start:prod
