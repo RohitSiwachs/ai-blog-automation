@@ -1,7 +1,7 @@
 # Build stage
 FROM node:20-slim AS builder
 
-# Install system dependencies for node-canvas
+# Install system dependencies for node-canvas and Prisma
 RUN apt-get update && apt-get install -y \
     build-essential \
     libcairo2-dev \
@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     libgif-dev \
     librsvg2-dev \
     python3 \
+    openssl \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -18,7 +19,7 @@ COPY package*.json ./
 COPY prisma ./prisma/
 
 RUN npm install
-RUN npx prisma generate
+RUN DATABASE_URL="postgresql://localhost:5432/dummy" npx prisma generate
 
 COPY . .
 
