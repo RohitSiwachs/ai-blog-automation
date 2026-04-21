@@ -34,4 +34,4 @@ RUN npm run build
 EXPOSE 3002
 
 # Run migrations and start
-CMD npx prisma db push && npm run start:prod
+CMD if [ -z "$DATABASE_URL" ]; then echo "❌ ERROR: DATABASE_URL is NOT set in environment!"; else echo "✅ DATABASE_URL is set (Length: ${#DATABASE_URL})"; fi && npx prisma db push && npm run start:prod
