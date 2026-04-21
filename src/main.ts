@@ -24,7 +24,7 @@ async function bootstrap() {
   app.enableCors();
 
   const port = process.env.PORT || 3002;
-  await app.listen(port);
+  await app.listen(port, '0.0.0.0');
 
   const logger = app.get(WINSTON_MODULE_NEST_PROVIDER);
   logger.log(`🚀 AI Blog Automation Engine running on port ${port}`);
