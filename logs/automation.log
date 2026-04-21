@@ -1771,6 +1771,7 @@
 {"level":"info","message":"🚀 AI Blog Automation Engine running on port 3001","timestamp":"2026-03-07T12:01:13.502Z"}
 {"level":"info","message":"📋 Health check: http://localhost:3001/health","timestamp":"2026-03-07T12:01:13.502Z"}
 {"level":"info","message":"🔧 Manual trigger: POST http://localhost:3001/trigger?count=1","timestamp":"2026-03-07T12:01:13.503Z"}
+<<<<<<< HEAD
 {"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-03-07T12:20:04.470Z"}
 {"context":"RoutesResolver","level":"info","message":"AppController {/}:","timestamp":"2026-03-07T12:20:04.476Z"}
 {"context":"RouterExplorer","level":"info","message":"Mapped {/health, GET} route","timestamp":"2026-03-07T12:20:04.478Z"}
@@ -6704,3 +6705,26 @@
 {"level":"info","message":"Strapi: Creating article \"WordPress Customization: No Code Needed!\"...","timestamp":"2026-04-21T10:59:31.544Z"}
 {"level":"info","message":"Strapi: Article created successfully — ID: 210, slug: \"wordpress-customization-no-code-needed\"","timestamp":"2026-04-21T10:59:32.656Z"}
 {"level":"info","message":"✅ BlogJob [1]: Successfully published — Strapi ID: 210, slug: \"wordpress-customization-no-code-needed\"","timestamp":"2026-04-21T10:59:32.726Z"}
+=======
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-04-21T11:09:28.347Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:","timestamp":"2026-04-21T11:09:28.353Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/health, GET} route","timestamp":"2026-04-21T11:09:28.354Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/trigger, POST} route","timestamp":"2026-04-21T11:09:28.355Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 7 * * *\", Posts/day: 1","timestamp":"2026-04-21T11:09:28.403Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-04-21T11:09:28.404Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-04-21T11:09:28.411Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3001","timestamp":"2026-04-21T11:09:28.422Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3001/health","timestamp":"2026-04-21T11:09:28.422Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3001/trigger?count=1","timestamp":"2026-04-21T11:09:28.423Z"}
+{"level":"info","message":"Manual trigger received — count: 1","timestamp":"2026-04-21T11:11:16.999Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-04-21T11:11:17.001Z"}
+{"level":"info","message":"🔄 Scheduler: Starting daily batch — 2026-04-21T11:11:17.001Z","timestamp":"2026-04-21T11:11:17.002Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-04-21T11:11:17.003Z"}
+{"level":"info","message":"TopicEngine: Generating 1 new topics...","timestamp":"2026-04-21T11:11:17.005Z"}
+{"level":"info","message":"TopicEngine: Syncing recent topics from Strapi...","timestamp":"2026-04-21T11:11:17.007Z"}
+{"level":"info","message":"Strapi: Fetching last 50 articles...","timestamp":"2026-04-21T11:11:17.008Z"}
+{"level":"info","message":"Strapi: Fetched 12 recent articles","timestamp":"2026-04-21T11:11:18.213Z"}
+{"level":"info","message":"TopicEngine: Strapi sync complete","timestamp":"2026-04-21T11:11:18.291Z"}
+{"level":"info","message":"TopicEngine: Successfully generated 0 topics","timestamp":"2026-04-21T11:11:18.304Z"}
+{"level":"warn","message":"Scheduler: No new topics generated. All topics may have been used. Skipping batch.","timestamp":"2026-04-21T11:11:18.304Z"}
+>>>>>>> 006e5b9 (demo)

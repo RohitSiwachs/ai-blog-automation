@@ -1,0 +1,8 @@
+node_modules
+dist
+previews
+logs
+.env
+.git
+*.jpg
+*.md
