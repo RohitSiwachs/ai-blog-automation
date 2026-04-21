@@ -31,9 +31,9 @@ async function bootstrap() {
 
   const logger = app.get(WINSTON_MODULE_NEST_PROVIDER);
   logger.log(`🚀 AI Blog Automation Engine running on port ${port}`);
-  logger.log(`📋 Health check: http://localhost:${port}/health`);
+  logger.log(`📋 Health check: /api/health`);
   logger.log(
-    `🔧 Manual trigger: POST http://localhost:${port}/trigger?count=1`,
+    `🔧 Manual trigger: POST /api/trigger?count=1`,
   );
 }
 
