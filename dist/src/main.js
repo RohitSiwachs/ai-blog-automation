@@ -9,13 +9,22 @@ async function bootstrap() {
     });
     app.useLogger(app.get(nest_winston_1.WINSTON_MODULE_NEST_PROVIDER));
     app.enableShutdownHooks();
+    app.setGlobalPrefix('api');
     app.enableCors();
     const port = process.env.PORT || 3002;
-    await app.listen(port);
+    await app.listen(port, '0.0.0.0');
     const logger = app.get(nest_winston_1.WINSTON_MODULE_NEST_PROVIDER);
-    logger.log(`🚀 AI Blog Automation Engine running on port ${port}`);
-    logger.log(`📋 Health check: http://localhost:${port}/health`);
-    logger.log(`🔧 Manual trigger: POST http://localhost:${port}/trigger?count=1`);
+    const baseUrl = process.env.RENDER_EXTERNAL_URL || `http://localhost:${port}`;
+    const startupMsg = `🚀 AI Blog Automation Engine running on port ${port}`;
+    const healthMsg = `📋 Health check: ${baseUrl}/api/health`;
+    const triggerMsg = `🔧 Manual trigger: POST ${baseUrl}/api/trigger?count=1`;
+    logger.log(startupMsg);
+    logger.log(healthMsg);
+    logger.log(triggerMsg);
+    console.log('--- Startup Summary ---');
+    console.log(startupMsg);
+    console.log(healthMsg);
+    console.log(triggerMsg);
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

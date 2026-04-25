@@ -24,6 +24,13 @@ let AppController = class AppController {
         this.schedulerService = schedulerService;
         this.logger = logger;
     }
+    index() {
+        return {
+            message: 'AI Blog Automation Engine is running!',
+            documentation: '/api/health',
+            trigger: '/api/trigger?count=1',
+        };
+    }
     getHealth() {
         return {
             status: 'ok',
@@ -44,6 +51,12 @@ let AppController = class AppController {
     }
 };
 exports.AppController = AppController;
+__decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "index", null);
 __decorate([
     (0, common_1.Get)('health'),
     __metadata("design:type", Function),

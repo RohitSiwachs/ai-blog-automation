@@ -6801,3 +6801,24 @@
 {"level":"info","message":"Strapi: Creating article \"APIs for Web Developers: A Seamless Integration Guide\"...","timestamp":"2026-04-21T11:20:45.034Z"}
 {"level":"info","message":"Strapi: Article created successfully — ID: 212, slug: \"apis-for-web-developers-a-seamless-integration-guide\"","timestamp":"2026-04-21T11:20:46.395Z"}
 {"level":"info","message":"✅ BlogJob [2]: Successfully published — Strapi ID: 212, slug: \"apis-for-web-developers-a-seamless-integration-guide\"","timestamp":"2026-04-21T11:20:46.481Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-04-22T06:30:37.685Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-04-22T06:30:37.691Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-04-22T06:30:37.693Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-04-22T06:30:37.694Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-04-22T06:30:37.694Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 7 * * *\", Posts/day: 1","timestamp":"2026-04-22T06:30:37.748Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-04-22T06:30:37.748Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-04-22T06:30:37.757Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-04-22T06:30:37.766Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-04-22T06:30:37.767Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-04-22T06:30:37.767Z"}
+{"level":"info","message":"Manual trigger received — count: 1","timestamp":"2026-04-22T06:30:52.103Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-04-22T06:30:52.105Z"}
+{"level":"info","message":"🔄 Scheduler: Starting daily batch — 2026-04-22T06:30:52.105Z","timestamp":"2026-04-22T06:30:52.106Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-04-22T06:30:52.107Z"}
+{"level":"info","message":"TopicEngine: Generating 1 new topics...","timestamp":"2026-04-22T06:30:52.109Z"}
+{"level":"info","message":"TopicEngine: Syncing recent topics from Strapi...","timestamp":"2026-04-22T06:30:52.111Z"}
+{"level":"info","message":"Strapi: Fetching last 50 articles...","timestamp":"2026-04-22T06:30:52.112Z"}
+{"level":"info","message":"Strapi: Fetched 3 recent articles","timestamp":"2026-04-22T06:30:53.241Z"}
+{"level":"warn","message":"TopicEngine: Failed to sync from Strapi — \nInvalid `prisma.topic.findUnique()` invocation:\n\n\nCan't reach database server at dpg-d7jqts7lk1mc738brb80-a. Continuing with local data.","timestamp":"2026-04-22T06:30:54.915Z"}
+{"level":"error","message":"❌ Scheduler: Batch failed — \nInvalid `prisma.topic.findMany()` invocation:\n\n\nCan't reach database server at dpg-d7jqts7lk1mc738brb80-a","stack":"PrismaClientKnownRequestError: \nInvalid `prisma.topic.findMany()` invocation:\n\n\nCan't reach database server at dpg-d7jqts7lk1mc738brb80-a\n    at zr.handleRequestError (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:237:13)\n    at zr.handleAndLogRequestError (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:183:12)\n    at zr.request (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:152:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async a (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\getPrismaClient.ts:808:24)\n    at async TopicEngineService.generateTopics (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\src\\modules\\topic-engine\\topic-engine.service.ts:184:24)\n    at async SchedulerService.scheduleDailyBatch (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\src\\modules\\scheduler\\scheduler.service.ts:72:22)\n    at async SchedulerService.triggerManualBatch (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\src\\modules\\scheduler\\scheduler.service.ts:155:7)\n    at async AppController.triggerBatch (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\src\\app.controller.ts:56:20)\n    at async C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@nestjs\\core\\router\\router-execution-context.js:46:28","timestamp":"2026-04-22T06:30:55.791Z"}

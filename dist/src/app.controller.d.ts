@@ -4,6 +4,11 @@ export declare class AppController {
     private readonly schedulerService;
     private readonly logger;
     constructor(schedulerService: SchedulerService, logger: Logger);
+    index(): {
+        message: string;
+        documentation: string;
+        trigger: string;
+    };
     getHealth(): {
         status: string;
         service: string;
