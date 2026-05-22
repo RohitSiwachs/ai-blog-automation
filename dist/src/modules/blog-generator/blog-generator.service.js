@@ -69,6 +69,8 @@ let BlogGeneratorService = class BlogGeneratorService {
                     strict: true,
                     trim: true,
                 });
+                const humanizedContent = await this.humanizeContent(parsed.content);
+                const finalContent = await this.enrichInlineImages(humanizedContent);
                 const blog = {
                     seoTitle: parsed.seoTitle,
                     metaDescription: this.truncate(parsed.metaDescription, 160),
@@ -79,7 +81,7 @@ let BlogGeneratorService = class BlogGeneratorService {
                     category: parsed.category || categories[0] || 'Development',
                     tags: parsed.tags || [],
                     slug,
-                    content: await this.enrichInlineImages(parsed.content),
+                    content: finalContent,
                 };
                 this.logger.info(`BlogGenerator: Content generated successfully — "${blog.seoTitle}" (${this.countWords(blog.content)} words)`);
                 return blog;
@@ -299,6 +301,25 @@ let BlogGeneratorService = class BlogGeneratorService {
             this.logger.warn(`BlogGenerator: NVIDIA Llama inline prompt also failed: ${nvidiaErr.message}`);
         }
         return `${intent}. photorealistic, professional lighting, cinematic`;
+    }
+    async humanizeContent(content) {
+        this.logger.info('BlogGenerator: Humanizing text using second-pass LLM...');
+        const prompt = (0, prompts_1.buildHumanizerPrompt)(content);
+        try {
+            let humanized;
+            if (this.aiProvider === 'nvidia') {
+                humanized = await this.generateWithNvidia(prompt);
+            }
+            else {
+                humanized = await this.generateWithGemini(prompt);
+            }
+            this.logger.info('BlogGenerator: Second-pass humanization complete.');
+            return humanized.trim();
+        }
+        catch (e) {
+            this.logger.error(`BlogGenerator: LLM Humanization failed: ${e.message}. Falling back to original content.`);
+            return content;
+        }
     }
     countWords(markdown) {
         const text = markdown

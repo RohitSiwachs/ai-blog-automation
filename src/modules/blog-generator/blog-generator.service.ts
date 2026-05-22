@@ -11,7 +11,7 @@ import { Logger } from 'winston';
 import axios from 'axios';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import slugify from 'slugify';
-import { buildBlogPrompt } from './prompts';
+import { buildBlogPrompt, buildHumanizerPrompt } from './prompts';
 
 /** Represents a fully generated blog post ready for publishing */
 export interface GeneratedBlog {
@@ -95,6 +95,12 @@ export class BlogGeneratorService {
           trim: true,
         });
 
+        // Step 1: Humanize content using second-pass LLM
+        const humanizedContent = await this.humanizeContent(parsed.content);
+
+        // Step 2: Enrich inline Pollinations images inside the humanized content
+        const finalContent = await this.enrichInlineImages(humanizedContent);
+
         const blog: GeneratedBlog = {
           seoTitle: parsed.seoTitle,
           metaDescription: this.truncate(parsed.metaDescription, 160),
@@ -108,7 +114,7 @@ export class BlogGeneratorService {
           category: parsed.category || categories[0] || 'Development',
           tags: parsed.tags || [],
           slug,
-          content: await this.enrichInlineImages(parsed.content),
+          content: finalContent,
         };
 
         this.logger.info(
@@ -412,6 +418,31 @@ export class BlogGeneratorService {
 
     // Final fallback: basic prompt
     return `${intent}. photorealistic, professional lighting, cinematic`;
+  }
+
+  /**
+   * Humanizes the generated blog content using a second-pass LLM prompt.
+   * Focuses on natural sentence structure, burstiness, natural transitions,
+   * and human-like flow.
+   */
+  async humanizeContent(content: string): Promise<string> {
+    this.logger.info('BlogGenerator: Humanizing text using second-pass LLM...');
+    const prompt = buildHumanizerPrompt(content);
+    
+    try {
+      let humanized: string;
+      if (this.aiProvider === 'nvidia') {
+        humanized = await this.generateWithNvidia(prompt);
+      } else {
+        humanized = await this.generateWithGemini(prompt);
+      }
+      
+      this.logger.info('BlogGenerator: Second-pass humanization complete.');
+      return humanized.trim();
+    } catch (e) {
+      this.logger.error(`BlogGenerator: LLM Humanization failed: ${e.message}. Falling back to original content.`);
+      return content;
+    }
   }
 
   /** Count words in Markdown text */

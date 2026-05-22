@@ -30,5 +30,6 @@ export declare class BlogGeneratorService {
     private truncate;
     private enrichInlineImages;
     private generateInlineSmartPrompt;
+    humanizeContent(content: string): Promise<string>;
     private countWords;
 }

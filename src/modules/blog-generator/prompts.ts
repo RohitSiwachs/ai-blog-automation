@@ -72,3 +72,25 @@ CRITICAL RULES:
 - metaDescription MUST be 150-160 characters — count carefully.
 - Make content sound human-written, not AI-generated.`;
 }
+
+/**
+ * Builds the prompt for the second-pass "Humanizer" LLM.
+ * Directs the LLM to refine the generated markdown to sound natural, organic, and engaging.
+ */
+export function buildHumanizerPrompt(content: string): string {
+  return `You are a professional senior editor. Rewrite the following AI-generated blog post to make it sound 100% human, highly organic, and conversational.
+
+=== CRITICAL LINGUISTIC RULES ===
+1. VARIATION (BURSTINESS): AI writes with extremely consistent sentence lengths and rhythms. Humans write with natural "burstiness" — some sentences are long, flowing, and descriptive, while others are extremely short and punchy. Vary sentence lengths and structures drastically.
+2. NATURAL TRANSITIONS: NEVER use rigid AI transition words like "Furthermore", "Moreover", "In summary", "Crucially", "Consequently", "It is important to remember", or "In conclusion". Use natural human transitions ("Actually,", "So,", "But here is the thing...", "That means...", "To be honest,").
+3. NO CLICHÉS: Ban generic corporate AI terms like "delve", "testament", "pave the way", "revolutionize", "multifaceted", "beacon", "look no further", or "in today's digital landscape". Use smart, everyday, professional vocabulary.
+4. TONE & FLOW: Write like an experienced human expert explaining a topic to a close colleague over coffee. Warm, authentic, energetic, and completely devoid of fluff or academic stiffness. Use organic contractions ("don't", "it's", "you'll", "we're") naturally.
+5. PRESERVE MARKDOWN STRUCTURE (CRITICAL): Keep all markdown headings (#, ##, ###), bold text, lists, and bullet points.
+6. PRESERVE IMAGE LINKS (MANDATORY): Do NOT alter, rewrite, remove, or modify any markdown image links (e.g. ![Image](https://image.pollinations.ai/...)). Leave them exactly as they are in their original positions.
+
+ORIGINAL AI-GENERATED TEXT:
+${content}
+
+OUTPUT:
+Respond with ONLY the rewritten markdown text. No conversational introductions, no markdown code fences (like \`\`\`markdown), and no extra notes. Start writing the blog post immediately.`;
+}
