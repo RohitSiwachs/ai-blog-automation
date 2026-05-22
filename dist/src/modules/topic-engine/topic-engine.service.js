@@ -150,6 +150,7 @@ let TopicEngineService = class TopicEngineService {
     nvidiaModel;
     nvidiaEndpoint;
     aiProvider;
+    FALLBACK_NVIDIA_MODEL = 'meta/llama-3.1-8b-instruct';
     constructor(prisma, strapiService, configService, logger) {
         this.prisma = prisma;
         this.strapiService = strapiService;
@@ -316,11 +317,29 @@ let TopicEngineService = class TopicEngineService {
       Output only the titles, one per line. No numbers, no extra text, no markdown fences.`;
         try {
             let text;
-            if (this.aiProvider === 'nvidia') {
-                text = await this.generateAITopicsWithNvidia(prompt);
+            const providers = this.aiProvider === 'nvidia'
+                ? ['nvidia', 'gemini']
+                : ['gemini', 'nvidia'];
+            let lastProviderError = null;
+            for (const provider of providers) {
+                try {
+                    this.logger.info(`TopicEngine: Trying ${provider.toUpperCase()} for AI topics...`);
+                    if (provider === 'nvidia') {
+                        text = await this.generateAITopicsWithNvidia(prompt);
+                    }
+                    else {
+                        text = await this.generateAITopicsWithGemini(prompt);
+                    }
+                    lastProviderError = null;
+                    break;
+                }
+                catch (providerErr) {
+                    lastProviderError = providerErr;
+                    this.logger.warn(`TopicEngine: ${provider.toUpperCase()} failed — ${providerErr.message}`);
+                }
             }
-            else {
-                text = await this.generateAITopicsWithGemini(prompt);
+            if (lastProviderError || !text) {
+                throw lastProviderError || new Error('All providers failed');
             }
             return text
                 .split('\n')
@@ -339,24 +358,47 @@ let TopicEngineService = class TopicEngineService {
         return result.response.text();
     }
     async generateAITopicsWithNvidia(prompt) {
-        const payload = {
-            model: this.nvidiaModel,
-            messages: [{ role: 'user', content: prompt }],
-            max_tokens: 4096,
-            temperature: 0.8,
-            top_p: 0.9,
-            stream: false,
-        };
-        if (this.nvidiaModel.includes('gemma-4')) {
-            payload.chat_template_kwargs = { enable_thinking: true };
+        const modelsToTry = [this.nvidiaModel];
+        if (this.nvidiaModel !== this.FALLBACK_NVIDIA_MODEL) {
+            modelsToTry.push(this.FALLBACK_NVIDIA_MODEL);
         }
-        const response = await axios_1.default.post(this.nvidiaEndpoint, payload, {
-            headers: {
-                Authorization: `Bearer ${this.nvidiaApiKey}`,
-                Accept: 'application/json',
-            },
-        });
-        return response.data.choices[0].message.content;
+        let lastError;
+        for (const model of modelsToTry) {
+            const payload = {
+                model,
+                messages: [{ role: 'user', content: prompt }],
+                max_tokens: 4096,
+                temperature: 0.8,
+                top_p: 0.9,
+                stream: false,
+            };
+            if (model.includes('gemma-4')) {
+                payload.chat_template_kwargs = { enable_thinking: true };
+            }
+            try {
+                this.logger.info(`TopicEngine: NVIDIA requesting model "${model}"...`);
+                const response = await axios_1.default.post(this.nvidiaEndpoint, payload, {
+                    headers: {
+                        Authorization: `Bearer ${this.nvidiaApiKey}`,
+                        Accept: 'application/json',
+                    },
+                    timeout: 120000,
+                });
+                this.logger.info(`TopicEngine: NVIDIA model "${model}" succeeded.`);
+                return response.data.choices[0].message.content;
+            }
+            catch (error) {
+                lastError = error;
+                const statusCode = error.response?.status;
+                const detail = error.response?.data?.detail || '';
+                if (statusCode === 400 && (detail.includes('DEGRADED') || detail.includes('cannot be invoked'))) {
+                    this.logger.warn(`TopicEngine: NVIDIA model "${model}" is DEGRADED. Trying fallback model...`);
+                    continue;
+                }
+                this.logger.warn(`TopicEngine: NVIDIA model "${model}" failed — ${error.message}`);
+            }
+        }
+        throw lastError;
     }
     extractKeywords(title) {
         const stopWords = new Set([

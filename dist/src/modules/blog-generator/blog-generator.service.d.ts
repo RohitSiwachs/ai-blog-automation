@@ -21,6 +21,7 @@ export declare class BlogGeneratorService {
     private nvidiaModel;
     private nvidiaEndpoint;
     private aiProvider;
+    private readonly FALLBACK_NVIDIA_MODEL;
     constructor(configService: ConfigService, logger: Logger);
     generateBlog(title: string, keywords: string[], categories: string[]): Promise<GeneratedBlog>;
     private generateWithGemini;

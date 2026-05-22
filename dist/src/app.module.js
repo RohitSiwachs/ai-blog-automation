@@ -37,14 +37,38 @@ exports.AppModule = AppModule = __decorate([
             schedule_1.ScheduleModule.forRoot(),
             bullmq_1.BullModule.forRootAsync({
                 imports: [config_1.ConfigModule],
-                useFactory: (configService) => ({
-                    connection: {
-                        host: configService.get('redis.host'),
-                        port: configService.get('redis.port'),
-                        password: configService.get('redis.password'),
-                        tls: configService.get('redis.tls') ? {} : undefined,
-                    },
-                }),
+                useFactory: (configService) => {
+                    const redisEnabled = configService.get('redis.enabled') !== 'false';
+                    if (!redisEnabled) {
+                        console.warn('⚠️  REDIS_ENABLED=false — BullMQ running in disconnected mode. Jobs will NOT be processed.');
+                        return {
+                            connection: {
+                                host: '127.0.0.1',
+                                port: 6379,
+                                maxRetriesPerRequest: 0,
+                                lazyConnect: true,
+                                enableOfflineQueue: false,
+                            },
+                        };
+                    }
+                    return {
+                        connection: {
+                            host: configService.get('redis.host'),
+                            port: configService.get('redis.port'),
+                            password: configService.get('redis.password'),
+                            tls: configService.get('redis.tls') ? {} : undefined,
+                            maxRetriesPerRequest: 3,
+                            enableOfflineQueue: false,
+                            retryStrategy: (times) => {
+                                if (times > 5) {
+                                    console.error('❌ Redis: Max reconnection attempts reached. Giving up.');
+                                    return null;
+                                }
+                                return Math.min(times * 2000, 30000);
+                            },
+                        },
+                    };
+                },
                 inject: [config_1.ConfigService],
             }),
             logger_module_1.LoggerModule,

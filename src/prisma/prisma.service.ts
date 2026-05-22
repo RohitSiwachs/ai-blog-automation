@@ -15,8 +15,17 @@ export class PrismaService
   constructor() {
     // Prisma 7 requires a driver adapter for direct DB connections.
     // Using @prisma/adapter-pg with the DATABASE_URL env variable.
+    
+    // Programmatically strip the `sslmode` query parameter from DATABASE_URL
+    // because the node-postgres parser overrides custom JS SSL settings when it sees sslmode.
+    const dbUrl = process.env.DATABASE_URL || '';
+    const cleanUrl = dbUrl.replace(/[?&]sslmode=[^&]*/g, '');
+
     const adapter = new PrismaPg({
-      connectionString: process.env.DATABASE_URL,
+      connectionString: cleanUrl,
+      ssl: {
+        rejectUnauthorized: false,
+      },
     });
     super({ adapter });
   }

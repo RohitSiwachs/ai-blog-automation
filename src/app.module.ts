@@ -32,14 +32,40 @@ import { AppController } from './app.controller';
     // --- BullMQ (Redis-backed job queue) ---
     BullModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        connection: {
-          host: configService.get<string>('redis.host'),
-          port: configService.get<number>('redis.port'),
-          password: configService.get<string>('redis.password'),
-          tls: configService.get<boolean>('redis.tls') ? {} : undefined,
-        },
-      }),
+      useFactory: (configService: ConfigService) => {
+        const redisEnabled = configService.get<string>('redis.enabled') !== 'false';
+
+        if (!redisEnabled) {
+          console.warn('⚠️  REDIS_ENABLED=false — BullMQ running in disconnected mode. Jobs will NOT be processed.');
+          return {
+            connection: {
+              host: '127.0.0.1',
+              port: 6379,
+              maxRetriesPerRequest: 0,
+              lazyConnect: true,
+              enableOfflineQueue: false,
+            },
+          };
+        }
+
+        return {
+          connection: {
+            host: configService.get<string>('redis.host'),
+            port: configService.get<number>('redis.port'),
+            password: configService.get<string>('redis.password'),
+            tls: configService.get<boolean>('redis.tls') ? {} : undefined,
+            maxRetriesPerRequest: 3,      // Stop retrying after 3 failures (prevents infinite loop)
+            enableOfflineQueue: false,     // Don't queue requests when Redis is unreachable
+            retryStrategy: (times: number) => {
+              if (times > 5) {
+                console.error('❌ Redis: Max reconnection attempts reached. Giving up.');
+                return null; // Stop retrying
+              }
+              return Math.min(times * 2000, 30000); // 2s, 4s, 6s... up to 30s
+            },
+          },
+        };
+      },
       inject: [ConfigService],
     }),
 

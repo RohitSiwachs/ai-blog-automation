@@ -35,6 +35,7 @@ export class BlogGeneratorService {
   private nvidiaModel: string;
   private nvidiaEndpoint: string;
   private aiProvider: string;
+  private readonly FALLBACK_NVIDIA_MODEL = 'meta/llama-3.1-8b-instruct';
 
   constructor(
     private readonly configService: ConfigService,
@@ -67,48 +68,65 @@ export class BlogGeneratorService {
     const prompt = buildBlogPrompt(title, keywords, categories);
     let rawText: string;
 
-    try {
-      if (this.aiProvider === 'nvidia') {
-        rawText = await this.generateWithNvidia(prompt);
-      } else {
-        rawText = await this.generateWithGemini(prompt);
+    // Try primary provider first, then fallback to the other
+    const providers = this.aiProvider === 'nvidia'
+      ? ['nvidia', 'gemini'] as const
+      : ['gemini', 'nvidia'] as const;
+
+    let lastError: Error | null = null;
+
+    for (const provider of providers) {
+      try {
+        this.logger.info(`BlogGenerator: Trying ${provider.toUpperCase()}...`);
+
+        if (provider === 'nvidia') {
+          rawText = await this.generateWithNvidia(prompt);
+        } else {
+          rawText = await this.generateWithGemini(prompt);
+        }
+
+        this.logger.info(`BlogGenerator: ${provider.toUpperCase()} response received, parsing...`);
+
+        const parsed = this.parseAIResponse(rawText!);
+
+        const slug = slugify(parsed.seoTitle, {
+          lower: true,
+          strict: true,
+          trim: true,
+        });
+
+        const blog: GeneratedBlog = {
+          seoTitle: parsed.seoTitle,
+          metaDescription: this.truncate(parsed.metaDescription, 160),
+          ogTitle: parsed.ogTitle || parsed.seoTitle,
+          ogDescription: parsed.ogDescription || parsed.metaDescription,
+          metaKeywords: parsed.metaKeywords || keywords.join(', '),
+          description: this.truncate(
+            parsed.description || parsed.metaDescription,
+            180,
+          ),
+          category: parsed.category || categories[0] || 'Development',
+          tags: parsed.tags || [],
+          slug,
+          content: await this.enrichInlineImages(parsed.content),
+        };
+
+        this.logger.info(
+          `BlogGenerator: Content generated successfully — "${blog.seoTitle}" (${this.countWords(blog.content)} words)`,
+        );
+
+        return blog;
+      } catch (error) {
+        lastError = error;
+        this.logger.error(`BlogGenerator: ${provider.toUpperCase()} failed — ${error.message}`);
+
+        if (provider !== providers[providers.length - 1]) {
+          this.logger.warn(`BlogGenerator: Falling back to ${providers[providers.indexOf(provider) + 1].toUpperCase()}...`);
+        }
       }
-
-      this.logger.info(`BlogGenerator: ${this.aiProvider.toUpperCase()} response received, parsing...`);
-
-      const parsed = this.parseAIResponse(rawText);
-
-      const slug = slugify(parsed.seoTitle, {
-        lower: true,
-        strict: true,
-        trim: true,
-      });
-
-      const blog: GeneratedBlog = {
-        seoTitle: parsed.seoTitle,
-        metaDescription: this.truncate(parsed.metaDescription, 160),
-        ogTitle: parsed.ogTitle || parsed.seoTitle,
-        ogDescription: parsed.ogDescription || parsed.metaDescription,
-        metaKeywords: parsed.metaKeywords || keywords.join(', '),
-        description: this.truncate(
-          parsed.description || parsed.metaDescription,
-          180,
-        ),
-        category: parsed.category || categories[0] || 'Development',
-        tags: parsed.tags || [],
-        slug,
-        content: await this.enrichInlineImages(parsed.content),
-      };
-
-      this.logger.info(
-        `BlogGenerator: Content generated successfully — "${blog.seoTitle}" (${this.countWords(blog.content)} words)`,
-      );
-
-      return blog;
-    } catch (error) {
-      this.logger.error(`BlogGenerator: ${this.aiProvider.toUpperCase()} API failed — ${error.message}`);
-      throw new Error(`Blog generation failed: ${error.message}`);
     }
+
+    throw new Error(`Blog generation failed (all providers exhausted): ${lastError?.message}`);
   }
 
   /**
@@ -124,47 +142,70 @@ export class BlogGeneratorService {
    * Calls NVIDIA NIM API (Gemma/Llama)
    */
   private async generateWithNvidia(prompt: string): Promise<string> {
-    const payload: any = {
-      model: this.nvidiaModel,
-      messages: [{ role: 'user', content: prompt }],
-      max_tokens: 4096,
-      temperature: 0.7,
-      top_p: 0.9,
-      stream: false,
-    };
-
-    // Gemma 4 requires thinking kwargs as per user provided snippet
-    if (this.nvidiaModel.includes('gemma-4')) {
-      payload.chat_template_kwargs = { enable_thinking: true };
+    // Models to try: primary model first, then fallback
+    const modelsToTry = [this.nvidiaModel];
+    if (this.nvidiaModel !== this.FALLBACK_NVIDIA_MODEL) {
+      modelsToTry.push(this.FALLBACK_NVIDIA_MODEL);
     }
 
-    const maxRetries = 2;
     let lastError: any;
 
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
-      try {
-        const response = await axios.post(this.nvidiaEndpoint, payload, {
-          headers: {
-            Authorization: `Bearer ${this.nvidiaApiKey}`,
-            Accept: 'application/json',
-          },
-          timeout: 600000, // 10 minute timeout for "thinking" models
-        });
+    for (const model of modelsToTry) {
+      const payload: any = {
+        model,
+        messages: [{ role: 'user', content: prompt }],
+        max_tokens: 4096,
+        temperature: 0.7,
+        top_p: 0.9,
+        stream: false,
+      };
 
-        return response.data.choices[0].message.content;
-      } catch (error) {
-        lastError = error;
-        const statusCode = error.response?.status;
-        
-        if (statusCode === 504 && attempt < maxRetries) {
-          this.logger.warn(`BlogGenerator: NVIDIA 504 Timeout (Attempt ${attempt}/${maxRetries}). Retrying in 5s...`);
-          await new Promise(resolve => setTimeout(resolve, 5000));
-          continue;
+      // Gemma 4 requires thinking kwargs
+      if (model.includes('gemma-4')) {
+        payload.chat_template_kwargs = { enable_thinking: true };
+      }
+
+      const maxRetries = 2;
+
+      for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+          this.logger.info(`BlogGenerator: NVIDIA requesting model "${model}" (attempt ${attempt})...`);
+          const response = await axios.post(this.nvidiaEndpoint, payload, {
+            headers: {
+              Authorization: `Bearer ${this.nvidiaApiKey}`,
+              Accept: 'application/json',
+            },
+            timeout: 600000,
+          });
+
+          this.logger.info(`BlogGenerator: NVIDIA model "${model}" succeeded.`);
+          return response.data.choices[0].message.content;
+        } catch (error) {
+          lastError = error;
+          const statusCode = error.response?.status;
+          const detail = error.response?.data?.detail || '';
+
+          // If model is DEGRADED (400) or unavailable, skip to fallback model immediately
+          if (statusCode === 400 && (detail.includes('DEGRADED') || detail.includes('cannot be invoked'))) {
+            this.logger.warn(`BlogGenerator: NVIDIA model "${model}" is DEGRADED. Trying fallback model...`);
+            break; // Break inner retry loop, try next model
+          }
+
+          if (statusCode === 504 && attempt < maxRetries) {
+            this.logger.warn(`BlogGenerator: NVIDIA 504 Timeout (Attempt ${attempt}/${maxRetries}). Retrying in 5s...`);
+            await new Promise(resolve => setTimeout(resolve, 5000));
+            continue;
+          }
+
+          // For other errors on last retry, break to try next model
+          if (attempt >= maxRetries) {
+            this.logger.warn(`BlogGenerator: NVIDIA model "${model}" failed after ${maxRetries} attempts. Trying next model...`);
+            break;
+          }
         }
-        
-        throw error;
       }
     }
+
     throw lastError;
   }
 
@@ -326,9 +367,7 @@ export class BlogGeneratorService {
    * Helper to generate a professional image prompt for inline images.
    */
   private async generateInlineSmartPrompt(intent: string): Promise<string> {
-    try {
-      const model = this.genAI.getGenerativeModel({ model: this.geminiModel });
-      const prompt = `You are a professional image prompt engineer. 
+    const promptRequest = `You are a professional image prompt engineer. 
       Create a detailed, ultra-realistic prompt for a blog image.
       Context: "${intent}".
       
@@ -340,12 +379,39 @@ export class BlogGeneratorService {
       
       Output ONLY the description (50-70 words).`;
 
-      const result = await model.generateContent(prompt);
+    // Try Gemini first
+    try {
+      const model = this.genAI.getGenerativeModel({ model: this.geminiModel });
+      const result = await model.generateContent(promptRequest);
       return result.response.text().trim();
-    } catch (e) {
-      this.logger.warn(`BlogGenerator: Inline prompt engineering failed: ${e.message}`);
-      return `${intent}. photorealistic, professional lighting, cinematic`;
+    } catch (geminiErr) {
+      this.logger.warn(`BlogGenerator: Gemini inline prompt failed (${geminiErr.message}). Trying NVIDIA Llama...`);
     }
+
+    // Fallback: NVIDIA Llama
+    try {
+      if (this.nvidiaApiKey) {
+        const response = await axios.post(this.nvidiaEndpoint, {
+          model: this.FALLBACK_NVIDIA_MODEL,
+          messages: [{ role: 'user', content: promptRequest }],
+          max_tokens: 200,
+          temperature: 0.7,
+          stream: false,
+        }, {
+          headers: {
+            'Authorization': `Bearer ${this.nvidiaApiKey}`,
+            'Accept': 'application/json',
+          },
+          timeout: 30000,
+        });
+        return response.data.choices[0].message.content.trim();
+      }
+    } catch (nvidiaErr) {
+      this.logger.warn(`BlogGenerator: NVIDIA Llama inline prompt also failed: ${nvidiaErr.message}`);
+    }
+
+    // Final fallback: basic prompt
+    return `${intent}. photorealistic, professional lighting, cinematic`;
   }
 
   /** Count words in Markdown text */

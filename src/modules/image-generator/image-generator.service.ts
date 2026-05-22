@@ -27,6 +27,8 @@ export class ImageGeneratorService {
   private genAI: GoogleGenerativeAI;
   private nvidiaApiKey: string;
   private nvidiaEndpoint: string;
+  private nvidiaTextEndpoint: string;
+  private readonly FALLBACK_NVIDIA_TEXT_MODEL = 'meta/llama-3.1-8b-instruct';
 
   constructor(
     private readonly configService: ConfigService,
@@ -41,6 +43,7 @@ export class ImageGeneratorService {
     );
     this.nvidiaApiKey = this.configService.get<string>('nvidia.imageApiKey') || '';
     this.nvidiaEndpoint = this.configService.get<string>('nvidia.imageEndpoint') || '';
+    this.nvidiaTextEndpoint = this.configService.get<string>('nvidia.chatEndpoint') || 'https://integrate.api.nvidia.com/v1/chat/completions';
 
     // Attempt to register a custom font if available
     this.tryRegisterFont();
@@ -268,13 +271,7 @@ export class ImageGeneratorService {
    * This allows free models like Flux to produce DALL-E 3 level quality.
    */
   private async generateSmartPrompt(title: string): Promise<string> {
-    try {
-      this.logger.info(`ImageGenerator: Using Gemini to engineer a professional prompt...`);
-      const model = this.genAI.getGenerativeModel({ 
-        model: this.configService.get<string>('gemini.model') || 'gemini-2.0-flash' 
-      });
-      
-      const prompt = `You are a professional DALL-E 3 prompt engineer. 
+    const promptRequest = `You are a professional DALL-E 3 prompt engineer. 
       Create a highly detailed, professional, and visually stunning image generation prompt for a blog banner.
       The blog title is: "${title}".
       
@@ -296,14 +293,51 @@ export class ImageGeneratorService {
       
       Output ONLY the final prompt. Do not explain your choice.`;
 
-      const result = await model.generateContent(prompt);
+    // Try Gemini first
+    try {
+      this.logger.info(`ImageGenerator: Using Gemini to engineer a professional prompt...`);
+      const model = this.genAI.getGenerativeModel({ 
+        model: this.configService.get<string>('gemini.model') || 'gemini-2.0-flash' 
+      });
+      
+      const result = await model.generateContent(promptRequest);
       const smartPrompt = result.response.text().trim();
       this.logger.info(`ImageGenerator: Gemini Prompt Engineering complete. Prompt: "${smartPrompt.substring(0, 100)}..."`);
       return smartPrompt;
-    } catch (e) {
-      this.logger.warn(`ImageGenerator: Gemini prompt engineering failed, using basic prompt.`);
-      return `${title}. photorealistic, high-tech, futuristic, cinematic lighting, 8k`;
+    } catch (geminiErr) {
+      this.logger.warn(`ImageGenerator: Gemini prompt engineering failed (${geminiErr.message}). Trying NVIDIA Llama fallback...`);
     }
+
+    // Fallback: NVIDIA Llama for prompt engineering
+    try {
+      const nvidiaTextApiKey = this.configService.get<string>('nvidia.apiKey') || this.nvidiaApiKey;
+      if (nvidiaTextApiKey) {
+        this.logger.info(`ImageGenerator: Using NVIDIA Llama for prompt engineering...`);
+        const response = await axios.post(this.nvidiaTextEndpoint, {
+          model: this.FALLBACK_NVIDIA_TEXT_MODEL,
+          messages: [{ role: 'user', content: promptRequest }],
+          max_tokens: 300,
+          temperature: 0.7,
+          stream: false,
+        }, {
+          headers: {
+            'Authorization': `Bearer ${nvidiaTextApiKey}`,
+            'Accept': 'application/json',
+          },
+          timeout: 30000,
+        });
+
+        const smartPrompt = response.data.choices[0].message.content.trim();
+        this.logger.info(`ImageGenerator: NVIDIA Llama Prompt Engineering complete. Prompt: "${smartPrompt.substring(0, 100)}..."`);
+        return smartPrompt;
+      }
+    } catch (nvidiaErr) {
+      this.logger.warn(`ImageGenerator: NVIDIA Llama prompt engineering also failed: ${nvidiaErr.message}`);
+    }
+
+    // Final fallback: basic prompt
+    this.logger.warn(`ImageGenerator: All prompt engineering failed, using basic prompt.`);
+    return `${title}. photorealistic, high-tech, futuristic, cinematic lighting, 8k`;
   }
 
   /**

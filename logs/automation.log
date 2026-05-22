@@ -6822,3 +6822,434 @@
 {"level":"info","message":"Strapi: Fetched 3 recent articles","timestamp":"2026-04-22T06:30:53.241Z"}
 {"level":"warn","message":"TopicEngine: Failed to sync from Strapi — \nInvalid `prisma.topic.findUnique()` invocation:\n\n\nCan't reach database server at dpg-d7jqts7lk1mc738brb80-a. Continuing with local data.","timestamp":"2026-04-22T06:30:54.915Z"}
 {"level":"error","message":"❌ Scheduler: Batch failed — \nInvalid `prisma.topic.findMany()` invocation:\n\n\nCan't reach database server at dpg-d7jqts7lk1mc738brb80-a","stack":"PrismaClientKnownRequestError: \nInvalid `prisma.topic.findMany()` invocation:\n\n\nCan't reach database server at dpg-d7jqts7lk1mc738brb80-a\n    at zr.handleRequestError (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:237:13)\n    at zr.handleAndLogRequestError (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:183:12)\n    at zr.request (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:152:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async a (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\getPrismaClient.ts:808:24)\n    at async TopicEngineService.generateTopics (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\src\\modules\\topic-engine\\topic-engine.service.ts:184:24)\n    at async SchedulerService.scheduleDailyBatch (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\src\\modules\\scheduler\\scheduler.service.ts:72:22)\n    at async SchedulerService.triggerManualBatch (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\src\\modules\\scheduler\\scheduler.service.ts:155:7)\n    at async AppController.triggerBatch (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\src\\app.controller.ts:56:20)\n    at async C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@nestjs\\core\\router\\router-execution-context.js:46:28","timestamp":"2026-04-22T06:30:55.791Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-06T09:02:22.621Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-06T09:02:22.628Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-06T09:02:22.629Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-06T09:02:22.630Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-06T09:02:22.630Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1","timestamp":"2026-05-06T09:02:22.689Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-06T09:02:22.690Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-06T09:02:22.697Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-06T09:02:22.706Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-06T09:02:22.706Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-06T09:02:22.707Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-06T09:07:37.270Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-06T09:07:37.279Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-06T09:07:37.281Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-06T09:07:37.282Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-06T09:07:37.282Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED","timestamp":"2026-05-06T09:07:37.332Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis is disabled. Blog generation jobs will NOT be queued.","timestamp":"2026-05-06T09:07:37.332Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-06T09:07:37.332Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-06T09:07:37.339Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-06T09:07:37.346Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-06T09:07:37.346Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-06T09:07:37.346Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-06T09:10:06.432Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-06T09:10:06.441Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-06T09:10:06.442Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-06T09:10:06.443Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-06T09:10:06.443Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED","timestamp":"2026-05-06T09:10:06.495Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis is disabled. Blog generation jobs will NOT be queued.","timestamp":"2026-05-06T09:10:06.495Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-06T09:10:06.495Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-06T09:10:06.502Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-06T09:10:06.509Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-06T09:10:06.509Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-06T09:10:06.509Z"}
+{"level":"info","message":"Manual trigger received — count: 1","timestamp":"2026-05-06T09:11:06.770Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-06T09:11:06.771Z"}
+{"level":"info","message":"🔄 Scheduler: Starting daily batch — 2026-05-06T09:11:06.772Z","timestamp":"2026-05-06T09:11:06.772Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-06T09:11:06.772Z"}
+{"level":"warn","message":"⚠️  Scheduler: Skipping batch — Redis is disabled (REDIS_ENABLED=false).","timestamp":"2026-05-06T09:11:06.773Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-06T09:14:20.706Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-06T09:14:20.714Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-06T09:14:20.715Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-06T09:14:20.716Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-06T09:14:20.716Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED","timestamp":"2026-05-06T09:14:20.762Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis is disabled. Blog generation jobs will NOT be queued.","timestamp":"2026-05-06T09:14:20.762Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-06T09:14:20.762Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-06T09:14:20.769Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-06T09:14:20.776Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-06T09:14:20.776Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-06T09:14:20.776Z"}
+{"level":"info","message":"Manual trigger received — count: 1","timestamp":"2026-05-06T09:14:25.357Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-06T09:14:25.360Z"}
+{"level":"info","message":"🔄 Scheduler: Starting daily batch — 2026-05-06T09:14:25.360Z","timestamp":"2026-05-06T09:14:25.361Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-06T09:14:25.364Z"}
+{"level":"warn","message":"⚠️  Scheduler: Skipping batch — Redis is disabled (REDIS_ENABLED=false).","timestamp":"2026-05-06T09:14:25.366Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-06T09:16:33.009Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-06T09:16:33.017Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-06T09:16:33.019Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-06T09:16:33.020Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-06T09:16:33.020Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED (Direct Mode)","timestamp":"2026-05-06T09:16:33.066Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis disabled — using DIRECT MODE (no queue, jobs run synchronously).","timestamp":"2026-05-06T09:16:33.067Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-06T09:16:33.067Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-06T09:16:33.074Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-06T09:16:33.080Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-06T09:16:33.081Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-06T09:16:33.081Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-06T09:16:45.140Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-06T09:16:45.146Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-06T09:16:45.148Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-06T09:16:45.148Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-06T09:16:45.149Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED (Direct Mode)","timestamp":"2026-05-06T09:16:45.197Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis disabled — using DIRECT MODE (no queue, jobs run synchronously).","timestamp":"2026-05-06T09:16:45.197Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-06T09:16:45.198Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-06T09:16:45.204Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-06T09:16:45.211Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-06T09:16:45.211Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-06T09:16:45.211Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-06T09:18:31.695Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-06T09:18:31.701Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-06T09:18:31.703Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-06T09:18:31.703Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-06T09:18:31.704Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED (Direct Mode)","timestamp":"2026-05-06T09:18:31.749Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis disabled — using DIRECT MODE (no queue, jobs run synchronously).","timestamp":"2026-05-06T09:18:31.749Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-06T09:18:31.750Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-06T09:18:31.757Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-06T09:18:31.763Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-06T09:18:31.763Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-06T09:18:31.763Z"}
+{"level":"info","message":"Manual trigger received — count: 1","timestamp":"2026-05-06T09:18:35.774Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-06T09:18:35.775Z"}
+{"level":"info","message":"🔄 Scheduler: Starting daily batch — 2026-05-06T09:18:35.775Z","timestamp":"2026-05-06T09:18:35.775Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-06T09:18:35.776Z"}
+{"level":"info","message":"TopicEngine: Generating 1 new topics...","timestamp":"2026-05-06T09:18:35.777Z"}
+{"level":"info","message":"TopicEngine: Syncing recent topics from Strapi...","timestamp":"2026-05-06T09:18:35.778Z"}
+{"level":"info","message":"Strapi: Fetching last 50 articles...","timestamp":"2026-05-06T09:18:35.779Z"}
+{"level":"info","message":"Strapi: Fetched 50 recent articles","timestamp":"2026-05-06T09:18:36.845Z"}
+{"level":"warn","message":"TopicEngine: Failed to sync from Strapi — \nInvalid `prisma.topic.findUnique()` invocation:\n\n\nCan't reach database server at dpg-d7jqts7lk1mc738brb80-a. Continuing with local data.","timestamp":"2026-05-06T09:18:38.310Z"}
+{"level":"error","message":"❌ Scheduler: Batch failed — \nInvalid `prisma.topic.findMany()` invocation:\n\n\nCan't reach database server at dpg-d7jqts7lk1mc738brb80-a","stack":"PrismaClientKnownRequestError: \nInvalid `prisma.topic.findMany()` invocation:\n\n\nCan't reach database server at dpg-d7jqts7lk1mc738brb80-a\n    at zr.handleRequestError (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:237:13)\n    at zr.handleAndLogRequestError (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:183:12)\n    at zr.request (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:152:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async a (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\getPrismaClient.ts:808:24)\n    at async TopicEngineService.generateTopics (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\src\\modules\\topic-engine\\topic-engine.service.ts:185:24)\n    at async SchedulerService.scheduleDailyBatch (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\src\\modules\\scheduler\\scheduler.service.ts:84:22)\n    at async SchedulerService.triggerManualBatch (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\src\\modules\\scheduler\\scheduler.service.ts:295:7)\n    at async AppController.triggerBatch (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\src\\app.controller.ts:56:20)\n    at async C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@nestjs\\core\\router\\router-execution-context.js:46:28","timestamp":"2026-05-06T09:18:39.520Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-06T09:30:00.015Z"}
+{"level":"info","message":"🔄 Scheduler: Starting daily batch — 2026-05-06T09:30:00.015Z","timestamp":"2026-05-06T09:30:00.015Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-06T09:30:00.016Z"}
+{"level":"info","message":"TopicEngine: Generating 1 new topics...","timestamp":"2026-05-06T09:30:00.016Z"}
+{"level":"info","message":"TopicEngine: Syncing recent topics from Strapi...","timestamp":"2026-05-06T09:30:00.016Z"}
+{"level":"info","message":"Strapi: Fetching last 50 articles...","timestamp":"2026-05-06T09:30:00.016Z"}
+{"level":"info","message":"Strapi: Fetched 50 recent articles","timestamp":"2026-05-06T09:30:05.500Z"}
+{"level":"warn","message":"TopicEngine: Failed to sync from Strapi — \nInvalid `prisma.topic.findUnique()` invocation:\n\n\nCan't reach database server at dpg-d7jqts7lk1mc738brb80-a. Continuing with local data.","timestamp":"2026-05-06T09:30:06.815Z"}
+{"level":"error","message":"❌ Scheduler: Batch failed — \nInvalid `prisma.topic.findMany()` invocation:\n\n\nCan't reach database server at dpg-d7jqts7lk1mc738brb80-a","stack":"PrismaClientKnownRequestError: \nInvalid `prisma.topic.findMany()` invocation:\n\n\nCan't reach database server at dpg-d7jqts7lk1mc738brb80-a\n    at zr.handleRequestError (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:237:13)\n    at zr.handleAndLogRequestError (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:183:12)\n    at zr.request (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:152:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async a (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\getPrismaClient.ts:808:24)\n    at async TopicEngineService.generateTopics (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\src\\modules\\topic-engine\\topic-engine.service.ts:185:24)\n    at async SchedulerService.scheduleDailyBatch (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\src\\modules\\scheduler\\scheduler.service.ts:84:22)\n    at async SchedulerService.handleDailyBatch (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\src\\modules\\scheduler\\scheduler.service.ts:67:5)\n    at async CronJob.<anonymous> (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@nestjs\\schedule\\dist\\schedule.explorer.js:119:17)","timestamp":"2026-05-06T09:30:07.954Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-06T09:43:36.033Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-06T09:43:36.041Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-06T09:43:36.043Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-06T09:43:36.043Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-06T09:43:36.044Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED (Direct Mode)","timestamp":"2026-05-06T09:43:36.089Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis disabled — using DIRECT MODE (no queue, jobs run synchronously).","timestamp":"2026-05-06T09:43:36.089Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-06T09:43:36.089Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-06T09:43:36.097Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-06T09:43:36.105Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-06T09:43:36.105Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-06T09:43:36.105Z"}
+{"level":"info","message":"Manual trigger received — count: 1","timestamp":"2026-05-06T09:43:44.170Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-06T09:43:44.173Z"}
+{"level":"info","message":"🔄 Scheduler: Starting daily batch — 2026-05-06T09:43:44.173Z","timestamp":"2026-05-06T09:43:44.174Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-06T09:43:44.178Z"}
+{"level":"info","message":"TopicEngine: Generating 1 new topics...","timestamp":"2026-05-06T09:43:44.180Z"}
+{"level":"info","message":"TopicEngine: Syncing recent topics from Strapi...","timestamp":"2026-05-06T09:43:44.182Z"}
+{"level":"info","message":"Strapi: Fetching last 50 articles...","timestamp":"2026-05-06T09:43:44.184Z"}
+{"level":"info","message":"Strapi: Fetched 50 recent articles","timestamp":"2026-05-06T09:43:44.755Z"}
+{"level":"warn","message":"TopicEngine: Failed to sync from Strapi — \nInvalid `prisma.topic.findUnique()` invocation:\n\n\nCan't reach database server at dpg-d7jqts7lk1mc738brb80-a. Continuing with local data.","timestamp":"2026-05-06T09:43:46.258Z"}
+{"level":"error","message":"❌ Scheduler: Batch failed — \nInvalid `prisma.topic.findMany()` invocation:\n\n\nCan't reach database server at dpg-d7jqts7lk1mc738brb80-a","stack":"PrismaClientKnownRequestError: \nInvalid `prisma.topic.findMany()` invocation:\n\n\nCan't reach database server at dpg-d7jqts7lk1mc738brb80-a\n    at zr.handleRequestError (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:237:13)\n    at zr.handleAndLogRequestError (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:183:12)\n    at zr.request (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:152:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async a (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\getPrismaClient.ts:808:24)\n    at async TopicEngineService.generateTopics (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\src\\modules\\topic-engine\\topic-engine.service.ts:185:24)\n    at async SchedulerService.scheduleDailyBatch (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\src\\modules\\scheduler\\scheduler.service.ts:84:22)\n    at async SchedulerService.triggerManualBatch (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\src\\modules\\scheduler\\scheduler.service.ts:295:7)\n    at async AppController.triggerBatch (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\src\\app.controller.ts:56:20)\n    at async C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@nestjs\\core\\router\\router-execution-context.js:46:28","timestamp":"2026-05-06T09:43:47.510Z"}
+{"context":"NestApplicationContext","level":"error","message":"Error happened during shutdown","stack":["Error: kill ENOSYS\n    at process.kill (node:internal/process/per_thread:277:13)\n    at process.cleanup (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@nestjs\\core\\nest-application-context.js:220:29)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)"],"timestamp":"2026-05-06T09:53:48.429Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-21T15:37:31.129Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-21T15:37:31.138Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-21T15:37:31.140Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-21T15:37:31.141Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-21T15:37:31.143Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED (Direct Mode)","timestamp":"2026-05-21T15:37:31.213Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis disabled — using DIRECT MODE (no queue, jobs run synchronously).","timestamp":"2026-05-21T15:37:31.214Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-21T15:37:31.215Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-21T15:37:31.227Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-21T15:37:31.236Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-21T15:37:31.237Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-21T15:37:31.237Z"}
+{"level":"info","message":"Manual trigger received — count: 1","timestamp":"2026-05-21T15:38:22.842Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-21T15:38:22.844Z"}
+{"level":"info","message":"🔄 Scheduler: Starting daily batch — 2026-05-21T15:38:22.844Z","timestamp":"2026-05-21T15:38:22.845Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-21T15:38:22.846Z"}
+{"level":"info","message":"TopicEngine: Generating 1 new topics...","timestamp":"2026-05-21T15:38:22.848Z"}
+{"level":"info","message":"TopicEngine: Syncing recent topics from Strapi...","timestamp":"2026-05-21T15:38:22.849Z"}
+{"level":"info","message":"Strapi: Fetching last 50 articles...","timestamp":"2026-05-21T15:38:22.851Z"}
+{"level":"info","message":"Strapi: Fetched 50 recent articles","timestamp":"2026-05-21T15:38:23.930Z"}
+{"level":"warn","message":"TopicEngine: Failed to sync from Strapi — \nInvalid `prisma.topic.findUnique()` invocation:\n\n\nServer has closed the connection.. Continuing with local data.","timestamp":"2026-05-21T15:38:24.584Z"}
+{"level":"error","message":"❌ Scheduler: Batch failed — \nInvalid `prisma.topic.findMany()` invocation:\n\n\nServer has closed the connection.","stack":"PrismaClientKnownRequestError: \nInvalid `prisma.topic.findMany()` invocation:\n\n\nServer has closed the connection.\n    at zr.handleRequestError (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:237:13)\n    at zr.handleAndLogRequestError (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:183:12)\n    at zr.request (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:152:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async a (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\getPrismaClient.ts:808:24)\n    at async TopicEngineService.generateTopics (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\src\\modules\\topic-engine\\topic-engine.service.ts:185:24)\n    at async SchedulerService.scheduleDailyBatch (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\src\\modules\\scheduler\\scheduler.service.ts:84:22)\n    at async SchedulerService.triggerManualBatch (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\src\\modules\\scheduler\\scheduler.service.ts:295:7)\n    at async AppController.triggerBatch (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\src\\app.controller.ts:56:20)\n    at async C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@nestjs\\core\\router\\router-execution-context.js:46:28","timestamp":"2026-05-21T15:38:25.145Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-21T15:43:07.356Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-21T15:43:07.365Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-21T15:43:07.368Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-21T15:43:07.371Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-21T15:43:07.372Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED (Direct Mode)","timestamp":"2026-05-21T15:43:07.434Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis disabled — using DIRECT MODE (no queue, jobs run synchronously).","timestamp":"2026-05-21T15:43:07.435Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-21T15:43:07.435Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-21T15:43:07.446Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-21T15:43:07.456Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-21T15:43:07.456Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-21T15:43:07.456Z"}
+{"level":"info","message":"Manual trigger received — count: 1","timestamp":"2026-05-21T15:43:09.935Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-21T15:43:09.937Z"}
+{"level":"info","message":"🔄 Scheduler: Starting daily batch — 2026-05-21T15:43:09.937Z","timestamp":"2026-05-21T15:43:09.938Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-21T15:43:09.938Z"}
+{"level":"info","message":"TopicEngine: Generating 1 new topics...","timestamp":"2026-05-21T15:43:09.940Z"}
+{"level":"info","message":"TopicEngine: Syncing recent topics from Strapi...","timestamp":"2026-05-21T15:43:09.942Z"}
+{"level":"info","message":"Strapi: Fetching last 50 articles...","timestamp":"2026-05-21T15:43:09.943Z"}
+{"level":"info","message":"Strapi: Fetched 50 recent articles","timestamp":"2026-05-21T15:43:10.316Z"}
+{"level":"warn","message":"TopicEngine: Failed to sync from Strapi — Connection terminated unexpectedly. Continuing with local data.","timestamp":"2026-05-21T15:43:11.494Z"}
+{"level":"error","message":"❌ Scheduler: Batch failed — Connection terminated unexpectedly","stack":"Error: Connection terminated unexpectedly\n    at C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\pg-pool\\index.js:45:11\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async PrismaPgAdapter.performIO (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\adapter-pg\\dist\\index.js:652:22)\n    at async PrismaPgAdapter.queryRaw (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\adapter-pg\\dist\\index.js:602:30)\n    at async e.interpretNode (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client-engine-runtime\\src\\interpreter\\query-interpreter.ts:182:26)\n    at async e.interpretNode (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client-engine-runtime\\src\\interpreter\\query-interpreter.ts:268:41)\n    at async e.run (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client-engine-runtime\\src\\interpreter\\query-interpreter.ts:93:23)\n    at async e.execute (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\core\\engines\\client\\LocalExecutor.ts:81:12)\n    at async qt.request (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\core\\engines\\client\\ClientEngine.ts:492:22)\n    at async Object.singleLoader (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:112:26)","timestamp":"2026-05-21T15:43:12.477Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-21T15:43:57.018Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-21T15:43:57.030Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-21T15:43:57.032Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-21T15:43:57.033Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-21T15:43:57.034Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED (Direct Mode)","timestamp":"2026-05-21T15:43:57.103Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis disabled — using DIRECT MODE (no queue, jobs run synchronously).","timestamp":"2026-05-21T15:43:57.104Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-21T15:43:57.104Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-21T15:43:57.116Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-21T15:43:57.125Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-21T15:43:57.126Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-21T15:43:57.126Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-21T15:45:09.965Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-21T15:45:09.980Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-21T15:45:09.983Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-21T15:45:09.983Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-21T15:45:09.984Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED (Direct Mode)","timestamp":"2026-05-21T15:45:10.054Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis disabled — using DIRECT MODE (no queue, jobs run synchronously).","timestamp":"2026-05-21T15:45:10.054Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-21T15:45:10.054Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-21T15:45:10.065Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-21T15:45:10.074Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-21T15:45:10.074Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-21T15:45:10.074Z"}
+{"level":"info","message":"Manual trigger received — count: 1","timestamp":"2026-05-21T15:45:13.112Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-21T15:45:13.114Z"}
+{"level":"info","message":"🔄 Scheduler: Starting daily batch — 2026-05-21T15:45:13.114Z","timestamp":"2026-05-21T15:45:13.115Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-21T15:45:13.117Z"}
+{"level":"info","message":"TopicEngine: Generating 1 new topics...","timestamp":"2026-05-21T15:45:13.120Z"}
+{"level":"info","message":"TopicEngine: Syncing recent topics from Strapi...","timestamp":"2026-05-21T15:45:13.122Z"}
+{"level":"info","message":"Strapi: Fetching last 50 articles...","timestamp":"2026-05-21T15:45:13.124Z"}
+{"level":"info","message":"Strapi: Fetched 50 recent articles","timestamp":"2026-05-21T15:45:13.534Z"}
+{"level":"warn","message":"TopicEngine: Failed to sync from Strapi — Connection terminated unexpectedly. Continuing with local data.","timestamp":"2026-05-21T15:45:14.631Z"}
+{"level":"error","message":"❌ Scheduler: Batch failed — Connection terminated unexpectedly","stack":"Error: Connection terminated unexpectedly\n    at C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\pg-pool\\index.js:45:11\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async PrismaPgAdapter.performIO (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\adapter-pg\\dist\\index.js:652:22)\n    at async PrismaPgAdapter.queryRaw (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\adapter-pg\\dist\\index.js:602:30)\n    at async e.interpretNode (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client-engine-runtime\\src\\interpreter\\query-interpreter.ts:182:26)\n    at async e.interpretNode (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client-engine-runtime\\src\\interpreter\\query-interpreter.ts:268:41)\n    at async e.run (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client-engine-runtime\\src\\interpreter\\query-interpreter.ts:93:23)\n    at async e.execute (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\core\\engines\\client\\LocalExecutor.ts:81:12)\n    at async qt.request (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\core\\engines\\client\\ClientEngine.ts:492:22)\n    at async Object.singleLoader (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:112:26)","timestamp":"2026-05-21T15:45:15.621Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-21T15:46:19.098Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-21T15:46:19.106Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-21T15:46:19.109Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-21T15:46:19.109Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-21T15:46:19.110Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED (Direct Mode)","timestamp":"2026-05-21T15:46:19.170Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis disabled — using DIRECT MODE (no queue, jobs run synchronously).","timestamp":"2026-05-21T15:46:19.170Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-21T15:46:19.170Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-21T15:46:19.181Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-21T15:46:19.191Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-21T15:46:19.192Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-21T15:46:19.192Z"}
+{"level":"info","message":"Manual trigger received — count: 1","timestamp":"2026-05-21T15:48:03.323Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-21T15:48:03.323Z"}
+{"level":"info","message":"🔄 Scheduler: Starting daily batch — 2026-05-21T15:48:03.323Z","timestamp":"2026-05-21T15:48:03.324Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-21T15:48:03.324Z"}
+{"level":"info","message":"TopicEngine: Generating 1 new topics...","timestamp":"2026-05-21T15:48:03.325Z"}
+{"level":"info","message":"TopicEngine: Syncing recent topics from Strapi...","timestamp":"2026-05-21T15:48:03.325Z"}
+{"level":"info","message":"Strapi: Fetching last 50 articles...","timestamp":"2026-05-21T15:48:03.325Z"}
+{"level":"info","message":"Strapi: Fetched 50 recent articles","timestamp":"2026-05-21T15:48:03.743Z"}
+{"level":"warn","message":"TopicEngine: Failed to sync from Strapi — Connection terminated unexpectedly. Continuing with local data.","timestamp":"2026-05-21T15:48:04.759Z"}
+{"level":"error","message":"❌ Scheduler: Batch failed — Connection terminated unexpectedly","stack":"Error: Connection terminated unexpectedly\n    at C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\pg-pool\\index.js:45:11\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async PrismaPgAdapter.performIO (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\adapter-pg\\dist\\index.js:652:22)\n    at async PrismaPgAdapter.queryRaw (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\adapter-pg\\dist\\index.js:602:30)\n    at async e.interpretNode (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client-engine-runtime\\src\\interpreter\\query-interpreter.ts:182:26)\n    at async e.interpretNode (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client-engine-runtime\\src\\interpreter\\query-interpreter.ts:268:41)\n    at async e.run (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client-engine-runtime\\src\\interpreter\\query-interpreter.ts:93:23)\n    at async e.execute (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\core\\engines\\client\\LocalExecutor.ts:81:12)\n    at async qt.request (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\core\\engines\\client\\ClientEngine.ts:492:22)\n    at async Object.singleLoader (C:\\Users\\ROHIT\\Desktop\\innoaft\\ai-automation\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:112:26)","timestamp":"2026-05-21T15:48:05.770Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-21T15:49:51.959Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-21T15:49:51.968Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-21T15:49:51.971Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-21T15:49:51.972Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-21T15:49:51.972Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED (Direct Mode)","timestamp":"2026-05-21T15:49:52.038Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis disabled — using DIRECT MODE (no queue, jobs run synchronously).","timestamp":"2026-05-21T15:49:52.038Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-21T15:49:52.038Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-21T15:49:52.049Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-21T15:49:52.059Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-21T15:49:52.059Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-21T15:49:52.059Z"}
+{"level":"info","message":"Manual trigger received — count: 1","timestamp":"2026-05-21T15:49:58.720Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-21T15:49:58.721Z"}
+{"level":"info","message":"🔄 Scheduler: Starting daily batch — 2026-05-21T15:49:58.721Z","timestamp":"2026-05-21T15:49:58.722Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-21T15:49:58.722Z"}
+{"level":"info","message":"TopicEngine: Generating 1 new topics...","timestamp":"2026-05-21T15:49:58.723Z"}
+{"level":"info","message":"TopicEngine: Syncing recent topics from Strapi...","timestamp":"2026-05-21T15:49:58.727Z"}
+{"level":"info","message":"Strapi: Fetching last 50 articles...","timestamp":"2026-05-21T15:49:58.729Z"}
+{"level":"info","message":"Strapi: Fetched 50 recent articles","timestamp":"2026-05-21T15:49:59.557Z"}
+{"level":"info","message":"TopicEngine: Strapi sync complete","timestamp":"2026-05-21T15:50:06.255Z"}
+{"level":"info","message":"TopicEngine: Static pool exhausted. Using AI to generate 1 fresh topics...","timestamp":"2026-05-21T15:50:06.738Z"}
+{"level":"info","message":"TopicEngine: Trying NVIDIA for AI topics...","timestamp":"2026-05-21T15:50:06.739Z"}
+{"level":"info","message":"TopicEngine: NVIDIA requesting model \"google/gemma-3-27b-it\"...","timestamp":"2026-05-21T15:50:06.739Z"}
+{"level":"warn","message":"TopicEngine: NVIDIA model \"google/gemma-3-27b-it\" failed — Request failed with status code 410","timestamp":"2026-05-21T15:50:06.876Z"}
+{"level":"info","message":"TopicEngine: NVIDIA requesting model \"meta/llama-3.1-8b-instruct\"...","timestamp":"2026-05-21T15:50:06.877Z"}
+{"level":"info","message":"TopicEngine: NVIDIA model \"meta/llama-3.1-8b-instruct\" succeeded.","timestamp":"2026-05-21T15:50:07.389Z"}
+{"level":"info","message":"TopicEngine: AI generated topic — \"Digital Skills That Guarantee a Future-Proof Career in 2026\" [digital-skills]","timestamp":"2026-05-21T15:50:07.390Z"}
+{"level":"info","message":"TopicEngine: Successfully generated 1 topics","timestamp":"2026-05-21T15:50:07.507Z"}
+{"level":"info","message":"Scheduler: Generated 1 topics. Mode: DIRECT","timestamp":"2026-05-21T15:50:07.508Z"}
+{"level":"info","message":"🔧 Scheduler: DIRECT MODE — Processing 1 topics synchronously...","timestamp":"2026-05-21T15:50:07.508Z"}
+{"level":"info","message":"\n🚀 Direct [1/1]: Starting — \"Digital Skills That Guarantee a Future-Proof Career in 2026\"","timestamp":"2026-05-21T15:50:07.509Z"}
+{"level":"info","message":"Direct [1]: Step 1/4 — Generating content...","timestamp":"2026-05-21T15:50:07.612Z"}
+{"level":"info","message":"Strapi: Fetching categories...","timestamp":"2026-05-21T15:50:07.613Z"}
+{"level":"info","message":"Strapi: Fetched 4 categories","timestamp":"2026-05-21T15:50:07.872Z"}
+{"level":"info","message":"BlogGenerator: Generating content for \"Digital Skills That Guarantee a Future-Proof Career in 2026\" using NVIDIA...","timestamp":"2026-05-21T15:50:07.873Z"}
+{"level":"info","message":"BlogGenerator: Trying NVIDIA...","timestamp":"2026-05-21T15:50:07.873Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 1)...","timestamp":"2026-05-21T15:50:07.874Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 2)...","timestamp":"2026-05-21T15:50:07.914Z"}
+{"level":"warn","message":"BlogGenerator: NVIDIA model \"google/gemma-3-27b-it\" failed after 2 attempts. Trying next model...","timestamp":"2026-05-21T15:50:07.958Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"meta/llama-3.1-8b-instruct\" (attempt 1)...","timestamp":"2026-05-21T15:50:07.959Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA model \"meta/llama-3.1-8b-instruct\" succeeded.","timestamp":"2026-05-21T15:50:12.618Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA response received, parsing...","timestamp":"2026-05-21T15:50:12.619Z"}
+{"level":"warn","message":"BlogGenerator: JSON parse failed, attempting super-robust brute-force extraction...","timestamp":"2026-05-21T15:50:12.619Z"}
+{"level":"info","message":"BlogGenerator: Brute-force succeeded for \"Future-Proof Digital Skills for 2026\"","timestamp":"2026-05-21T15:50:12.620Z"}
+{"level":"info","message":"BlogGenerator: Finalizing and enriching inline images with Gemini...","timestamp":"2026-05-21T15:50:12.622Z"}
+{"level":"info","message":"BlogGenerator: No Pollinations images found in content.","timestamp":"2026-05-21T15:50:12.622Z"}
+{"level":"info","message":"BlogGenerator: Content generated successfully — \"Future-Proof Digital Skills for 2026\" (551 words)","timestamp":"2026-05-21T15:50:12.623Z"}
+{"level":"info","message":"Direct [1]: Content generated — \"Future-Proof Digital Skills for 2026\"","timestamp":"2026-05-21T15:50:12.623Z"}
+{"level":"info","message":"Direct [1]: Step 2/4 — Generating banner image...","timestamp":"2026-05-21T15:50:12.624Z"}
+{"level":"info","message":"ImageGenerator: Creating professional banner for \"Future-Proof Digital Skills for 2026\"...","timestamp":"2026-05-21T15:50:12.624Z"}
+{"level":"info","message":"ImageGenerator: Using Gemini to engineer a professional prompt...","timestamp":"2026-05-21T15:50:13.144Z"}
+{"level":"warn","message":"ImageGenerator: Gemini prompt engineering failed ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\nPlease retry in 46.668781262s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\",\"quotaId\":\"GenerateContentInputTokensPerModelPerMinute-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"46s\"}]). Trying NVIDIA Llama fallback...","timestamp":"2026-05-21T15:50:13.751Z"}
+{"level":"info","message":"ImageGenerator: Using NVIDIA Llama for prompt engineering...","timestamp":"2026-05-21T15:50:13.752Z"}
+{"level":"info","message":"ImageGenerator: NVIDIA Llama Prompt Engineering complete. Prompt: \"\"Generate a cinematic 8k octane render of a futuristic server room at dusk, with a holographic inter...\"","timestamp":"2026-05-21T15:50:14.513Z"}
+{"level":"info","message":"ImageGenerator: Tier 1 - Requesting NVIDIA NIM for \"Future-Proof Digital Skills for 2026\"...","timestamp":"2026-05-21T15:50:14.513Z"}
+{"level":"info","message":"ImageGenerator: NVIDIA NIM success","timestamp":"2026-05-21T15:50:17.898Z"}
+{"level":"info","message":"ImageGenerator: Banner created successfully (119.5 KB)","timestamp":"2026-05-21T15:50:17.931Z"}
+{"level":"info","message":"Direct [1]: Banner image generated","timestamp":"2026-05-21T15:50:17.932Z"}
+{"level":"info","message":"Direct [1]: Preview saved locally","timestamp":"2026-05-21T15:50:17.934Z"}
+{"level":"info","message":"Direct [1]: Step 3/4 — Uploading image to Strapi...","timestamp":"2026-05-21T15:50:17.935Z"}
+{"level":"info","message":"Strapi: Uploading image \"digital-skills-that-guarantee-a-future-proof-career-in-2026-banner.jpg\"...","timestamp":"2026-05-21T15:50:17.935Z"}
+{"level":"info","message":"Strapi: Image uploaded successfully — ID: 247, filename: \"digital-skills-that-guarantee-a-future-proof-career-in-2026-banner.jpg\"","timestamp":"2026-05-21T15:50:21.456Z"}
+{"level":"info","message":"Direct [1]: Image uploaded — Media ID: 247","timestamp":"2026-05-21T15:50:21.456Z"}
+{"level":"info","message":"Direct [1]: Step 4/4 — Publishing article...","timestamp":"2026-05-21T15:50:21.457Z"}
+{"level":"info","message":"Strapi: Fetching authors...","timestamp":"2026-05-21T15:50:21.457Z"}
+{"level":"info","message":"Strapi: Fetched 3 authors: [Ansh, Sharukh, Nikhil Chauhan]","timestamp":"2026-05-21T15:50:21.625Z"}
+{"level":"info","message":"Strapi: Creating article \"Future-Proof Digital Skills for 2026\"...","timestamp":"2026-05-21T15:50:21.626Z"}
+{"level":"info","message":"Strapi: Article created successfully — ID: 321, slug: \"future-proof-digital-skills-for-2026\"","timestamp":"2026-05-21T15:50:22.805Z"}
+{"level":"info","message":"✅ Direct [1]: Published — Strapi ID: 321, slug: \"future-proof-digital-skills-for-2026\"","timestamp":"2026-05-21T15:50:23.977Z"}
+{"level":"info","message":"✅ Scheduler: DIRECT MODE batch complete","timestamp":"2026-05-21T15:50:23.978Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-22T03:12:19.553Z"}
+{"level":"info","message":"🔄 Scheduler: Starting daily batch — 2026-05-22T03:12:19.556Z","timestamp":"2026-05-22T03:12:19.558Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-22T03:12:19.558Z"}
+{"level":"info","message":"TopicEngine: Generating 1 new topics...","timestamp":"2026-05-22T03:12:19.559Z"}
+{"level":"info","message":"TopicEngine: Syncing recent topics from Strapi...","timestamp":"2026-05-22T03:12:19.561Z"}
+{"level":"info","message":"Strapi: Fetching last 50 articles...","timestamp":"2026-05-22T03:12:19.566Z"}
+{"level":"warn","message":"Strapi: fetchRecentBlogs failed (attempt 1/3) — Status: N/A, Error: getaddrinfo ENOTFOUND strapi-blog.innovaft.com","timestamp":"2026-05-22T03:12:20.115Z"}
+{"level":"info","message":"Strapi: Retrying fetchRecentBlogs in 1000ms...","timestamp":"2026-05-22T03:12:20.155Z"}
+{"level":"info","message":"Strapi: Fetched 50 recent articles","timestamp":"2026-05-22T03:12:21.954Z"}
+{"level":"info","message":"TopicEngine: Strapi sync complete","timestamp":"2026-05-22T03:12:28.109Z"}
+{"level":"info","message":"TopicEngine: Static pool exhausted. Using AI to generate 1 fresh topics...","timestamp":"2026-05-22T03:12:28.327Z"}
+{"level":"info","message":"TopicEngine: Trying NVIDIA for AI topics...","timestamp":"2026-05-22T03:12:28.327Z"}
+{"level":"info","message":"TopicEngine: NVIDIA requesting model \"google/gemma-3-27b-it\"...","timestamp":"2026-05-22T03:12:28.328Z"}
+{"level":"warn","message":"TopicEngine: NVIDIA model \"google/gemma-3-27b-it\" failed — Request failed with status code 410","timestamp":"2026-05-22T03:12:28.477Z"}
+{"level":"info","message":"TopicEngine: NVIDIA requesting model \"meta/llama-3.1-8b-instruct\"...","timestamp":"2026-05-22T03:12:28.478Z"}
+{"level":"info","message":"TopicEngine: NVIDIA model \"meta/llama-3.1-8b-instruct\" succeeded.","timestamp":"2026-05-22T03:12:29.092Z"}
+{"level":"info","message":"TopicEngine: AI generated topic — \"WordPress Website Security: Best Practices for Protecting Your Online Presence in India\" [wordpress]","timestamp":"2026-05-22T03:12:29.092Z"}
+{"level":"info","message":"TopicEngine: Successfully generated 1 topics","timestamp":"2026-05-22T03:12:29.186Z"}
+{"level":"info","message":"Scheduler: Generated 1 topics. Mode: DIRECT","timestamp":"2026-05-22T03:12:29.187Z"}
+{"level":"info","message":"🔧 Scheduler: DIRECT MODE — Processing 1 topics synchronously...","timestamp":"2026-05-22T03:12:29.187Z"}
+{"level":"info","message":"\n🚀 Direct [1/1]: Starting — \"WordPress Website Security: Best Practices for Protecting Your Online Presence in India\"","timestamp":"2026-05-22T03:12:29.188Z"}
+{"level":"info","message":"Direct [1]: Step 1/4 — Generating content...","timestamp":"2026-05-22T03:12:29.288Z"}
+{"level":"info","message":"Strapi: Fetching categories...","timestamp":"2026-05-22T03:12:29.288Z"}
+{"level":"info","message":"Strapi: Fetched 4 categories","timestamp":"2026-05-22T03:12:29.597Z"}
+{"level":"info","message":"BlogGenerator: Generating content for \"WordPress Website Security: Best Practices for Protecting Your Online Presence in India\" using NVIDIA...","timestamp":"2026-05-22T03:12:29.597Z"}
+{"level":"info","message":"BlogGenerator: Trying NVIDIA...","timestamp":"2026-05-22T03:12:29.597Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 1)...","timestamp":"2026-05-22T03:12:29.598Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 2)...","timestamp":"2026-05-22T03:12:29.632Z"}
+{"level":"warn","message":"BlogGenerator: NVIDIA model \"google/gemma-3-27b-it\" failed after 2 attempts. Trying next model...","timestamp":"2026-05-22T03:12:29.666Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"meta/llama-3.1-8b-instruct\" (attempt 1)...","timestamp":"2026-05-22T03:12:29.666Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA model \"meta/llama-3.1-8b-instruct\" succeeded.","timestamp":"2026-05-22T03:12:33.351Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA response received, parsing...","timestamp":"2026-05-22T03:12:33.352Z"}
+{"level":"info","message":"BlogGenerator: Finalizing and enriching inline images with Gemini...","timestamp":"2026-05-22T03:12:33.353Z"}
+{"level":"info","message":"BlogGenerator: Found 2 Pollinations images to enrich.","timestamp":"2026-05-22T03:12:33.353Z"}
+{"level":"info","message":"BlogGenerator: Engineering prompt for inline image: \"student using laptop...\"","timestamp":"2026-05-22T03:12:33.353Z"}
+{"level":"warn","message":"BlogGenerator: Gemini inline prompt failed ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\nPlease retry in 26.33053475s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\",\"quotaId\":\"GenerateContentInputTokensPerModelPerMinute-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"26s\"}]). Trying NVIDIA Llama...","timestamp":"2026-05-22T03:12:33.912Z"}
+{"level":"info","message":"BlogGenerator: Inline image enriched for \"student-using-laptop\"","timestamp":"2026-05-22T03:12:34.522Z"}
+{"level":"info","message":"BlogGenerator: Engineering prompt for inline image: \"security audit...\"","timestamp":"2026-05-22T03:12:34.522Z"}
+{"level":"warn","message":"BlogGenerator: Gemini inline prompt failed ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\nPlease retry in 25.543239048s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"model\":\"gemini-2.0-flash\",\"location\":\"global\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"model\":\"gemini-2.0-flash\",\"location\":\"global\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\",\"quotaId\":\"GenerateContentInputTokensPerModelPerMinute-FreeTier\",\"quotaDimensions\":{\"model\":\"gemini-2.0-flash\",\"location\":\"global\"}}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"25s\"}]). Trying NVIDIA Llama...","timestamp":"2026-05-22T03:12:34.677Z"}
+{"level":"info","message":"BlogGenerator: Inline image enriched for \"security-audit\"","timestamp":"2026-05-22T03:12:35.221Z"}
+{"level":"info","message":"BlogGenerator: Content generated successfully — \"WordPress Website Security Best Practices in India\" (419 words)","timestamp":"2026-05-22T03:12:35.221Z"}
+{"level":"info","message":"Direct [1]: Content generated — \"WordPress Website Security Best Practices in India\"","timestamp":"2026-05-22T03:12:35.221Z"}
+{"level":"info","message":"Direct [1]: Step 2/4 — Generating banner image...","timestamp":"2026-05-22T03:12:35.222Z"}
+{"level":"info","message":"ImageGenerator: Creating professional banner for \"WordPress Website Security Best Practices in India\"...","timestamp":"2026-05-22T03:12:35.222Z"}
+{"level":"info","message":"ImageGenerator: Using Gemini to engineer a professional prompt...","timestamp":"2026-05-22T03:12:35.223Z"}
+{"level":"warn","message":"ImageGenerator: Gemini prompt engineering failed ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\nPlease retry in 24.849978613s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\",\"quotaId\":\"GenerateContentInputTokensPerModelPerMinute-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"model\":\"gemini-2.0-flash\",\"location\":\"global\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"model\":\"gemini-2.0-flash\",\"location\":\"global\"}}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"24s\"}]). Trying NVIDIA Llama fallback...","timestamp":"2026-05-22T03:12:35.445Z"}
+{"level":"info","message":"ImageGenerator: Using NVIDIA Llama for prompt engineering...","timestamp":"2026-05-22T03:12:35.445Z"}
+{"level":"info","message":"ImageGenerator: NVIDIA Llama Prompt Engineering complete. Prompt: \"\"Generate a cinematic, 8k octane render of a futuristic Indian data center at sunset, with a quantum...\"","timestamp":"2026-05-22T03:12:36.365Z"}
+{"level":"info","message":"ImageGenerator: Tier 1 - Requesting NVIDIA NIM for \"WordPress Website Security Best Practices in India\"...","timestamp":"2026-05-22T03:12:36.365Z"}
+{"level":"error","message":"ImageGenerator: NVIDIA NIM API error — \"timeout of 120000ms exceeded\"","timestamp":"2026-05-22T03:14:36.379Z"}
+{"level":"warn","message":"ImageGenerator: Tier 1 (NVIDIA) failed (NVIDIA NIM failed: \"timeout of 120000ms exceeded\"). Moving to Tier 2...","timestamp":"2026-05-22T03:14:36.380Z"}
+{"level":"info","message":"ImageGenerator: Tier 2 - Requesting DALL-E 3 for \"WordPress Website Security Best Practices in India\"...","timestamp":"2026-05-22T03:14:36.380Z"}
+{"level":"warn","message":"ImageGenerator: Tier 2 failed (401 Incorrect API key provided: \"sk-proj**********************************************************************************************************************************************************BcA\". You can find your API key at https://platform.openai.com/account/api-keys.). Moving to Tier 3 (Flux)...","timestamp":"2026-05-22T03:14:37.508Z"}
+{"level":"info","message":"ImageGenerator: Tier 2 - Requesting Flux (Attempt 1)...","timestamp":"2026-05-22T03:14:37.509Z"}
+{"level":"info","message":"ImageGenerator: Flux success","timestamp":"2026-05-22T03:14:39.088Z"}
+{"level":"info","message":"ImageGenerator: Banner created successfully (133.4 KB)","timestamp":"2026-05-22T03:14:39.161Z"}
+{"level":"info","message":"Direct [1]: Banner image generated","timestamp":"2026-05-22T03:14:39.163Z"}
+{"level":"info","message":"Direct [1]: Preview saved locally","timestamp":"2026-05-22T03:14:39.168Z"}
+{"level":"info","message":"Direct [1]: Step 3/4 — Uploading image to Strapi...","timestamp":"2026-05-22T03:14:39.172Z"}
+{"level":"info","message":"Strapi: Uploading image \"wordpress-website-security-best-practices-for-protecting-your-online-presence-in-india-banner.jpg\"...","timestamp":"2026-05-22T03:14:39.174Z"}
+{"level":"info","message":"Strapi: Image uploaded successfully — ID: 248, filename: \"wordpress-website-security-best-practices-for-protecting-your-online-presence-in-india-banner.jpg\"","timestamp":"2026-05-22T03:14:43.133Z"}
+{"level":"info","message":"Direct [1]: Image uploaded — Media ID: 248","timestamp":"2026-05-22T03:14:43.133Z"}
+{"level":"info","message":"Direct [1]: Step 4/4 — Publishing article...","timestamp":"2026-05-22T03:14:43.134Z"}
+{"level":"info","message":"Strapi: Fetching authors...","timestamp":"2026-05-22T03:14:43.134Z"}
+{"level":"info","message":"Strapi: Fetched 3 authors: [Ansh, Sharukh, Nikhil Chauhan]","timestamp":"2026-05-22T03:14:43.343Z"}
+{"level":"info","message":"Strapi: Creating article \"WordPress Website Security Best Practices in India\"...","timestamp":"2026-05-22T03:14:43.344Z"}
+{"level":"info","message":"Strapi: Article created successfully — ID: 323, slug: \"wordpress-website-security-best-practices-in-india\"","timestamp":"2026-05-22T03:14:44.653Z"}
+{"level":"info","message":"✅ Direct [1]: Published — Strapi ID: 323, slug: \"wordpress-website-security-best-practices-in-india\"","timestamp":"2026-05-22T03:14:46.109Z"}
+{"level":"info","message":"✅ Scheduler: DIRECT MODE batch complete","timestamp":"2026-05-22T03:14:46.110Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-22T03:30:00.048Z"}
+{"level":"info","message":"🔄 Scheduler: Starting daily batch — 2026-05-22T03:30:00.049Z","timestamp":"2026-05-22T03:30:00.051Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-22T03:30:00.051Z"}
+{"level":"info","message":"TopicEngine: Generating 1 new topics...","timestamp":"2026-05-22T03:30:00.052Z"}
+{"level":"info","message":"TopicEngine: Syncing recent topics from Strapi...","timestamp":"2026-05-22T03:30:00.061Z"}
+{"level":"info","message":"Strapi: Fetching last 50 articles...","timestamp":"2026-05-22T03:30:00.067Z"}
+{"level":"info","message":"Strapi: Fetched 50 recent articles","timestamp":"2026-05-22T03:30:00.895Z"}
+{"level":"info","message":"TopicEngine: Strapi sync complete","timestamp":"2026-05-22T03:30:11.294Z"}
+{"level":"info","message":"TopicEngine: Static pool exhausted. Using AI to generate 1 fresh topics...","timestamp":"2026-05-22T03:30:11.737Z"}
+{"level":"info","message":"TopicEngine: Trying NVIDIA for AI topics...","timestamp":"2026-05-22T03:30:11.738Z"}
+{"level":"info","message":"TopicEngine: NVIDIA requesting model \"google/gemma-3-27b-it\"...","timestamp":"2026-05-22T03:30:11.743Z"}
+{"level":"warn","message":"TopicEngine: NVIDIA model \"google/gemma-3-27b-it\" failed — Request failed with status code 410","timestamp":"2026-05-22T03:30:12.016Z"}
+{"level":"info","message":"TopicEngine: NVIDIA requesting model \"meta/llama-3.1-8b-instruct\"...","timestamp":"2026-05-22T03:30:12.017Z"}
+{"level":"info","message":"TopicEngine: NVIDIA model \"meta/llama-3.1-8b-instruct\" succeeded.","timestamp":"2026-05-22T03:30:12.731Z"}
+{"level":"info","message":"TopicEngine: AI generated topic — \"Unlocking the Power of WordPress: Essential Skills for Digital Professionals in India\" [wordpress]","timestamp":"2026-05-22T03:30:12.733Z"}
+{"level":"info","message":"TopicEngine: Successfully generated 1 topics","timestamp":"2026-05-22T03:30:12.899Z"}
+{"level":"info","message":"Scheduler: Generated 1 topics. Mode: DIRECT","timestamp":"2026-05-22T03:30:12.899Z"}
+{"level":"info","message":"🔧 Scheduler: DIRECT MODE — Processing 1 topics synchronously...","timestamp":"2026-05-22T03:30:12.900Z"}
+{"level":"info","message":"\n🚀 Direct [1/1]: Starting — \"Unlocking the Power of WordPress: Essential Skills for Digital Professionals in India\"","timestamp":"2026-05-22T03:30:12.900Z"}
+{"level":"info","message":"Direct [1]: Step 1/4 — Generating content...","timestamp":"2026-05-22T03:30:13.040Z"}
+{"level":"info","message":"Strapi: Fetching categories...","timestamp":"2026-05-22T03:30:13.040Z"}
+{"level":"info","message":"Strapi: Fetched 4 categories","timestamp":"2026-05-22T03:30:13.450Z"}
+{"level":"info","message":"BlogGenerator: Generating content for \"Unlocking the Power of WordPress: Essential Skills for Digital Professionals in India\" using NVIDIA...","timestamp":"2026-05-22T03:30:13.451Z"}
+{"level":"info","message":"BlogGenerator: Trying NVIDIA...","timestamp":"2026-05-22T03:30:13.452Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 1)...","timestamp":"2026-05-22T03:30:13.453Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 2)...","timestamp":"2026-05-22T03:30:13.521Z"}
+{"level":"warn","message":"BlogGenerator: NVIDIA model \"google/gemma-3-27b-it\" failed after 2 attempts. Trying next model...","timestamp":"2026-05-22T03:30:13.642Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"meta/llama-3.1-8b-instruct\" (attempt 1)...","timestamp":"2026-05-22T03:30:13.644Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA model \"meta/llama-3.1-8b-instruct\" succeeded.","timestamp":"2026-05-22T03:30:18.977Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA response received, parsing...","timestamp":"2026-05-22T03:30:18.979Z"}
+{"level":"info","message":"BlogGenerator: Finalizing and enriching inline images with Gemini...","timestamp":"2026-05-22T03:30:18.979Z"}
+{"level":"info","message":"BlogGenerator: No Pollinations images found in content.","timestamp":"2026-05-22T03:30:18.980Z"}
+{"level":"info","message":"BlogGenerator: Content generated successfully — \"Unlocking WordPress Power for Digital Pros in India\" (479 words)","timestamp":"2026-05-22T03:30:18.980Z"}
+{"level":"info","message":"Direct [1]: Content generated — \"Unlocking WordPress Power for Digital Pros in India\"","timestamp":"2026-05-22T03:30:18.981Z"}
+{"level":"info","message":"Direct [1]: Step 2/4 — Generating banner image...","timestamp":"2026-05-22T03:30:18.981Z"}
+{"level":"info","message":"ImageGenerator: Creating professional banner for \"Unlocking WordPress Power for Digital Pros in India\"...","timestamp":"2026-05-22T03:30:18.981Z"}
+{"level":"info","message":"ImageGenerator: Using Gemini to engineer a professional prompt...","timestamp":"2026-05-22T03:30:18.982Z"}
+{"level":"warn","message":"ImageGenerator: Gemini prompt engineering failed ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\nPlease retry in 40.642275676s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\",\"quotaId\":\"GenerateContentInputTokensPerModelPerMinute-FreeTier\",\"quotaDimensions\":{\"model\":\"gemini-2.0-flash\",\"location\":\"global\"}}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"40s\"}]). Trying NVIDIA Llama fallback...","timestamp":"2026-05-22T03:30:19.599Z"}
+{"level":"info","message":"ImageGenerator: Using NVIDIA Llama for prompt engineering...","timestamp":"2026-05-22T03:30:19.599Z"}
+{"level":"info","message":"ImageGenerator: NVIDIA Llama Prompt Engineering complete. Prompt: \"\"Generate a 4K, cinematic, and surreal image of a futuristic server room with a central, glowing AI ...\"","timestamp":"2026-05-22T03:30:20.824Z"}
+{"level":"info","message":"ImageGenerator: Tier 1 - Requesting NVIDIA NIM for \"Unlocking WordPress Power for Digital Pros in India\"...","timestamp":"2026-05-22T03:30:20.825Z"}
+{"level":"info","message":"ImageGenerator: NVIDIA NIM success","timestamp":"2026-05-22T03:30:25.809Z"}
+{"level":"info","message":"ImageGenerator: Banner created successfully (128.8 KB)","timestamp":"2026-05-22T03:30:25.849Z"}
+{"level":"info","message":"Direct [1]: Banner image generated","timestamp":"2026-05-22T03:30:25.850Z"}
+{"level":"info","message":"Direct [1]: Preview saved locally","timestamp":"2026-05-22T03:30:25.892Z"}
+{"level":"info","message":"Direct [1]: Step 3/4 — Uploading image to Strapi...","timestamp":"2026-05-22T03:30:25.894Z"}
+{"level":"info","message":"Strapi: Uploading image \"unlocking-the-power-of-wordpress-essential-skills-for-digital-professionals-in-india-banner.jpg\"...","timestamp":"2026-05-22T03:30:25.896Z"}
+{"level":"info","message":"Strapi: Image uploaded successfully — ID: 249, filename: \"unlocking-the-power-of-wordpress-essential-skills-for-digital-professionals-in-india-banner.jpg\"","timestamp":"2026-05-22T03:30:29.128Z"}
+{"level":"info","message":"Direct [1]: Image uploaded — Media ID: 249","timestamp":"2026-05-22T03:30:29.129Z"}
+{"level":"info","message":"Direct [1]: Step 4/4 — Publishing article...","timestamp":"2026-05-22T03:30:29.130Z"}
+{"level":"info","message":"Strapi: Fetching authors...","timestamp":"2026-05-22T03:30:29.130Z"}
+{"level":"info","message":"Strapi: Fetched 3 authors: [Ansh, Sharukh, Nikhil Chauhan]","timestamp":"2026-05-22T03:30:29.424Z"}
+{"level":"info","message":"Strapi: Creating article \"Unlocking WordPress Power for Digital Pros in India\"...","timestamp":"2026-05-22T03:30:29.425Z"}
+{"level":"info","message":"Strapi: Article created successfully — ID: 325, slug: \"unlocking-wordpress-power-for-digital-pros-in-india\"","timestamp":"2026-05-22T03:30:30.669Z"}
+{"level":"info","message":"✅ Direct [1]: Published — Strapi ID: 325, slug: \"unlocking-wordpress-power-for-digital-pros-in-india\"","timestamp":"2026-05-22T03:30:32.190Z"}
+{"level":"info","message":"✅ Scheduler: DIRECT MODE batch complete","timestamp":"2026-05-22T03:30:32.191Z"}

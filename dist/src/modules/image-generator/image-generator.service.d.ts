@@ -8,6 +8,8 @@ export declare class ImageGeneratorService {
     private genAI;
     private nvidiaApiKey;
     private nvidiaEndpoint;
+    private nvidiaTextEndpoint;
+    private readonly FALLBACK_NVIDIA_TEXT_MODEL;
     constructor(configService: ConfigService, logger: Logger);
     generateBannerImage(title: string): Promise<Buffer>;
     private drawDynamicBackground;

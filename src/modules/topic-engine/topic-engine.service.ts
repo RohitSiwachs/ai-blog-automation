@@ -145,6 +145,7 @@ export class TopicEngineService {
   private nvidiaModel: string;
   private nvidiaEndpoint: string;
   private aiProvider: string;
+  private readonly FALLBACK_NVIDIA_MODEL = 'meta/llama-3.1-8b-instruct';
 
   constructor(
     private readonly prisma: PrismaService,
@@ -402,10 +403,31 @@ export class TopicEngineService {
     try {
       let text: string;
 
-      if (this.aiProvider === 'nvidia') {
-        text = await this.generateAITopicsWithNvidia(prompt);
-      } else {
-        text = await this.generateAITopicsWithGemini(prompt);
+      // Try primary provider first, then fallback to other
+      const providers = this.aiProvider === 'nvidia'
+        ? ['nvidia', 'gemini'] as const
+        : ['gemini', 'nvidia'] as const;
+
+      let lastProviderError: Error | null = null;
+
+      for (const provider of providers) {
+        try {
+          this.logger.info(`TopicEngine: Trying ${provider.toUpperCase()} for AI topics...`);
+          if (provider === 'nvidia') {
+            text = await this.generateAITopicsWithNvidia(prompt);
+          } else {
+            text = await this.generateAITopicsWithGemini(prompt);
+          }
+          lastProviderError = null;
+          break; // Success, exit loop
+        } catch (providerErr) {
+          lastProviderError = providerErr;
+          this.logger.warn(`TopicEngine: ${provider.toUpperCase()} failed — ${providerErr.message}`);
+        }
+      }
+
+      if (lastProviderError || !text!) {
+        throw lastProviderError || new Error('All providers failed');
       }
 
       return text
@@ -432,28 +454,56 @@ export class TopicEngineService {
    * Topics via NVIDIA
    */
   private async generateAITopicsWithNvidia(prompt: string): Promise<string> {
-    const payload: any = {
-      model: this.nvidiaModel,
-      messages: [{ role: 'user', content: prompt }],
-      max_tokens: 4096,
-      temperature: 0.8,
-      top_p: 0.9,
-      stream: false,
-    };
-
-    // Gemma 4 requires thinking kwargs as per user provided snippet
-    if (this.nvidiaModel.includes('gemma-4')) {
-      payload.chat_template_kwargs = { enable_thinking: true };
+    // Models to try: primary first, then fallback
+    const modelsToTry = [this.nvidiaModel];
+    if (this.nvidiaModel !== this.FALLBACK_NVIDIA_MODEL) {
+      modelsToTry.push(this.FALLBACK_NVIDIA_MODEL);
     }
 
-    const response = await axios.post(this.nvidiaEndpoint, payload, {
-      headers: {
-        Authorization: `Bearer ${this.nvidiaApiKey}`,
-        Accept: 'application/json',
-      },
-    });
+    let lastError: any;
 
-    return response.data.choices[0].message.content;
+    for (const model of modelsToTry) {
+      const payload: any = {
+        model,
+        messages: [{ role: 'user', content: prompt }],
+        max_tokens: 4096,
+        temperature: 0.8,
+        top_p: 0.9,
+        stream: false,
+      };
+
+      // Gemma 4 requires thinking kwargs
+      if (model.includes('gemma-4')) {
+        payload.chat_template_kwargs = { enable_thinking: true };
+      }
+
+      try {
+        this.logger.info(`TopicEngine: NVIDIA requesting model "${model}"...`);
+        const response = await axios.post(this.nvidiaEndpoint, payload, {
+          headers: {
+            Authorization: `Bearer ${this.nvidiaApiKey}`,
+            Accept: 'application/json',
+          },
+          timeout: 120000,
+        });
+
+        this.logger.info(`TopicEngine: NVIDIA model "${model}" succeeded.`);
+        return response.data.choices[0].message.content;
+      } catch (error) {
+        lastError = error;
+        const statusCode = error.response?.status;
+        const detail = error.response?.data?.detail || '';
+
+        if (statusCode === 400 && (detail.includes('DEGRADED') || detail.includes('cannot be invoked'))) {
+          this.logger.warn(`TopicEngine: NVIDIA model "${model}" is DEGRADED. Trying fallback model...`);
+          continue;
+        }
+
+        this.logger.warn(`TopicEngine: NVIDIA model "${model}" failed — ${error.message}`);
+      }
+    }
+
+    throw lastError;
   }
 
   /**

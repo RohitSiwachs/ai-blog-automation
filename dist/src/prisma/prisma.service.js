@@ -15,8 +15,13 @@ const client_1 = require("@prisma/client");
 const adapter_pg_1 = require("@prisma/adapter-pg");
 let PrismaService = class PrismaService extends client_1.PrismaClient {
     constructor() {
+        const dbUrl = process.env.DATABASE_URL || '';
+        const cleanUrl = dbUrl.replace(/[?&]sslmode=[^&]*/g, '');
         const adapter = new adapter_pg_1.PrismaPg({
-            connectionString: process.env.DATABASE_URL,
+            connectionString: cleanUrl,
+            ssl: {
+                rejectUnauthorized: false,
+            },
         });
         super({ adapter });
     }

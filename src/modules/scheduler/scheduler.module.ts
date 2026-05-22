@@ -1,7 +1,7 @@
 // ============================================================
 // Scheduler Module
 // Wires together BullMQ queue, cron scheduling, and the
-// blog job processor.
+// blog job processor. Supports direct mode when Redis is off.
 // ============================================================
 
 import { Module } from '@nestjs/common';

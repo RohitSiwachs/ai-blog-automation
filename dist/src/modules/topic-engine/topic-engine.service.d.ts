@@ -19,6 +19,7 @@ export declare class TopicEngineService {
     private nvidiaModel;
     private nvidiaEndpoint;
     private aiProvider;
+    private readonly FALLBACK_NVIDIA_MODEL;
     constructor(prisma: PrismaService, strapiService: StrapiService, configService: ConfigService, logger: Logger);
     generateTopics(count: number): Promise<GeneratedTopic[]>;
     private syncStrapiTopics;

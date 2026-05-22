@@ -18,6 +18,7 @@ declare const _default: () => {
         imageEndpoint: string;
     };
     redis: {
+        enabled: string;
         host: string;
         port: number;
         password: string | undefined;
