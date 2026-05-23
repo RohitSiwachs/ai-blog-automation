@@ -65,6 +65,7 @@ __decorate([
 ], AppController.prototype, "getHealth", null);
 __decorate([
     (0, common_1.Post)('trigger'),
+    (0, common_1.Get)('trigger'),
     __param(0, (0, common_1.Query)('count')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

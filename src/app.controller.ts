@@ -45,10 +45,12 @@ export class AppController {
   /**
    * Manually trigger a blog generation batch.
    * POST /trigger?count=3
+   * GET /trigger?count=3 (Added for easy browser testing and uptime service compatibility)
    *
    * @param count - Number of posts to generate (default: configured POSTS_PER_DAY)
    */
   @Post('trigger')
+  @Get('trigger')
   async triggerBatch(@Query('count') count?: string) {
     this.logger.info(`Manual trigger received — count: ${count || 'default'}`);
 
