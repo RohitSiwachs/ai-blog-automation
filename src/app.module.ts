@@ -17,7 +17,7 @@ import { StrapiModule } from './modules/strapi-service/strapi.module';
 import { SchedulerModule } from './modules/scheduler/scheduler.module';
 import { AppController } from './app.controller';
 
-const redisEnabled = process.env.REDIS_ENABLED !== 'false';
+const redisEnabled = process.env.REDIS_ENABLED !== 'false' && process.env.REDIS_AVAILABLE === 'true';
 
 const imports = [
   // --- Configuration (loads .env and typed config) ---

@@ -23,7 +23,7 @@ const image_generator_module_1 = require("./modules/image-generator/image-genera
 const strapi_module_1 = require("./modules/strapi-service/strapi.module");
 const scheduler_module_1 = require("./modules/scheduler/scheduler.module");
 const app_controller_1 = require("./app.controller");
-const redisEnabled = process.env.REDIS_ENABLED !== 'false';
+const redisEnabled = process.env.REDIS_ENABLED !== 'false' && process.env.REDIS_AVAILABLE === 'true';
 const imports = [
     config_1.ConfigModule.forRoot({
         isGlobal: true,

@@ -82,7 +82,9 @@ let SchedulerService = class SchedulerService {
         this.logger = logger;
         this.postsPerDay =
             this.configService.get('scheduler.postsPerDay') || 5;
-        this.redisEnabled = this.configService.get('redis.enabled') !== 'false';
+        this.redisEnabled =
+            this.configService.get('redis.enabled') !== 'false' &&
+                process.env.REDIS_AVAILABLE === 'true';
     }
     async onModuleInit() {
         const cron = this.configService.get('scheduler.dailyCron');

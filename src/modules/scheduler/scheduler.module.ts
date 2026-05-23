@@ -13,7 +13,7 @@ import { BlogGeneratorModule } from '../blog-generator/blog-generator.module';
 import { ImageGeneratorModule } from '../image-generator/image-generator.module';
 import { StrapiModule } from '../strapi-service/strapi.module';
 
-const redisEnabled = process.env.REDIS_ENABLED !== 'false';
+const redisEnabled = process.env.REDIS_ENABLED !== 'false' && process.env.REDIS_AVAILABLE === 'true';
 
 const imports: any[] = [
   // Import dependent modules

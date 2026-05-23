@@ -39,7 +39,9 @@ export class SchedulerService implements OnModuleInit {
   ) {
     this.postsPerDay =
       this.configService.get<number>('scheduler.postsPerDay') || 5;
-    this.redisEnabled = this.configService.get<string>('redis.enabled') !== 'false';
+    this.redisEnabled =
+      this.configService.get<string>('redis.enabled') !== 'false' &&
+      process.env.REDIS_AVAILABLE === 'true';
   }
 
   /**
