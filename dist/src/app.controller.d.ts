@@ -16,9 +16,9 @@ export declare class AppController {
         uptime: number;
     };
     triggerBatch(count?: string): Promise<{
-        timestamp: string;
-        message: string;
-        jobCount: number;
         success: boolean;
+        message: string;
+        jobCount: string | number;
+        timestamp: string;
     }>;
 }

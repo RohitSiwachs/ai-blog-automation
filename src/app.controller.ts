@@ -55,11 +55,21 @@ export class AppController {
     this.logger.info(`Manual trigger received — count: ${count || 'default'}`);
 
     const jobCount = count ? parseInt(count, 10) : undefined;
-    const result = await this.schedulerService.triggerManualBatch(jobCount);
+
+    // Trigger the batch asynchronously in the background so the HTTP
+    // request completes instantly (preventing connection timeouts).
+    this.schedulerService.triggerManualBatch(jobCount)
+      .then((result) => {
+        this.logger.info(`Background manual batch completed: ${result.message}`);
+      })
+      .catch((error) => {
+        this.logger.error(`Background manual batch failed: ${error.message}`);
+      });
 
     return {
       success: true,
-      ...result,
+      message: `Manual batch triggered successfully in the background.`,
+      jobCount: jobCount || 'default',
       timestamp: new Date().toISOString(),
     };
   }
