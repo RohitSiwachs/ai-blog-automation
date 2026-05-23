@@ -249,27 +249,32 @@ let ImageGeneratorService = class ImageGeneratorService {
         }
     }
     async generateSmartPrompt(title) {
-        const promptRequest = `You are a professional DALL-E 3 prompt engineer. 
-      Create a highly detailed, professional, and visually stunning image generation prompt for a blog banner.
+        const promptRequest = `You are a world-class visual designer and expert image prompt engineer for high-end tech landing pages (like Stripe, Vercel, and Apple).
+      Create an exceptionally premium, detailed, and visually stunning image generation prompt for a professional blog banner background.
       The blog title is: "${title}".
       
-      TONE & STYLE:
-      1. Determine if the topic is HUMAN-CENTRIC (Management, Career, Lifestyle) or TECH-CENTRAL (AI, Hardware, Coding, Cloud).
+      VISUAL STYLES TO CHOOSE FROM (Pick the one that fits best):
       
-      IF TECH-CENTRAL:
-      - Focus on high-tech conceptual art, futuristic 3D renders, glowing circuitry, or abstract digital landscapes.
-      - Use keywords: "Cybernetic", "Quantum glow", "Holographic interface", "8k octane render", "Cinematic lighting".
-      - SUBJECT: Can be a sleek robot, a glowing AI brain, a futuristic server room, or digital data streams.
+      STYLE 1: Sleek Minimalist Tech Workspace (Highly realistic, cozy, premium)
+      - A cinematic, high-depth-of-field, close-up photograph of a clean professional desk setup.
+      - Components: An elegant modern aluminum laptop, a warm desk lamp casting soft ambient light, a ceramic mug with gentle steam, a small lush green potted plant, minimal aesthetic.
+      - Lighting: Moody, warm, inviting, professional studio lighting, shot on 85mm lens.
       
-      IF HUMAN-CENTRIC:
-      - Focus on a professional subject (e.g., an Indian professional, focused eyes, confident posture).
-      - Background: Modern minimalist office or coworking space.
+      STYLE 2: Dark Cybertech & Glassmorphic 3D (Futuristic, abstract, clean)
+      - A state-of-the-art 3D abstract digital art background.
+      - Components: Floating translucent frosted glass plates, glowing neon data streams in deep blue, indigo, and orange accents, complex geometric nodes, holographic light refractions.
+      - Keywords: "Glassmorphism", "Frosted glass refraction", "Cinematic dark mode", "8k Octane Render", "Vray lighting", "Raytraced reflections", "Sleek and abstract".
       
-      GENERAL RULES:
-      - NO TEXT, NO WATERMARKS, NO LOGOS.
-      - Ensure high contrast and vibrant, premium colors.
+      STYLE 3: Premium Isometric Conceptual Design (Elegant, professional, flat/3D hybrid)
+      - A beautiful isometric minimalist design representing cloud, development, or productivity concepts.
+      - Components: Sleek glowing structures, smooth high-contrast colors, elegant lighting.
       
-      Output ONLY the final prompt. Do not explain your choice.`;
+      MANDATORY RULES:
+      - ABSOLUTELY NO humans, faces, hands, or corporate grinning stock photos (they look low-quality and artificial).
+      - ABSOLUTELY NO text, labels, logos, watermarks, or lettering on the image.
+      - Focus on high contrast, ultra-clean compositions, and sophisticated, harmonious color palettes (avoid primary red/blue/green; use deep navy, slate gray, violet, emerald, and warm golds).
+      
+      Output ONLY the final image prompt description. Do not include any intros, titles, or explanations.`;
         try {
             this.logger.info(`ImageGenerator: Using Gemini to engineer a professional prompt...`);
             const model = this.genAI.getGenerativeModel({

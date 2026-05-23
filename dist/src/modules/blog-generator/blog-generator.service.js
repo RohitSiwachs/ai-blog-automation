@@ -229,7 +229,7 @@ let BlogGeneratorService = class BlogGeneratorService {
     }
     async enrichInlineImages(content) {
         this.logger.info('BlogGenerator: Finalizing and enriching inline images with Gemini...');
-        const pollinationsRegex = /!\[([^\]]*)\]\((https?:\/\/(?:image\.)?pollinations\.ai\/prompt\/[^\?\)]+)(\?[^\)]+)?\)/g;
+        const pollinationsRegex = /!\[([^\]]*)\]\((https?:\/\/(?:[a-zA-Z0-9-]+\.)?pollinations\.ai\/(?:prompt\/)?[^\?\)]+)(\?[^\)]+)?\)/g;
         const matches = Array.from(content.matchAll(pollinationsRegex));
         if (matches.length === 0) {
             this.logger.info('BlogGenerator: No Pollinations images found in content.');
@@ -251,26 +251,26 @@ let BlogGeneratorService = class BlogGeneratorService {
                 .split(/\s+/)
                 .slice(0, 5)
                 .join('-');
-            const forcedSubject = "Realistic photo of a professional person, ";
             const uniqueSeed = Math.floor(Math.random() * 90000000) + 10000000;
-            const finalUrl = `https://image.pollinations.ai/prompt/${pathPart}?prompt=${encodeURIComponent(forcedSubject + smartPrompt)}&width=1024&height=1024&nologo=true&seed=${uniqueSeed}&model=flux`;
+            const finalUrl = `https://image.pollinations.ai/prompt/${pathPart}?prompt=${encodeURIComponent(smartPrompt)}&width=1024&height=1024&nologo=true&seed=${uniqueSeed}&model=flux`;
             this.logger.info(`BlogGenerator: Inline image enriched for "${alt}"`);
             enrichedContent = enrichedContent.replace(fullMatch, `![${alt}](${finalUrl})`);
         }
         return enrichedContent;
     }
     async generateInlineSmartPrompt(intent) {
-        const promptRequest = `You are a professional image prompt engineer. 
-      Create a detailed, ultra-realistic prompt for a blog image.
-      Context: "${intent}".
+        const promptRequest = `You are a world-class visual designer and image prompt engineer for premium tech websites (like Stripe and Apple).
+      Create a detailed, beautiful, and ultra-high-quality image generation prompt for an inline blog illustration.
+      Context/Intent: "${intent}".
       
-      MANDATORY Rules:
-      1. SUBJECT: Include a person (e.g. an Indian student, an IT professional, or a freelancer) interacting with technology or in a modern setting.
-      2. LOOK: Cinematic photography, realistic skin textures, high resolution.
-      3. BAN: No text, no logos, no fake-looking 3D renders.
-      4. START: Begin with "A high-resolution photo of [subject]..."
+      VISUAL RULES:
+      1. STYLE: Choose either:
+         a) A premium, cozy minimalist tech workspace (e.g. close-up photo of a sleek open laptop, warm ambient lights, a ceramic cup, a small green plant, shot on 85mm lens, high depth of field, warm cozy tone).
+         b) A stunning modern 3D abstract illustration (e.g. glowing glassmorphic shapes, translucent frosted glass spheres, glowing wireframe lines, neon gradient lighting, deep navy or slate background, clean and professional).
+      2. BAN: Absolutely NO people, NO faces, NO hands (avoids deformed limbs/weird smiles), NO text, NO labels, NO generic stock-photos.
+      3. START: Begin the prompt directly with a description (e.g., "A cinematic, shallow depth-of-field close-up of..." or "A high-end 3D render of abstract glassmorphism...").
       
-      Output ONLY the description (50-70 words).`;
+      Output ONLY the final image generation prompt (50-70 words). Do not explain or write anything else.`;
         try {
             const model = this.genAI.getGenerativeModel({ model: this.geminiModel });
             const result = await model.generateContent(promptRequest);

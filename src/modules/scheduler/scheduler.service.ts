@@ -60,9 +60,9 @@ export class SchedulerService implements OnModuleInit {
 
   /**
    * Daily cron job — runs at the configured time.
-   * Default: Every 3 hours.
+   * Default: Everyday at 7:00 AM (Asia/Kolkata).
    */
-  @Cron('0 */3 * * *', { name: 'daily-blog-batch', timeZone: 'Asia/Kolkata' })
+  @Cron('0 7 * * *', { name: 'daily-blog-batch', timeZone: 'Asia/Kolkata' })
   async handleDailyBatch(): Promise<void> {
     await this.scheduleDailyBatch();
   }

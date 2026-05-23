@@ -17,37 +17,34 @@ import { StrapiModule } from './modules/strapi-service/strapi.module';
 import { SchedulerModule } from './modules/scheduler/scheduler.module';
 import { AppController } from './app.controller';
 
-@Module({
-  imports: [
-    // --- Configuration (loads .env and typed config) ---
-    ConfigModule.forRoot({
-      isGlobal: true,
-      load: [configuration],
-      envFilePath: '.env',
-    }),
+const redisEnabled = process.env.REDIS_ENABLED !== 'false';
 
-    // --- Cron Scheduling ---
-    ScheduleModule.forRoot(),
+const imports = [
+  // --- Configuration (loads .env and typed config) ---
+  ConfigModule.forRoot({
+    isGlobal: true,
+    load: [configuration],
+    envFilePath: '.env',
+  }),
 
-    // --- BullMQ (Redis-backed job queue) ---
+  // --- Cron Scheduling ---
+  ScheduleModule.forRoot(),
+
+  // --- Application Modules ---
+  LoggerModule,
+  PrismaModule,
+  TopicEngineModule,
+  BlogGeneratorModule,
+  ImageGeneratorModule,
+  StrapiModule,
+  SchedulerModule,
+];
+
+if (redisEnabled) {
+  imports.push(
     BullModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => {
-        const redisEnabled = configService.get<string>('redis.enabled') !== 'false';
-
-        if (!redisEnabled) {
-          console.warn('⚠️  REDIS_ENABLED=false — BullMQ running in disconnected mode. Jobs will NOT be processed.');
-          return {
-            connection: {
-              host: '127.0.0.1',
-              port: 6379,
-              maxRetriesPerRequest: 0,
-              lazyConnect: true,
-              enableOfflineQueue: false,
-            },
-          };
-        }
-
         return {
           connection: {
             host: configService.get<string>('redis.host'),
@@ -68,16 +65,11 @@ import { AppController } from './app.controller';
       },
       inject: [ConfigService],
     }),
+  );
+}
 
-    // --- Application Modules ---
-    LoggerModule,
-    PrismaModule,
-    TopicEngineModule,
-    BlogGeneratorModule,
-    ImageGeneratorModule,
-    StrapiModule,
-    SchedulerModule,
-  ],
+@Module({
+  imports,
   controllers: [AppController],
 })
 export class AppModule {}

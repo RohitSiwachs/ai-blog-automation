@@ -5,7 +5,7 @@
 // ============================================================
 
 import { Module } from '@nestjs/common';
-import { BullModule } from '@nestjs/bullmq';
+import { BullModule, getQueueToken } from '@nestjs/bullmq';
 import { SchedulerService } from './scheduler.service';
 import { BlogJobProcessor } from './blog-job.processor';
 import { TopicEngineModule } from '../topic-engine/topic-engine.module';
@@ -13,20 +13,39 @@ import { BlogGeneratorModule } from '../blog-generator/blog-generator.module';
 import { ImageGeneratorModule } from '../image-generator/image-generator.module';
 import { StrapiModule } from '../strapi-service/strapi.module';
 
-@Module({
-  imports: [
-    // Register the blog-generation queue
+const redisEnabled = process.env.REDIS_ENABLED !== 'false';
+
+const imports: any[] = [
+  // Import dependent modules
+  TopicEngineModule,
+  BlogGeneratorModule,
+  ImageGeneratorModule,
+  StrapiModule,
+];
+
+const providers: any[] = [SchedulerService];
+
+if (redisEnabled) {
+  imports.push(
     BullModule.registerQueue({
       name: 'blog-generation',
     }),
+  );
+  providers.push(BlogJobProcessor);
+} else {
+  providers.push({
+    provide: getQueueToken('blog-generation'),
+    useValue: {
+      add: async () => {
+        return { id: 'mock-direct-job' };
+      },
+    },
+  });
+}
 
-    // Import dependent modules
-    TopicEngineModule,
-    BlogGeneratorModule,
-    ImageGeneratorModule,
-    StrapiModule,
-  ],
-  providers: [SchedulerService, BlogJobProcessor],
+@Module({
+  imports,
+  providers,
   exports: [SchedulerService],
 })
 export class SchedulerModule {}

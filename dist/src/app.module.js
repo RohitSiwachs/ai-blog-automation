@@ -23,62 +23,53 @@ const image_generator_module_1 = require("./modules/image-generator/image-genera
 const strapi_module_1 = require("./modules/strapi-service/strapi.module");
 const scheduler_module_1 = require("./modules/scheduler/scheduler.module");
 const app_controller_1 = require("./app.controller");
+const redisEnabled = process.env.REDIS_ENABLED !== 'false';
+const imports = [
+    config_1.ConfigModule.forRoot({
+        isGlobal: true,
+        load: [configuration_1.default],
+        envFilePath: '.env',
+    }),
+    schedule_1.ScheduleModule.forRoot(),
+    logger_module_1.LoggerModule,
+    prisma_module_1.PrismaModule,
+    topic_engine_module_1.TopicEngineModule,
+    blog_generator_module_1.BlogGeneratorModule,
+    image_generator_module_1.ImageGeneratorModule,
+    strapi_module_1.StrapiModule,
+    scheduler_module_1.SchedulerModule,
+];
+if (redisEnabled) {
+    imports.push(bullmq_1.BullModule.forRootAsync({
+        imports: [config_1.ConfigModule],
+        useFactory: (configService) => {
+            return {
+                connection: {
+                    host: configService.get('redis.host'),
+                    port: configService.get('redis.port'),
+                    password: configService.get('redis.password'),
+                    tls: configService.get('redis.tls') ? {} : undefined,
+                    maxRetriesPerRequest: 3,
+                    enableOfflineQueue: false,
+                    retryStrategy: (times) => {
+                        if (times > 5) {
+                            console.error('❌ Redis: Max reconnection attempts reached. Giving up.');
+                            return null;
+                        }
+                        return Math.min(times * 2000, 30000);
+                    },
+                },
+            };
+        },
+        inject: [config_1.ConfigService],
+    }));
+}
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [
-            config_1.ConfigModule.forRoot({
-                isGlobal: true,
-                load: [configuration_1.default],
-                envFilePath: '.env',
-            }),
-            schedule_1.ScheduleModule.forRoot(),
-            bullmq_1.BullModule.forRootAsync({
-                imports: [config_1.ConfigModule],
-                useFactory: (configService) => {
-                    const redisEnabled = configService.get('redis.enabled') !== 'false';
-                    if (!redisEnabled) {
-                        console.warn('⚠️  REDIS_ENABLED=false — BullMQ running in disconnected mode. Jobs will NOT be processed.');
-                        return {
-                            connection: {
-                                host: '127.0.0.1',
-                                port: 6379,
-                                maxRetriesPerRequest: 0,
-                                lazyConnect: true,
-                                enableOfflineQueue: false,
-                            },
-                        };
-                    }
-                    return {
-                        connection: {
-                            host: configService.get('redis.host'),
-                            port: configService.get('redis.port'),
-                            password: configService.get('redis.password'),
-                            tls: configService.get('redis.tls') ? {} : undefined,
-                            maxRetriesPerRequest: 3,
-                            enableOfflineQueue: false,
-                            retryStrategy: (times) => {
-                                if (times > 5) {
-                                    console.error('❌ Redis: Max reconnection attempts reached. Giving up.');
-                                    return null;
-                                }
-                                return Math.min(times * 2000, 30000);
-                            },
-                        },
-                    };
-                },
-                inject: [config_1.ConfigService],
-            }),
-            logger_module_1.LoggerModule,
-            prisma_module_1.PrismaModule,
-            topic_engine_module_1.TopicEngineModule,
-            blog_generator_module_1.BlogGeneratorModule,
-            image_generator_module_1.ImageGeneratorModule,
-            strapi_module_1.StrapiModule,
-            scheduler_module_1.SchedulerModule,
-        ],
+        imports,
         controllers: [app_controller_1.AppController],
     })
 ], AppModule);
