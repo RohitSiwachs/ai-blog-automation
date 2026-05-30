@@ -22,6 +22,7 @@ const blog_generator_module_1 = require("./modules/blog-generator/blog-generator
 const image_generator_module_1 = require("./modules/image-generator/image-generator.module");
 const strapi_module_1 = require("./modules/strapi-service/strapi.module");
 const scheduler_module_1 = require("./modules/scheduler/scheduler.module");
+const mail_module_1 = require("./modules/mail/mail.module");
 const app_controller_1 = require("./app.controller");
 const redisEnabled = process.env.REDIS_ENABLED !== 'false' && process.env.REDIS_AVAILABLE === 'true';
 const imports = [
@@ -38,6 +39,7 @@ const imports = [
     image_generator_module_1.ImageGeneratorModule,
     strapi_module_1.StrapiModule,
     scheduler_module_1.SchedulerModule,
+    mail_module_1.MailModule,
 ];
 if (redisEnabled) {
     imports.push(bullmq_1.BullModule.forRootAsync({

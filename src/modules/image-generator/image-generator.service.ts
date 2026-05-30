@@ -62,35 +62,19 @@ export class ImageGeneratorService {
       const canvas = createCanvas(IMAGE_WIDTH, IMAGE_HEIGHT);
       const ctx = canvas.getContext('2d');
 
+      // Draw a beautiful premium dark slate / deep indigo gradient first
+      // This handles image transparency and ensures the background is never completely black
+      const bgGradient = ctx.createLinearGradient(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
+      bgGradient.addColorStop(0, '#0a0f1d');
+      bgGradient.addColorStop(0.5, '#12132e');
+      bgGradient.addColorStop(1, '#0a0f1d');
+      ctx.fillStyle = bgGradient;
+      ctx.fillRect(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
+
       // --- 1. Draw creative background using AI ---
       await this.drawDynamicBackground(ctx, title);
 
-      // --- 2. Add professional text overlay ---
-      // Semi-transparent dark gradient at the bottom for readability
-      const gradient = ctx.createLinearGradient(0, IMAGE_HEIGHT * 0.5, 0, IMAGE_HEIGHT);
-      gradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
-      gradient.addColorStop(1, 'rgba(0, 0, 0, 0.8)');
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, IMAGE_HEIGHT * 0.5, IMAGE_WIDTH, IMAGE_HEIGHT * 0.5);
-
-      // Title Text
-      ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 50px Inter';
-      ctx.textAlign = 'left';
-      ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
-      ctx.shadowBlur = 10;
-
-      const lines = this.wrapText(ctx, title.toUpperCase(), IMAGE_WIDTH - 100, 3);
-      const startY = IMAGE_HEIGHT - (lines.length * 60) - 60;
-      
-      lines.forEach((line, i) => {
-        ctx.fillText(line, 50, startY + (i * 65));
-      });
-
-      // Brand Watermark
-      ctx.font = 'bold 24px Inter';
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-      ctx.fillText(this.brandName.toUpperCase(), 50, IMAGE_HEIGHT - 30);
+      // --- 2. Text overlay, gradient, and branding removed as per user preference ---
 
       // Convert canvas to JPEG buffer
       const buffer = canvas.toBuffer('image/jpeg', { quality: 0.9 });
@@ -113,20 +97,36 @@ export class ImageGeneratorService {
   private async drawDynamicBackground(ctx: any, title: string): Promise<void> {
     const smartPrompt = await this.generateSmartPrompt(title);
 
+    // Clean prompt: strip leading/trailing quotes and replace nested double quotes with single quotes
+    let cleanedPrompt = smartPrompt.trim();
+    if (cleanedPrompt.startsWith('"') && cleanedPrompt.endsWith('"')) {
+      cleanedPrompt = cleanedPrompt.substring(1, cleanedPrompt.length - 1).trim();
+    }
+    cleanedPrompt = cleanedPrompt.replace(/"/g, "'");
+
+    this.logger.info(`ImageGenerator: Cleaned prompt — "${cleanedPrompt.substring(0, 100)}..."`);
+
     // Stage 1: NVIDIA NIM Stable Diffusion 3 Medium (New High Quality Free Tier)
     if (this.nvidiaApiKey) {
       try {
         this.logger.info(`ImageGenerator: Tier 1 - Requesting NVIDIA NIM for "${title}"...`);
-        const imageBuffer = await this.generateNvidiaImage(smartPrompt);
+        const imageBuffer = await this.generateNvidiaImage(cleanedPrompt);
         if (imageBuffer) {
           const bgImage = await loadImage(imageBuffer);
+          this.logger.info(`ImageGenerator: Loaded bgImage from NVIDIA NIM — Width: ${bgImage.width}, Height: ${bgImage.height}`);
+          
           const scale = Math.max(IMAGE_WIDTH / bgImage.width, IMAGE_HEIGHT / bgImage.height);
           const x = (IMAGE_WIDTH / 2) - (bgImage.width / 2) * scale;
           const y = (IMAGE_HEIGHT / 2) - (bgImage.height / 2) * scale;
           ctx.drawImage(bgImage, x, y, bgImage.width * scale, bgImage.height * scale);
           
-          this.logger.info(`ImageGenerator: NVIDIA NIM success`);
-          return;
+          // Validate: reject if image is too dark (likely a black frame)
+          if (this.isCanvasTooBlack(ctx)) {
+            this.logger.warn(`ImageGenerator: NVIDIA NIM returned a near-black image — rejecting and falling through...`);
+          } else {
+            this.logger.info(`ImageGenerator: NVIDIA NIM success — brightness OK`);
+            return;
+          }
         }
       } catch (nvidiaErr) {
         this.logger.warn(`ImageGenerator: Tier 1 (NVIDIA) failed (${nvidiaErr.message}). Moving to Tier 2...`);
@@ -147,6 +147,8 @@ export class ImageGeneratorService {
       if (imageUrl) {
         const imageResponse = await axios.get(imageUrl, { responseType: 'arraybuffer', timeout: 30000 });
         const bgImage = await loadImage(Buffer.from(imageResponse.data));
+        this.logger.info(`ImageGenerator: Loaded bgImage from DALL-E 3 — Width: ${bgImage.width}, Height: ${bgImage.height}`);
+        
         const scale = Math.max(IMAGE_WIDTH / bgImage.width, IMAGE_HEIGHT / bgImage.height);
         const x = (IMAGE_WIDTH / 2) - (bgImage.width / 2) * scale;
         const y = (IMAGE_HEIGHT / 2) - (bgImage.height / 2) * scale;
@@ -166,12 +168,14 @@ export class ImageGeneratorService {
     for (let attempt = 1; attempt <= 2; attempt++) {
       try {
         this.logger.info(`ImageGenerator: Tier 2 - Requesting Flux (Attempt ${attempt})...`);
-        const fluxUrl = `https://image.pollinations.ai/prompt/${safeTitleId}?prompt=${encodeURIComponent(smartPrompt)}&width=${IMAGE_WIDTH}&height=${IMAGE_HEIGHT}&nologo=true&seed=${Math.floor(Math.random() * 1000000)}&model=flux`;
+        const fluxUrl = `https://image.pollinations.ai/prompt/${safeTitleId}?prompt=${encodeURIComponent(cleanedPrompt)}&width=${IMAGE_WIDTH}&height=${IMAGE_HEIGHT}&nologo=true&seed=${Math.floor(Math.random() * 1000000)}&model=flux`;
         
         const response = await axios.get(fluxUrl, { responseType: 'arraybuffer', timeout: attempt === 1 ? 30000 : 50000 });
         
         if (Buffer.from(response.data).length > 20000) {
           const bgImage = await loadImage(Buffer.from(response.data));
+          this.logger.info(`ImageGenerator: Loaded bgImage from Flux — Width: ${bgImage.width}, Height: ${bgImage.height}`);
+          
           ctx.drawImage(bgImage, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
           this.logger.info(`ImageGenerator: Flux success`);
           return;
@@ -236,11 +240,13 @@ export class ImageGeneratorService {
    */
   public async generateNvidiaImage(prompt: string): Promise<Buffer | null> {
     try {
+      const randomSeed = Math.floor(Math.random() * 2000000000);
+      this.logger.info(`ImageGenerator: NVIDIA NIM using seed: ${randomSeed}`);
       const response = await axios.post(
         this.nvidiaEndpoint,
         {
           prompt,
-          seed: 0
+          seed: randomSeed
         },
         {
           headers: {
@@ -267,36 +273,82 @@ export class ImageGeneratorService {
   }
 
   /**
+   * Check if the canvas is too dark / black by sampling pixel brightness.
+   * Returns true if the average brightness across sampled points is below threshold.
+   */
+  private isCanvasTooBlack(ctx: any): boolean {
+    const samplePoints = [
+      // Sample a grid of 20 points across the image
+      [100, 100], [300, 100], [600, 100], [900, 100], [1100, 100],
+      [100, 200], [400, 200], [700, 200], [1000, 200],
+      [100, 315], [400, 315], [600, 315], [900, 315], [1100, 315],
+      [100, 430], [400, 430], [700, 430], [1000, 430],
+      [100, 530], [600, 530], [1100, 530],
+    ];
+
+    let totalBrightness = 0;
+    let validSamples = 0;
+
+    for (const [x, y] of samplePoints) {
+      try {
+        const pixel = ctx.getImageData(x, y, 1, 1).data;
+        // Perceived luminance: 0.299*R + 0.587*G + 0.114*B
+        const brightness = 0.299 * pixel[0] + 0.587 * pixel[1] + 0.114 * pixel[2];
+        totalBrightness += brightness;
+        validSamples++;
+      } catch {
+        // skip invalid sample points
+      }
+    }
+
+    if (validSamples === 0) return true;
+
+    const avgBrightness = totalBrightness / validSamples;
+    this.logger.info(`ImageGenerator: Image brightness check — avg: ${avgBrightness.toFixed(1)}/255 (${validSamples} samples)`);
+
+    // Threshold: avg brightness below 15 out of 255 means essentially black
+    return avgBrightness < 15;
+  }
+
+  /**
    * Use Gemini to generate a highly detailed, professional image prompt.
    * This allows free models like Flux to produce DALL-E 3 level quality.
+   * The prompt is strongly anchored to the blog title's core topic for contextual relevance.
    */
   private async generateSmartPrompt(title: string): Promise<string> {
-    const promptRequest = `You are a world-class visual designer and expert image prompt engineer for high-end tech landing pages (like Stripe, Vercel, and Apple).
-      Create an exceptionally premium, detailed, and visually stunning image generation prompt for a professional blog banner background.
-      The blog title is: "${title}".
-      
-      VISUAL STYLES TO CHOOSE FROM (Pick the one that fits best):
-      
-      STYLE 1: Sleek Minimalist Tech Workspace (Highly realistic, cozy, premium)
-      - A cinematic, high-depth-of-field, close-up photograph of a clean professional desk setup.
-      - Components: An elegant modern aluminum laptop, a warm desk lamp casting soft ambient light, a ceramic mug with gentle steam, a small lush green potted plant, minimal aesthetic.
-      - Lighting: Moody, warm, inviting, professional studio lighting, shot on 85mm lens.
-      
-      STYLE 2: Dark Cybertech & Glassmorphic 3D (Futuristic, abstract, clean)
-      - A state-of-the-art 3D abstract digital art background.
-      - Components: Floating translucent frosted glass plates, glowing neon data streams in deep blue, indigo, and orange accents, complex geometric nodes, holographic light refractions.
-      - Keywords: "Glassmorphism", "Frosted glass refraction", "Cinematic dark mode", "8k Octane Render", "Vray lighting", "Raytraced reflections", "Sleek and abstract".
-      
-      STYLE 3: Premium Isometric Conceptual Design (Elegant, professional, flat/3D hybrid)
-      - A beautiful isometric minimalist design representing cloud, development, or productivity concepts.
-      - Components: Sleek glowing structures, smooth high-contrast colors, elegant lighting.
-      
-      MANDATORY RULES:
-      - ABSOLUTELY NO humans, faces, hands, or corporate grinning stock photos (they look low-quality and artificial).
-      - ABSOLUTELY NO text, labels, logos, watermarks, or lettering on the image.
-      - Focus on high contrast, ultra-clean compositions, and sophisticated, harmonious color palettes (avoid primary red/blue/green; use deep navy, slate gray, violet, emerald, and warm golds).
-      
-      Output ONLY the final image prompt description. Do not include any intros, titles, or explanations.`;
+    const promptRequest = `You are a world-class visual designer and expert image prompt engineer.
+Your task: Create a premium image generation prompt for a blog banner that DIRECTLY represents the topic of the blog.
+
+BLOG TITLE: "${title}"
+
+STEP 1 — ANALYZE THE TITLE:
+First, identify the 2-3 core concepts/keywords from the blog title. The generated image MUST visually represent these concepts.
+
+STEP 2 — BUILD A CONTEXTUALLY RELEVANT SCENE:
+Design a scene that a viewer would IMMEDIATELY associate with the blog topic. The image should make someone say "yes, this is clearly about [topic]".
+
+EXAMPLES OF CONTEXTUAL RELEVANCE:
+- "Freelancing Tips" → a cozy home office workspace with laptop, coffee, and notebooks on a wooden desk, warm ambient lighting
+- "Web Development Guide" → a sleek code editor on a monitor showing colorful syntax-highlighted code, dark theme, with IDE panels
+- "Digital Marketing Strategy" → an abstract dashboard visualization with analytics charts, growth graphs, and data nodes glowing in neon
+- "WordPress Customization" → a modern website builder interface with drag-and-drop components, elegant theme preview on a screen
+- "AI Automation Tools" → futuristic robotic arms or neural network visualization with glowing interconnected nodes
+- "Data Analytics Careers" → a 3D data visualization with floating charts, graphs, and holographic data dashboards
+- "SEO and Keywords" → a search engine interface with magnifying glass, keyword clouds, and ranking indicators
+
+VISUAL QUALITY REQUIREMENTS:
+- Ultra-premium quality: 8K, cinematic lighting, professional photography or high-end 3D render
+- Clean composition with strong depth-of-field
+- Sophisticated color palette: deep navy, slate, violet, emerald, warm gold (avoid plain red/blue/green)
+- Choose the best style for the topic: photorealistic workspace, 3D abstract tech art, isometric design, or glassmorphic UI
+
+ABSOLUTE RULES (NEVER VIOLATE):
+- ZERO humans, people, faces, hands, fingers, bodies, silhouettes, or human figures of ANY kind
+- ZERO text, words, labels, logos, watermarks, or lettering anywhere in the image
+- ZERO stock photo vibes — must feel premium and editorial
+- The image MUST be semantically relevant to "${title}" — an unrelated beautiful image is a FAILURE
+
+Output ONLY the final image prompt. No explanations, no intros, no labels.`;
 
     // Try Gemini first
     try {
@@ -320,9 +372,15 @@ export class ImageGeneratorService {
         this.logger.info(`ImageGenerator: Using NVIDIA Llama for prompt engineering...`);
         const response = await axios.post(this.nvidiaTextEndpoint, {
           model: this.FALLBACK_NVIDIA_TEXT_MODEL,
-          messages: [{ role: 'user', content: promptRequest }],
-          max_tokens: 300,
-          temperature: 0.7,
+          messages: [
+            { 
+              role: 'system', 
+              content: 'You are an expert image prompt engineer. You generate image prompts that are semantically relevant to the given blog topic. NEVER include humans, people, faces, or text in your prompts. Output ONLY the prompt, nothing else.' 
+            },
+            { role: 'user', content: promptRequest }
+          ],
+          max_tokens: 350,
+          temperature: 0.5,
           stream: false,
         }, {
           headers: {
@@ -340,9 +398,9 @@ export class ImageGeneratorService {
       this.logger.warn(`ImageGenerator: NVIDIA Llama prompt engineering also failed: ${nvidiaErr.message}`);
     }
 
-    // Final fallback: basic prompt
-    this.logger.warn(`ImageGenerator: All prompt engineering failed, using basic prompt.`);
-    return `${title}. photorealistic, high-tech, futuristic, cinematic lighting, 8k`;
+    // Final fallback: contextual basic prompt derived from the title
+    this.logger.warn(`ImageGenerator: All prompt engineering failed, using contextual fallback prompt.`);
+    return `A premium, ultra-detailed 3D visualization representing the concept of "${title}". Abstract tech-inspired scene with glowing elements, dark moody background, cinematic lighting, 8K quality, no text, no people, no faces. Professional editorial blog banner aesthetic.`;
   }
 
   /**

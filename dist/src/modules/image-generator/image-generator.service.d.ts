@@ -14,6 +14,7 @@ export declare class ImageGeneratorService {
     generateBannerImage(title: string): Promise<Buffer>;
     private drawDynamicBackground;
     generateNvidiaImage(prompt: string): Promise<Buffer | null>;
+    private isCanvasTooBlack;
     private generateSmartPrompt;
     private tryRegisterFont;
     private wrapText;
