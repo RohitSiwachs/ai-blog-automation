@@ -12,6 +12,7 @@ import { TopicEngineModule } from '../topic-engine/topic-engine.module';
 import { BlogGeneratorModule } from '../blog-generator/blog-generator.module';
 import { ImageGeneratorModule } from '../image-generator/image-generator.module';
 import { StrapiModule } from '../strapi-service/strapi.module';
+import { MailModule } from '../mail/mail.module';
 
 const redisEnabled = process.env.REDIS_ENABLED !== 'false' && process.env.REDIS_AVAILABLE === 'true';
 
@@ -21,6 +22,7 @@ const imports: any[] = [
   BlogGeneratorModule,
   ImageGeneratorModule,
   StrapiModule,
+  MailModule,
 ];
 
 const providers: any[] = [SchedulerService];

@@ -15,6 +15,7 @@ import { BlogGeneratorService } from '../blog-generator/blog-generator.service';
 import { ImageGeneratorService } from '../image-generator/image-generator.service';
 import { StrapiService } from '../strapi-service/strapi.service';
 import { ConfigService } from '@nestjs/config';
+import { MailService } from '../mail/mail.service';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -37,6 +38,7 @@ export class BlogJobProcessor extends WorkerHost {
     private readonly strapiService: StrapiService,
     private readonly prisma: PrismaService,
     private readonly configService: ConfigService,
+    private readonly mailService: MailService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
   ) {
     super();
@@ -185,14 +187,82 @@ export class BlogJobProcessor extends WorkerHost {
           `Strapi ID: ${strapiId}, slug: "${blog.slug}"`,
       );
     } catch (error) {
-      this.logger.error(`❌ BlogJob [${job.id}]: Failed — ${error.message}`);
+      const currentAttempt = job.attemptsMade + 1;
+      const maxAttempts = job.opts?.attempts || 5;
+      this.logger.error(`❌ BlogJob [${job.id}]: Failed (Attempt ${currentAttempt}/${maxAttempts}) — ${error.message}`);
 
       // Update BlogLog with error
       await this.updateBlogLog(blogLogId, {
         status: 'failed',
         error: error.message,
-        attempts: job.attemptsMade + 1,
+        attempts: currentAttempt,
       });
+
+      // If this is the final attempt, dispatch email notification
+      if (currentAttempt >= maxAttempts) {
+        this.logger.warn(`🚨 BlogJob [${job.id}]: All ${maxAttempts} attempts failed. Dispatching critical alert email...`);
+        
+        const recipient = 'innovaft.co@gmail.com';
+        const subject = `⚠️ CRITICAL: Blog Automation APIs Failed Repeatedly — "${title}"`;
+        const textContent = `Hello Team,
+
+This is an automated alert from the Innovaft Blog Automation system.
+
+A blog generation job has failed repeatedly and exhausted all ${maxAttempts} attempts.
+
+=======================================================
+JOB DETAILS:
+=======================================================
+- Job ID: ${job.id}
+- Blog Topic/Title: "${title}"
+- Slug: ${slug}
+- Keywords: ${keywords?.join(', ') || 'None'}
+- Failed At: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} (IST)
+
+=======================================================
+ERROR DETAILS:
+=======================================================
+- Error Message: ${error.message}
+- Stack Trace: 
+${error.stack || 'No stack trace available'}
+
+Please inspect the system logs or the Prisma database (BlogLog ID: ${blogLogId}) for more details.
+
+Best regards,
+Innovaft AI Automation Engine`;
+
+        const htmlContent = `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; border: 1px solid #f5c6cb; border-radius: 4px; padding: 20px; background-color: #f8d7da; color: #721c24;">
+            <h2 style="margin-top: 0; color: #721c24; border-bottom: 2px solid #f5c6cb; padding-bottom: 10px;">⚠️ Critical System Alert</h2>
+            <p><strong>Innovaft Blog Automation System has failed repeatedly.</strong></p>
+            <p>A blog generation job has exhausted all <strong>${maxAttempts}</strong> attempts and failed to compile or publish.</p>
+            
+            <div style="background: #ffffff; padding: 15px; border-radius: 4px; color: #333333; margin: 15px 0; border: 1px solid #ddd;">
+              <h3 style="margin-top: 0; color: #333;">Job Details</h3>
+              <table style="width: 100%; border-collapse: collapse;">
+                <tr><td style="width: 120px; font-weight: bold; padding: 4px 0;">Job ID:</td><td>${job.id}</td></tr>
+                <tr><td style="font-weight: bold; padding: 4px 0;">Blog Title:</td><td>"${title}"</td></tr>
+                <tr><td style="font-weight: bold; padding: 4px 0;">Slug:</td><td><code>${slug}</code></td></tr>
+                <tr><td style="font-weight: bold; padding: 4px 0;">Keywords:</td><td>${keywords?.join(', ') || 'None'}</td></tr>
+                <tr><td style="font-weight: bold; padding: 4px 0;">Timestamp:</td><td>${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} IST</td></tr>
+              </table>
+            </div>
+
+            <div style="background: #2b2b2b; padding: 15px; border-radius: 4px; color: #ff6b6b; font-family: monospace; font-size: 13px; white-space: pre-wrap; overflow-x: auto; margin-top: 15px;">
+              <strong>Error Message:</strong><br>${error.message}<br><br>
+              <strong>Stack Trace:</strong><br>${error.stack || 'No stack trace available'}
+            </div>
+            
+            <p style="font-size: 12px; color: #6c757d; margin-top: 20px; text-align: center;">
+              This is an auto-generated system message from Innovaft AI Engine. Please do not reply.
+            </p>
+          </div>
+        `;
+
+        // Send the mail asynchronously (non-blocking)
+        this.mailService.sendMail(recipient, subject, textContent, htmlContent)
+          .catch(mailErr => this.logger.error(`❌ BlogJob: Failed to send failure notification email: ${mailErr.message}`));
+      }
 
       // Re-throw to let BullMQ handle retries
       throw error;
