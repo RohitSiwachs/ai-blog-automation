@@ -15,12 +15,14 @@ const topic_engine_module_1 = require("../topic-engine/topic-engine.module");
 const blog_generator_module_1 = require("../blog-generator/blog-generator.module");
 const image_generator_module_1 = require("../image-generator/image-generator.module");
 const strapi_module_1 = require("../strapi-service/strapi.module");
+const mail_module_1 = require("../mail/mail.module");
 const redisEnabled = process.env.REDIS_ENABLED !== 'false' && process.env.REDIS_AVAILABLE === 'true';
 const imports = [
     topic_engine_module_1.TopicEngineModule,
     blog_generator_module_1.BlogGeneratorModule,
     image_generator_module_1.ImageGeneratorModule,
     strapi_module_1.StrapiModule,
+    mail_module_1.MailModule,
 ];
 const providers = [scheduler_service_1.SchedulerService];
 if (redisEnabled) {

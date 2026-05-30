@@ -15,6 +15,7 @@ import { BlogGeneratorModule } from './modules/blog-generator/blog-generator.mod
 import { ImageGeneratorModule } from './modules/image-generator/image-generator.module';
 import { StrapiModule } from './modules/strapi-service/strapi.module';
 import { SchedulerModule } from './modules/scheduler/scheduler.module';
+import { MailModule } from './modules/mail/mail.module';
 import { AppController } from './app.controller';
 
 const redisEnabled = process.env.REDIS_ENABLED !== 'false' && process.env.REDIS_AVAILABLE === 'true';
@@ -38,6 +39,7 @@ const imports = [
   ImageGeneratorModule,
   StrapiModule,
   SchedulerModule,
+  MailModule,
 ];
 
 if (redisEnabled) {

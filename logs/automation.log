@@ -7802,3 +7802,731 @@
 {"level":"info","message":"Strapi: Article created successfully — ID: 339, slug: \"digital-skills-every-indian-student-needs-for-a-thriving-career-in-2026\"","timestamp":"2026-05-22T11:45:17.007Z"}
 {"level":"info","message":"✅ Direct [1]: Published — Strapi ID: 339, slug: \"digital-skills-every-indian-student-needs-for-a-thriving-career-in-2026\"","timestamp":"2026-05-22T11:45:18.953Z"}
 {"level":"info","message":"✅ Scheduler: DIRECT MODE batch complete","timestamp":"2026-05-22T11:45:18.955Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-30T06:45:41.962Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-30T06:45:41.971Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-30T06:45:41.974Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-30T06:45:41.974Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-30T06:45:41.975Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED (Direct Mode)","timestamp":"2026-05-30T06:45:42.041Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis disabled — using DIRECT MODE (no queue, jobs run synchronously).","timestamp":"2026-05-30T06:45:42.041Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-30T06:45:42.041Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-30T06:45:42.052Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-30T06:45:42.059Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-30T06:45:42.059Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-30T06:45:42.059Z"}
+{"level":"info","message":"Manual trigger received — count: 1","timestamp":"2026-05-30T06:45:58.470Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-30T06:45:58.471Z"}
+{"level":"info","message":"🔄 Scheduler: Starting daily batch — 2026-05-30T06:45:58.471Z","timestamp":"2026-05-30T06:45:58.471Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-30T06:45:58.471Z"}
+{"level":"info","message":"TopicEngine: Generating 1 new topics...","timestamp":"2026-05-30T06:45:58.472Z"}
+{"level":"info","message":"TopicEngine: Syncing recent topics from Strapi...","timestamp":"2026-05-30T06:45:58.472Z"}
+{"level":"info","message":"Strapi: Fetching last 50 articles...","timestamp":"2026-05-30T06:45:58.472Z"}
+{"level":"info","message":"Strapi: Fetched 50 recent articles","timestamp":"2026-05-30T06:46:00.625Z"}
+{"level":"info","message":"TopicEngine: Strapi sync complete","timestamp":"2026-05-30T06:46:18.776Z"}
+{"level":"info","message":"TopicEngine: Static pool exhausted. Using AI to generate 1 fresh topics...","timestamp":"2026-05-30T06:46:19.823Z"}
+{"level":"info","message":"TopicEngine: Trying NVIDIA for AI topics...","timestamp":"2026-05-30T06:46:19.823Z"}
+{"level":"info","message":"TopicEngine: NVIDIA requesting model \"google/gemma-3-27b-it\"...","timestamp":"2026-05-30T06:46:19.824Z"}
+{"level":"warn","message":"TopicEngine: NVIDIA model \"google/gemma-3-27b-it\" failed — Request failed with status code 410","timestamp":"2026-05-30T06:46:20.262Z"}
+{"level":"info","message":"TopicEngine: NVIDIA requesting model \"meta/llama-3.1-8b-instruct\"...","timestamp":"2026-05-30T06:46:20.263Z"}
+{"level":"info","message":"TopicEngine: NVIDIA model \"meta/llama-3.1-8b-instruct\" succeeded.","timestamp":"2026-05-30T06:46:20.937Z"}
+{"level":"info","message":"TopicEngine: AI generated topic — \"Unlocking the Power of WordPress for Indian Entrepreneurs: A Step-by-Step Guide\" [wordpress]","timestamp":"2026-05-30T06:46:20.939Z"}
+{"level":"info","message":"TopicEngine: Successfully generated 1 topics","timestamp":"2026-05-30T06:46:21.039Z"}
+{"level":"info","message":"Scheduler: Generated 1 topics. Mode: DIRECT","timestamp":"2026-05-30T06:46:21.039Z"}
+{"level":"info","message":"🔧 Scheduler: DIRECT MODE — Processing 1 topics synchronously...","timestamp":"2026-05-30T06:46:21.040Z"}
+{"level":"info","message":"\n🚀 Direct [1/1]: Starting — \"Unlocking the Power of WordPress for Indian Entrepreneurs: A Step-by-Step Guide\"","timestamp":"2026-05-30T06:46:21.040Z"}
+{"level":"info","message":"Direct [1]: Step 1/4 — Generating content...","timestamp":"2026-05-30T06:46:21.348Z"}
+{"level":"info","message":"Strapi: Fetching categories...","timestamp":"2026-05-30T06:46:21.348Z"}
+{"level":"info","message":"Strapi: Fetched 4 categories","timestamp":"2026-05-30T06:46:21.978Z"}
+{"level":"info","message":"BlogGenerator: Generating content for \"Unlocking the Power of WordPress for Indian Entrepreneurs: A Step-by-Step Guide\" using NVIDIA...","timestamp":"2026-05-30T06:46:21.979Z"}
+{"level":"info","message":"BlogGenerator: Trying NVIDIA...","timestamp":"2026-05-30T06:46:21.980Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 1)...","timestamp":"2026-05-30T06:46:21.980Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 2)...","timestamp":"2026-05-30T06:46:22.065Z"}
+{"level":"warn","message":"BlogGenerator: NVIDIA model \"google/gemma-3-27b-it\" failed after 2 attempts. Trying next model...","timestamp":"2026-05-30T06:46:22.265Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"meta/llama-3.1-8b-instruct\" (attempt 1)...","timestamp":"2026-05-30T06:46:22.265Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA model \"meta/llama-3.1-8b-instruct\" succeeded.","timestamp":"2026-05-30T06:46:26.873Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA response received, parsing...","timestamp":"2026-05-30T06:46:26.874Z"}
+{"level":"info","message":"BlogGenerator: Humanizing text using second-pass LLM...","timestamp":"2026-05-30T06:46:26.875Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 1)...","timestamp":"2026-05-30T06:46:26.875Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 2)...","timestamp":"2026-05-30T06:46:26.919Z"}
+{"level":"warn","message":"BlogGenerator: NVIDIA model \"google/gemma-3-27b-it\" failed after 2 attempts. Trying next model...","timestamp":"2026-05-30T06:46:26.962Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"meta/llama-3.1-8b-instruct\" (attempt 1)...","timestamp":"2026-05-30T06:46:26.962Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA model \"meta/llama-3.1-8b-instruct\" succeeded.","timestamp":"2026-05-30T06:46:30.493Z"}
+{"level":"info","message":"BlogGenerator: Second-pass humanization complete.","timestamp":"2026-05-30T06:46:30.494Z"}
+{"level":"info","message":"BlogGenerator: Finalizing and enriching inline images with Gemini...","timestamp":"2026-05-30T06:46:30.495Z"}
+{"level":"info","message":"BlogGenerator: No Pollinations images found in content.","timestamp":"2026-05-30T06:46:30.495Z"}
+{"level":"info","message":"BlogGenerator: Content generated successfully — \"Unlocking WordPress Power for Indian Entrepreneurs\" (633 words)","timestamp":"2026-05-30T06:46:30.496Z"}
+{"level":"info","message":"Direct [1]: Content generated — \"Unlocking WordPress Power for Indian Entrepreneurs\"","timestamp":"2026-05-30T06:46:30.497Z"}
+{"level":"info","message":"Direct [1]: Step 2/4 — Generating banner image...","timestamp":"2026-05-30T06:46:30.497Z"}
+{"level":"info","message":"ImageGenerator: Creating professional banner for \"Unlocking WordPress Power for Indian Entrepreneurs\"...","timestamp":"2026-05-30T06:46:30.497Z"}
+{"level":"info","message":"ImageGenerator: Using Gemini to engineer a professional prompt...","timestamp":"2026-05-30T06:46:31.110Z"}
+{"level":"warn","message":"ImageGenerator: Gemini prompt engineering failed ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\nPlease retry in 28.43040565s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\",\"quotaId\":\"GenerateContentInputTokensPerModelPerMinute-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"28s\"}]). Trying NVIDIA Llama fallback...","timestamp":"2026-05-30T06:46:31.807Z"}
+{"level":"info","message":"ImageGenerator: Using NVIDIA Llama for prompt engineering...","timestamp":"2026-05-30T06:46:31.807Z"}
+{"level":"info","message":"ImageGenerator: NVIDIA Llama Prompt Engineering complete. Prompt: \"\"Generate a premium isometric conceptual design background for a blog banner, featuring a stunning b...\"","timestamp":"2026-05-30T06:46:33.637Z"}
+{"level":"info","message":"ImageGenerator: Tier 1 - Requesting NVIDIA NIM for \"Unlocking WordPress Power for Indian Entrepreneurs\"...","timestamp":"2026-05-30T06:46:33.637Z"}
+{"level":"info","message":"ImageGenerator: NVIDIA NIM success","timestamp":"2026-05-30T06:46:38.598Z"}
+{"level":"info","message":"ImageGenerator: Banner created successfully (73.9 KB)","timestamp":"2026-05-30T06:46:38.637Z"}
+{"level":"info","message":"Direct [1]: Banner image generated","timestamp":"2026-05-30T06:46:38.637Z"}
+{"level":"info","message":"Direct [1]: Preview saved locally","timestamp":"2026-05-30T06:46:38.639Z"}
+{"level":"info","message":"Direct [1]: Step 3/4 — Uploading image to Strapi...","timestamp":"2026-05-30T06:46:38.639Z"}
+{"level":"info","message":"Strapi: Uploading image \"unlocking-the-power-of-wordpress-for-indian-entrepreneurs-a-step-by-step-guide-banner.jpg\"...","timestamp":"2026-05-30T06:46:38.639Z"}
+{"level":"info","message":"Strapi: Image uploaded successfully — ID: 260, filename: \"unlocking-the-power-of-wordpress-for-indian-entrepreneurs-a-step-by-step-guide-banner.jpg\"","timestamp":"2026-05-30T06:46:42.159Z"}
+{"level":"info","message":"Direct [1]: Image uploaded — Media ID: 260","timestamp":"2026-05-30T06:46:42.160Z"}
+{"level":"info","message":"Direct [1]: Step 4/4 — Publishing article...","timestamp":"2026-05-30T06:46:42.160Z"}
+{"level":"info","message":"Strapi: Fetching authors...","timestamp":"2026-05-30T06:46:42.160Z"}
+{"level":"info","message":"Strapi: Fetched 3 authors: [Ansh, Sharukh, Nikhil Chauhan]","timestamp":"2026-05-30T06:46:42.442Z"}
+{"level":"info","message":"Strapi: Creating article \"Unlocking WordPress Power for Indian Entrepreneurs\"...","timestamp":"2026-05-30T06:46:42.443Z"}
+{"level":"info","message":"Strapi: Article created successfully — ID: 347, slug: \"unlocking-wordpress-power-for-indian-entrepreneurs\"","timestamp":"2026-05-30T06:46:43.776Z"}
+{"level":"info","message":"✅ Direct [1]: Published — Strapi ID: 347, slug: \"unlocking-wordpress-power-for-indian-entrepreneurs\"","timestamp":"2026-05-30T06:46:45.514Z"}
+{"level":"info","message":"✅ Scheduler: DIRECT MODE batch complete","timestamp":"2026-05-30T06:46:45.514Z"}
+{"level":"info","message":"Background manual batch completed: Manual batch triggered: 1 posts processed directly","timestamp":"2026-05-30T06:46:45.515Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-30T08:37:43.697Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-30T08:37:43.704Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-30T08:37:43.708Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-30T08:37:43.708Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-30T08:37:43.709Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED (Direct Mode)","timestamp":"2026-05-30T08:37:43.773Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis disabled — using DIRECT MODE (no queue, jobs run synchronously).","timestamp":"2026-05-30T08:37:43.773Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-30T08:37:43.773Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-30T08:37:43.789Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-30T08:37:43.798Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-30T08:37:43.798Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-30T08:37:43.798Z"}
+{"level":"info","message":"Manual trigger received — count: 1","timestamp":"2026-05-30T08:37:51.521Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-30T08:37:51.521Z"}
+{"level":"info","message":"🔄 Scheduler: Starting daily batch — 2026-05-30T08:37:51.521Z","timestamp":"2026-05-30T08:37:51.521Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-30T08:37:51.521Z"}
+{"level":"info","message":"TopicEngine: Generating 1 new topics...","timestamp":"2026-05-30T08:37:51.522Z"}
+{"level":"info","message":"TopicEngine: Syncing recent topics from Strapi...","timestamp":"2026-05-30T08:37:51.522Z"}
+{"level":"info","message":"Strapi: Fetching last 50 articles...","timestamp":"2026-05-30T08:37:51.522Z"}
+{"level":"info","message":"Strapi: Fetched 50 recent articles","timestamp":"2026-05-30T08:37:52.371Z"}
+{"level":"info","message":"TopicEngine: Strapi sync complete","timestamp":"2026-05-30T08:37:59.241Z"}
+{"level":"info","message":"TopicEngine: Static pool exhausted. Using AI to generate 1 fresh topics...","timestamp":"2026-05-30T08:37:59.462Z"}
+{"level":"info","message":"TopicEngine: Trying NVIDIA for AI topics...","timestamp":"2026-05-30T08:37:59.463Z"}
+{"level":"info","message":"TopicEngine: NVIDIA requesting model \"google/gemma-3-27b-it\"...","timestamp":"2026-05-30T08:37:59.464Z"}
+{"level":"warn","message":"TopicEngine: NVIDIA model \"google/gemma-3-27b-it\" failed — Request failed with status code 410","timestamp":"2026-05-30T08:37:59.800Z"}
+{"level":"info","message":"TopicEngine: NVIDIA requesting model \"meta/llama-3.1-8b-instruct\"...","timestamp":"2026-05-30T08:37:59.801Z"}
+{"level":"info","message":"TopicEngine: NVIDIA model \"meta/llama-3.1-8b-instruct\" succeeded.","timestamp":"2026-05-30T08:38:00.368Z"}
+{"level":"info","message":"TopicEngine: AI generated topic — \"The Future of Web Design: Essential Skills for Indian Professionals in {year}\" [web-design]","timestamp":"2026-05-30T08:38:00.369Z"}
+{"level":"info","message":"TopicEngine: Successfully generated 1 topics","timestamp":"2026-05-30T08:38:00.470Z"}
+{"level":"info","message":"Scheduler: Generated 1 topics. Mode: DIRECT","timestamp":"2026-05-30T08:38:00.470Z"}
+{"level":"info","message":"🔧 Scheduler: DIRECT MODE — Processing 1 topics synchronously...","timestamp":"2026-05-30T08:38:00.472Z"}
+{"level":"info","message":"\n🚀 Direct [1/1]: Starting — \"The Future of Web Design: Essential Skills for Indian Professionals in {year}\"","timestamp":"2026-05-30T08:38:00.472Z"}
+{"level":"info","message":"Direct [1]: Step 1/4 — Generating content...","timestamp":"2026-05-30T08:38:00.576Z"}
+{"level":"info","message":"Strapi: Fetching categories...","timestamp":"2026-05-30T08:38:00.576Z"}
+{"level":"info","message":"Strapi: Fetched 4 categories","timestamp":"2026-05-30T08:38:00.860Z"}
+{"level":"info","message":"BlogGenerator: Generating content for \"The Future of Web Design: Essential Skills for Indian Professionals in {year}\" using NVIDIA...","timestamp":"2026-05-30T08:38:00.861Z"}
+{"level":"info","message":"BlogGenerator: Trying NVIDIA...","timestamp":"2026-05-30T08:38:00.862Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 1)...","timestamp":"2026-05-30T08:38:00.863Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 2)...","timestamp":"2026-05-30T08:38:00.908Z"}
+{"level":"warn","message":"BlogGenerator: NVIDIA model \"google/gemma-3-27b-it\" failed after 2 attempts. Trying next model...","timestamp":"2026-05-30T08:38:00.948Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"meta/llama-3.1-8b-instruct\" (attempt 1)...","timestamp":"2026-05-30T08:38:00.948Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA model \"meta/llama-3.1-8b-instruct\" succeeded.","timestamp":"2026-05-30T08:38:04.557Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA response received, parsing...","timestamp":"2026-05-30T08:38:04.557Z"}
+{"level":"info","message":"BlogGenerator: Humanizing text using second-pass LLM...","timestamp":"2026-05-30T08:38:04.558Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 1)...","timestamp":"2026-05-30T08:38:04.558Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 2)...","timestamp":"2026-05-30T08:38:04.659Z"}
+{"level":"warn","message":"BlogGenerator: NVIDIA model \"google/gemma-3-27b-it\" failed after 2 attempts. Trying next model...","timestamp":"2026-05-30T08:38:04.759Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"meta/llama-3.1-8b-instruct\" (attempt 1)...","timestamp":"2026-05-30T08:38:04.759Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA model \"meta/llama-3.1-8b-instruct\" succeeded.","timestamp":"2026-05-30T08:38:07.521Z"}
+{"level":"info","message":"BlogGenerator: Second-pass humanization complete.","timestamp":"2026-05-30T08:38:07.521Z"}
+{"level":"info","message":"BlogGenerator: Finalizing and enriching inline images with Gemini...","timestamp":"2026-05-30T08:38:07.522Z"}
+{"level":"info","message":"BlogGenerator: Found 1 Pollinations images to enrich.","timestamp":"2026-05-30T08:38:07.522Z"}
+{"level":"info","message":"BlogGenerator: Engineering prompt for inline image: \"Designing the Future...\"","timestamp":"2026-05-30T08:38:07.522Z"}
+{"level":"warn","message":"BlogGenerator: Gemini inline prompt failed ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\nPlease retry in 51.242979088s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"model\":\"gemini-2.0-flash\",\"location\":\"global\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\",\"quotaId\":\"GenerateContentInputTokensPerModelPerMinute-FreeTier\",\"quotaDimensions\":{\"model\":\"gemini-2.0-flash\",\"location\":\"global\"}}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"51s\"}]). Trying NVIDIA Llama...","timestamp":"2026-05-30T08:38:08.151Z"}
+{"level":"info","message":"BlogGenerator: Inline image enriched for \"Designing the Future\"","timestamp":"2026-05-30T08:38:08.754Z"}
+{"level":"info","message":"BlogGenerator: Content generated successfully — \"The Future of Web Design in 2026 for Indian Professionals\" (439 words)","timestamp":"2026-05-30T08:38:08.755Z"}
+{"level":"info","message":"Direct [1]: Content generated — \"The Future of Web Design in 2026 for Indian Professionals\"","timestamp":"2026-05-30T08:38:08.755Z"}
+{"level":"info","message":"Direct [1]: Step 2/4 — Generating banner image...","timestamp":"2026-05-30T08:38:08.755Z"}
+{"level":"info","message":"ImageGenerator: Creating professional banner for \"The Future of Web Design in 2026 for Indian Professionals\"...","timestamp":"2026-05-30T08:38:08.755Z"}
+{"level":"info","message":"ImageGenerator: Using Gemini to engineer a professional prompt...","timestamp":"2026-05-30T08:38:09.436Z"}
+{"level":"warn","message":"ImageGenerator: Gemini prompt engineering failed ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\nPlease retry in 49.741212566s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\",\"quotaId\":\"GenerateContentInputTokensPerModelPerMinute-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"49s\"}]). Trying NVIDIA Llama fallback...","timestamp":"2026-05-30T08:38:09.677Z"}
+{"level":"info","message":"ImageGenerator: Using NVIDIA Llama for prompt engineering...","timestamp":"2026-05-30T08:38:09.678Z"}
+{"level":"info","message":"ImageGenerator: NVIDIA Llama Prompt Engineering complete. Prompt: \"Create a Premium Isometric Conceptual Design background for \"The Future of Web Design in 2026 for In...\"","timestamp":"2026-05-30T08:38:11.209Z"}
+{"level":"info","message":"ImageGenerator: Tier 1 - Requesting NVIDIA NIM for \"The Future of Web Design in 2026 for Indian Professionals\"...","timestamp":"2026-05-30T08:38:11.209Z"}
+{"level":"info","message":"ImageGenerator: NVIDIA NIM success","timestamp":"2026-05-30T08:38:16.101Z"}
+{"level":"info","message":"ImageGenerator: Banner created successfully (12.3 KB)","timestamp":"2026-05-30T08:38:16.104Z"}
+{"level":"info","message":"Direct [1]: Banner image generated","timestamp":"2026-05-30T08:38:16.105Z"}
+{"level":"info","message":"Direct [1]: Preview saved locally","timestamp":"2026-05-30T08:38:16.106Z"}
+{"level":"info","message":"Direct [1]: Step 3/4 — Uploading image to Strapi...","timestamp":"2026-05-30T08:38:16.107Z"}
+{"level":"info","message":"Strapi: Uploading image \"the-future-of-web-design-essential-skills-for-indian-professionals-in-year-banner.jpg\"...","timestamp":"2026-05-30T08:38:16.107Z"}
+{"level":"info","message":"Strapi: Image uploaded successfully — ID: 261, filename: \"the-future-of-web-design-essential-skills-for-indian-professionals-in-year-banner.jpg\"","timestamp":"2026-05-30T08:38:19.022Z"}
+{"level":"info","message":"Direct [1]: Image uploaded — Media ID: 261","timestamp":"2026-05-30T08:38:19.022Z"}
+{"level":"info","message":"Direct [1]: Step 4/4 — Publishing article...","timestamp":"2026-05-30T08:38:19.022Z"}
+{"level":"info","message":"Strapi: Fetching authors...","timestamp":"2026-05-30T08:38:19.023Z"}
+{"level":"info","message":"Strapi: Fetched 3 authors: [Ansh, Sharukh, Nikhil Chauhan]","timestamp":"2026-05-30T08:38:19.189Z"}
+{"level":"info","message":"Strapi: Creating article \"The Future of Web Design in 2026 for Indian Professionals\"...","timestamp":"2026-05-30T08:38:19.190Z"}
+{"level":"info","message":"Strapi: Article created successfully — ID: 349, slug: \"the-future-of-web-design-in-2026-for-indian-professionals\"","timestamp":"2026-05-30T08:38:20.273Z"}
+{"level":"info","message":"✅ Direct [1]: Published — Strapi ID: 349, slug: \"the-future-of-web-design-in-2026-for-indian-professionals\"","timestamp":"2026-05-30T08:38:21.408Z"}
+{"level":"info","message":"✅ Scheduler: DIRECT MODE batch complete","timestamp":"2026-05-30T08:38:21.408Z"}
+{"level":"info","message":"Background manual batch completed: Manual batch triggered: 1 posts processed directly","timestamp":"2026-05-30T08:38:21.408Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-30T08:50:09.595Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-30T08:50:09.602Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-30T08:50:09.604Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-30T08:50:09.605Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-30T08:50:09.605Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED (Direct Mode)","timestamp":"2026-05-30T08:50:09.669Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis disabled — using DIRECT MODE (no queue, jobs run synchronously).","timestamp":"2026-05-30T08:50:09.669Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-30T08:50:09.669Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-30T08:50:09.680Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-30T08:50:09.687Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-30T08:50:09.687Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-30T08:50:09.687Z"}
+{"level":"info","message":"Manual trigger received — count: 1","timestamp":"2026-05-30T08:50:20.745Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-30T08:50:20.745Z"}
+{"level":"info","message":"🔄 Scheduler: Starting daily batch — 2026-05-30T08:50:20.745Z","timestamp":"2026-05-30T08:50:20.745Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-30T08:50:20.745Z"}
+{"level":"info","message":"TopicEngine: Generating 1 new topics...","timestamp":"2026-05-30T08:50:20.746Z"}
+{"level":"info","message":"TopicEngine: Syncing recent topics from Strapi...","timestamp":"2026-05-30T08:50:20.746Z"}
+{"level":"info","message":"Strapi: Fetching last 50 articles...","timestamp":"2026-05-30T08:50:20.747Z"}
+{"level":"info","message":"Strapi: Fetched 50 recent articles","timestamp":"2026-05-30T08:50:21.336Z"}
+{"level":"info","message":"TopicEngine: Strapi sync complete","timestamp":"2026-05-30T08:50:28.140Z"}
+{"level":"info","message":"TopicEngine: Static pool exhausted. Using AI to generate 1 fresh topics...","timestamp":"2026-05-30T08:50:28.345Z"}
+{"level":"info","message":"TopicEngine: Trying NVIDIA for AI topics...","timestamp":"2026-05-30T08:50:28.346Z"}
+{"level":"info","message":"TopicEngine: NVIDIA requesting model \"google/gemma-3-27b-it\"...","timestamp":"2026-05-30T08:50:28.346Z"}
+{"level":"warn","message":"TopicEngine: NVIDIA model \"google/gemma-3-27b-it\" failed — Request failed with status code 410","timestamp":"2026-05-30T08:50:28.655Z"}
+{"level":"info","message":"TopicEngine: NVIDIA requesting model \"meta/llama-3.1-8b-instruct\"...","timestamp":"2026-05-30T08:50:28.655Z"}
+{"level":"info","message":"TopicEngine: NVIDIA model \"meta/llama-3.1-8b-instruct\" succeeded.","timestamp":"2026-05-30T08:50:29.039Z"}
+{"level":"info","message":"TopicEngine: AI generated topic — \"Overcoming Common Freelancing Burnout and Staying Motivated in a Remote Work World\" [freelancing]","timestamp":"2026-05-30T08:50:29.040Z"}
+{"level":"info","message":"TopicEngine: Successfully generated 1 topics","timestamp":"2026-05-30T08:50:29.153Z"}
+{"level":"info","message":"Scheduler: Generated 1 topics. Mode: DIRECT","timestamp":"2026-05-30T08:50:29.153Z"}
+{"level":"info","message":"🔧 Scheduler: DIRECT MODE — Processing 1 topics synchronously...","timestamp":"2026-05-30T08:50:29.154Z"}
+{"level":"info","message":"\n🚀 Direct [1/1]: Starting — \"Overcoming Common Freelancing Burnout and Staying Motivated in a Remote Work World\"","timestamp":"2026-05-30T08:50:29.154Z"}
+{"level":"info","message":"Direct [1]: Step 1/4 — Generating content...","timestamp":"2026-05-30T08:50:29.254Z"}
+{"level":"info","message":"Strapi: Fetching categories...","timestamp":"2026-05-30T08:50:29.255Z"}
+{"level":"info","message":"Strapi: Fetched 4 categories","timestamp":"2026-05-30T08:50:29.527Z"}
+{"level":"info","message":"BlogGenerator: Generating content for \"Overcoming Common Freelancing Burnout and Staying Motivated in a Remote Work World\" using NVIDIA...","timestamp":"2026-05-30T08:50:29.527Z"}
+{"level":"info","message":"BlogGenerator: Trying NVIDIA...","timestamp":"2026-05-30T08:50:29.528Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 1)...","timestamp":"2026-05-30T08:50:29.528Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 2)...","timestamp":"2026-05-30T08:50:29.570Z"}
+{"level":"warn","message":"BlogGenerator: NVIDIA model \"google/gemma-3-27b-it\" failed after 2 attempts. Trying next model...","timestamp":"2026-05-30T08:50:29.610Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"meta/llama-3.1-8b-instruct\" (attempt 1)...","timestamp":"2026-05-30T08:50:29.610Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA model \"meta/llama-3.1-8b-instruct\" succeeded.","timestamp":"2026-05-30T08:50:33.199Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA response received, parsing...","timestamp":"2026-05-30T08:50:33.200Z"}
+{"level":"warn","message":"BlogGenerator: JSON parse failed, attempting super-robust brute-force extraction...","timestamp":"2026-05-30T08:50:33.202Z"}
+{"level":"info","message":"BlogGenerator: Brute-force succeeded for \"Overcoming Freelancing Burnout in Haryana\"","timestamp":"2026-05-30T08:50:33.203Z"}
+{"level":"info","message":"BlogGenerator: Humanizing text using second-pass LLM...","timestamp":"2026-05-30T08:50:33.206Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 1)...","timestamp":"2026-05-30T08:50:33.207Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 2)...","timestamp":"2026-05-30T08:50:33.247Z"}
+{"level":"warn","message":"BlogGenerator: NVIDIA model \"google/gemma-3-27b-it\" failed after 2 attempts. Trying next model...","timestamp":"2026-05-30T08:50:33.292Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"meta/llama-3.1-8b-instruct\" (attempt 1)...","timestamp":"2026-05-30T08:50:33.293Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA model \"meta/llama-3.1-8b-instruct\" succeeded.","timestamp":"2026-05-30T08:50:38.471Z"}
+{"level":"info","message":"BlogGenerator: Second-pass humanization complete.","timestamp":"2026-05-30T08:50:38.472Z"}
+{"level":"info","message":"BlogGenerator: Finalizing and enriching inline images with Gemini...","timestamp":"2026-05-30T08:50:38.473Z"}
+{"level":"info","message":"BlogGenerator: Found 2 Pollinations images to enrich.","timestamp":"2026-05-30T08:50:38.477Z"}
+{"level":"info","message":"BlogGenerator: Engineering prompt for inline image: \"student using laptop in haryan...\"","timestamp":"2026-05-30T08:50:38.477Z"}
+{"level":"warn","message":"BlogGenerator: Gemini inline prompt failed ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\nPlease retry in 20.213379497s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\",\"quotaId\":\"GenerateContentInputTokensPerModelPerMinute-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"20s\"}]). Trying NVIDIA Llama...","timestamp":"2026-05-30T08:50:39.171Z"}
+{"level":"info","message":"BlogGenerator: Inline image enriched for \"Student Using Laptop in Haryana\"","timestamp":"2026-05-30T08:50:39.869Z"}
+{"level":"info","message":"BlogGenerator: Engineering prompt for inline image: \"haryana freelancer working fro...\"","timestamp":"2026-05-30T08:50:39.870Z"}
+{"level":"warn","message":"BlogGenerator: Gemini inline prompt failed ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\nPlease retry in 19.296770135s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\",\"quotaId\":\"GenerateContentInputTokensPerModelPerMinute-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"19s\"}]). Trying NVIDIA Llama...","timestamp":"2026-05-30T08:50:40.049Z"}
+{"level":"info","message":"BlogGenerator: Inline image enriched for \"Haryana Freelancer Working from Home\"","timestamp":"2026-05-30T08:50:40.957Z"}
+{"level":"info","message":"BlogGenerator: Content generated successfully — \"Overcoming Freelancing Burnout in Haryana\" (386 words)","timestamp":"2026-05-30T08:50:40.959Z"}
+{"level":"info","message":"Direct [1]: Content generated — \"Overcoming Freelancing Burnout in Haryana\"","timestamp":"2026-05-30T08:50:40.962Z"}
+{"level":"info","message":"Direct [1]: Step 2/4 — Generating banner image...","timestamp":"2026-05-30T08:50:40.964Z"}
+{"level":"info","message":"ImageGenerator: Creating professional banner for \"Overcoming Freelancing Burnout in Haryana\"...","timestamp":"2026-05-30T08:50:40.967Z"}
+{"level":"info","message":"ImageGenerator: Using Gemini to engineer a professional prompt...","timestamp":"2026-05-30T08:50:43.574Z"}
+{"level":"warn","message":"ImageGenerator: Gemini prompt engineering failed ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\nPlease retry in 15.603948483s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\",\"quotaId\":\"GenerateContentInputTokensPerModelPerMinute-FreeTier\",\"quotaDimensions\":{\"model\":\"gemini-2.0-flash\",\"location\":\"global\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"model\":\"gemini-2.0-flash\",\"location\":\"global\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"model\":\"gemini-2.0-flash\",\"location\":\"global\"}}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"15s\"}]). Trying NVIDIA Llama fallback...","timestamp":"2026-05-30T08:50:43.766Z"}
+{"level":"info","message":"ImageGenerator: Using NVIDIA Llama for prompt engineering...","timestamp":"2026-05-30T08:50:43.766Z"}
+{"level":"info","message":"ImageGenerator: NVIDIA Llama Prompt Engineering complete. Prompt: \"Generate a high-end, premium, detailed, and visually stunning image of a dark, moody, and futuristic...\"","timestamp":"2026-05-30T08:50:45.440Z"}
+{"level":"info","message":"ImageGenerator: Cleaned prompt — \"Generate a high-end, premium, detailed, and visually stunning image of a dark, moody, and futuristic...\"","timestamp":"2026-05-30T08:50:45.440Z"}
+{"level":"info","message":"ImageGenerator: Tier 1 - Requesting NVIDIA NIM for \"Overcoming Freelancing Burnout in Haryana\"...","timestamp":"2026-05-30T08:50:45.440Z"}
+{"level":"info","message":"ImageGenerator: Loaded bgImage from NVIDIA NIM — Width: 1024, Height: 1024","timestamp":"2026-05-30T08:50:49.749Z"}
+{"level":"info","message":"ImageGenerator: NVIDIA NIM success","timestamp":"2026-05-30T08:50:49.878Z"}
+{"level":"info","message":"ImageGenerator: Banner created successfully (47.0 KB)","timestamp":"2026-05-30T08:50:49.910Z"}
+{"level":"info","message":"Direct [1]: Banner image generated","timestamp":"2026-05-30T08:50:49.910Z"}
+{"level":"info","message":"Direct [1]: Preview saved locally","timestamp":"2026-05-30T08:50:49.923Z"}
+{"level":"info","message":"Direct [1]: Step 3/4 — Uploading image to Strapi...","timestamp":"2026-05-30T08:50:49.927Z"}
+{"level":"info","message":"Strapi: Uploading image \"overcoming-common-freelancing-burnout-and-staying-motivated-in-a-remote-work-world-banner.jpg\"...","timestamp":"2026-05-30T08:50:49.928Z"}
+{"level":"info","message":"Strapi: Image uploaded successfully — ID: 262, filename: \"overcoming-common-freelancing-burnout-and-staying-motivated-in-a-remote-work-world-banner.jpg\"","timestamp":"2026-05-30T08:50:53.281Z"}
+{"level":"info","message":"Direct [1]: Image uploaded — Media ID: 262","timestamp":"2026-05-30T08:50:53.282Z"}
+{"level":"info","message":"Direct [1]: Step 4/4 — Publishing article...","timestamp":"2026-05-30T08:50:53.282Z"}
+{"level":"info","message":"Strapi: Fetching authors...","timestamp":"2026-05-30T08:50:53.283Z"}
+{"level":"info","message":"Strapi: Fetched 3 authors: [Ansh, Sharukh, Nikhil Chauhan]","timestamp":"2026-05-30T08:50:53.483Z"}
+{"level":"info","message":"Strapi: Creating article \"Overcoming Freelancing Burnout in Haryana\"...","timestamp":"2026-05-30T08:50:53.485Z"}
+{"level":"info","message":"Strapi: Article created successfully — ID: 351, slug: \"overcoming-freelancing-burnout-in-haryana\"","timestamp":"2026-05-30T08:50:54.610Z"}
+{"level":"info","message":"✅ Direct [1]: Published — Strapi ID: 351, slug: \"overcoming-freelancing-burnout-in-haryana\"","timestamp":"2026-05-30T08:50:55.870Z"}
+{"level":"info","message":"✅ Scheduler: DIRECT MODE batch complete","timestamp":"2026-05-30T08:50:55.871Z"}
+{"level":"info","message":"Background manual batch completed: Manual batch triggered: 1 posts processed directly","timestamp":"2026-05-30T08:50:55.871Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-30T09:18:04.863Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-30T09:18:04.981Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-30T09:18:05.125Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-30T09:18:05.171Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-30T09:18:05.315Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED (Direct Mode)","timestamp":"2026-05-30T09:18:09.038Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis disabled — using DIRECT MODE (no queue, jobs run synchronously).","timestamp":"2026-05-30T09:18:09.231Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-30T09:18:09.573Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-30T09:18:10.599Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-30T09:18:11.377Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-30T09:18:11.432Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-30T09:18:11.606Z"}
+{"level":"info","message":"Manual trigger received — count: 1","timestamp":"2026-05-30T09:18:47.104Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-30T09:18:47.110Z"}
+{"level":"info","message":"🔄 Scheduler: Starting daily batch — 2026-05-30T09:18:47.111Z","timestamp":"2026-05-30T09:18:47.112Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-30T09:18:47.113Z"}
+{"level":"info","message":"TopicEngine: Generating 1 new topics...","timestamp":"2026-05-30T09:18:47.238Z"}
+{"level":"info","message":"TopicEngine: Syncing recent topics from Strapi...","timestamp":"2026-05-30T09:18:47.253Z"}
+{"level":"info","message":"Strapi: Fetching last 50 articles...","timestamp":"2026-05-30T09:18:47.378Z"}
+{"level":"info","message":"Strapi: Fetched 50 recent articles","timestamp":"2026-05-30T09:18:48.785Z"}
+{"level":"info","message":"TopicEngine: Strapi sync complete","timestamp":"2026-05-30T09:18:56.860Z"}
+{"level":"info","message":"TopicEngine: Static pool exhausted. Using AI to generate 1 fresh topics...","timestamp":"2026-05-30T09:18:57.086Z"}
+{"level":"info","message":"TopicEngine: Trying NVIDIA for AI topics...","timestamp":"2026-05-30T09:18:57.087Z"}
+{"level":"info","message":"TopicEngine: NVIDIA requesting model \"google/gemma-3-27b-it\"...","timestamp":"2026-05-30T09:18:57.088Z"}
+{"level":"warn","message":"TopicEngine: NVIDIA model \"google/gemma-3-27b-it\" failed — Request failed with status code 410","timestamp":"2026-05-30T09:18:57.404Z"}
+{"level":"info","message":"TopicEngine: NVIDIA requesting model \"meta/llama-3.1-8b-instruct\"...","timestamp":"2026-05-30T09:18:57.404Z"}
+{"level":"info","message":"TopicEngine: NVIDIA model \"meta/llama-3.1-8b-instruct\" succeeded.","timestamp":"2026-05-30T09:18:57.980Z"}
+{"level":"warn","message":"TopicEngine: CRITICAL FALLBACK — Reusing 1 existing topics with unique suffixes.","timestamp":"2026-05-30T09:18:57.981Z"}
+{"level":"info","message":"TopicEngine: REUSED topic — \"How to Use AI Tools for SEO and Keyword Research\" (suffix: 646ex)","timestamp":"2026-05-30T09:18:57.982Z"}
+{"level":"info","message":"TopicEngine: Successfully generated 1 topics","timestamp":"2026-05-30T09:18:58.184Z"}
+{"level":"info","message":"Scheduler: Generated 1 topics. Mode: DIRECT","timestamp":"2026-05-30T09:18:58.185Z"}
+{"level":"info","message":"🔧 Scheduler: DIRECT MODE — Processing 1 topics synchronously...","timestamp":"2026-05-30T09:18:58.186Z"}
+{"level":"info","message":"\n🚀 Direct [1/1]: Starting — \"How to Use AI Tools for SEO and Keyword Research\"","timestamp":"2026-05-30T09:18:58.186Z"}
+{"level":"info","message":"Direct [1]: Step 1/4 — Generating content...","timestamp":"2026-05-30T09:18:58.285Z"}
+{"level":"info","message":"Strapi: Fetching categories...","timestamp":"2026-05-30T09:18:58.285Z"}
+{"level":"info","message":"Strapi: Fetched 4 categories","timestamp":"2026-05-30T09:18:58.695Z"}
+{"level":"info","message":"BlogGenerator: Generating content for \"How to Use AI Tools for SEO and Keyword Research\" using NVIDIA...","timestamp":"2026-05-30T09:18:58.695Z"}
+{"level":"info","message":"BlogGenerator: Trying NVIDIA...","timestamp":"2026-05-30T09:18:58.696Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 1)...","timestamp":"2026-05-30T09:18:58.696Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 2)...","timestamp":"2026-05-30T09:18:58.801Z"}
+{"level":"warn","message":"BlogGenerator: NVIDIA model \"google/gemma-3-27b-it\" failed after 2 attempts. Trying next model...","timestamp":"2026-05-30T09:18:58.901Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"meta/llama-3.1-8b-instruct\" (attempt 1)...","timestamp":"2026-05-30T09:18:58.901Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA model \"meta/llama-3.1-8b-instruct\" succeeded.","timestamp":"2026-05-30T09:19:04.033Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA response received, parsing...","timestamp":"2026-05-30T09:19:04.035Z"}
+{"level":"warn","message":"BlogGenerator: JSON parse failed, attempting super-robust brute-force extraction...","timestamp":"2026-05-30T09:19:04.036Z"}
+{"level":"info","message":"BlogGenerator: Brute-force succeeded for \"AI Tools for SEO and Keyword Research\"","timestamp":"2026-05-30T09:19:04.037Z"}
+{"level":"info","message":"BlogGenerator: Humanizing text using second-pass LLM...","timestamp":"2026-05-30T09:19:04.038Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 1)...","timestamp":"2026-05-30T09:19:04.039Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 2)...","timestamp":"2026-05-30T09:19:04.123Z"}
+{"level":"warn","message":"BlogGenerator: NVIDIA model \"google/gemma-3-27b-it\" failed after 2 attempts. Trying next model...","timestamp":"2026-05-30T09:19:04.181Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"meta/llama-3.1-8b-instruct\" (attempt 1)...","timestamp":"2026-05-30T09:19:04.181Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA model \"meta/llama-3.1-8b-instruct\" succeeded.","timestamp":"2026-05-30T09:19:07.920Z"}
+{"level":"info","message":"BlogGenerator: Second-pass humanization complete.","timestamp":"2026-05-30T09:19:07.921Z"}
+{"level":"info","message":"BlogGenerator: Finalizing and enriching inline images with Gemini...","timestamp":"2026-05-30T09:19:07.922Z"}
+{"level":"info","message":"BlogGenerator: Found 2 Pollinations images to enrich.","timestamp":"2026-05-30T09:19:07.922Z"}
+{"level":"info","message":"BlogGenerator: Engineering prompt for inline image: \"student using laptop for seo r...\"","timestamp":"2026-05-30T09:19:07.923Z"}
+{"level":"warn","message":"BlogGenerator: Gemini inline prompt failed ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\nPlease retry in 51.161009063s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\",\"quotaId\":\"GenerateContentInputTokensPerModelPerMinute-FreeTier\",\"quotaDimensions\":{\"model\":\"gemini-2.0-flash\",\"location\":\"global\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"51s\"}]). Trying NVIDIA Llama...","timestamp":"2026-05-30T09:19:08.236Z"}
+{"level":"info","message":"BlogGenerator: Inline image enriched for \"Student-Using-Laptop\"","timestamp":"2026-05-30T09:19:08.834Z"}
+{"level":"info","message":"BlogGenerator: Engineering prompt for inline image: \"ai powered seo research for st...\"","timestamp":"2026-05-30T09:19:08.834Z"}
+{"level":"warn","message":"BlogGenerator: Gemini inline prompt failed ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\nPlease retry in 50.337906219s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\",\"quotaId\":\"GenerateContentInputTokensPerModelPerMinute-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"50s\"}]). Trying NVIDIA Llama...","timestamp":"2026-05-30T09:19:09.002Z"}
+{"level":"info","message":"BlogGenerator: Inline image enriched for \"AI-Powered-SEO\"","timestamp":"2026-05-30T09:19:09.550Z"}
+{"level":"info","message":"BlogGenerator: Content generated successfully — \"AI Tools for SEO and Keyword Research\" (481 words)","timestamp":"2026-05-30T09:19:09.551Z"}
+{"level":"info","message":"Direct [1]: Content generated — \"AI Tools for SEO and Keyword Research\"","timestamp":"2026-05-30T09:19:09.551Z"}
+{"level":"info","message":"Direct [1]: Step 2/4 — Generating banner image...","timestamp":"2026-05-30T09:19:09.551Z"}
+{"level":"info","message":"ImageGenerator: Creating professional banner for \"AI Tools for SEO and Keyword Research\"...","timestamp":"2026-05-30T09:19:09.552Z"}
+{"level":"info","message":"ImageGenerator: Using Gemini to engineer a professional prompt...","timestamp":"2026-05-30T09:19:10.289Z"}
+{"level":"warn","message":"ImageGenerator: Gemini prompt engineering failed ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\nPlease retry in 48.893498119s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\",\"quotaId\":\"GenerateContentInputTokensPerModelPerMinute-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"48s\"}]). Trying NVIDIA Llama fallback...","timestamp":"2026-05-30T09:19:10.474Z"}
+{"level":"info","message":"ImageGenerator: Using NVIDIA Llama for prompt engineering...","timestamp":"2026-05-30T09:19:10.475Z"}
+{"level":"info","message":"ImageGenerator: NVIDIA Llama Prompt Engineering complete. Prompt: \"Create a Premium Dark Cybertech & Glassmorphic 3D background image for a blog banner with the title ...\"","timestamp":"2026-05-30T09:19:12.024Z"}
+{"level":"info","message":"ImageGenerator: Cleaned prompt — \"Create a Premium Dark Cybertech & Glassmorphic 3D background image for a blog banner with the title ...\"","timestamp":"2026-05-30T09:19:12.024Z"}
+{"level":"info","message":"ImageGenerator: Tier 1 - Requesting NVIDIA NIM for \"AI Tools for SEO and Keyword Research\"...","timestamp":"2026-05-30T09:19:12.025Z"}
+{"level":"info","message":"ImageGenerator: Loaded bgImage from NVIDIA NIM — Width: 1024, Height: 1024","timestamp":"2026-05-30T09:19:17.055Z"}
+{"level":"info","message":"ImageGenerator: NVIDIA NIM success","timestamp":"2026-05-30T09:19:17.089Z"}
+{"level":"info","message":"ImageGenerator: Banner created successfully (12.3 KB)","timestamp":"2026-05-30T09:19:17.093Z"}
+{"level":"info","message":"Direct [1]: Banner image generated","timestamp":"2026-05-30T09:19:17.094Z"}
+{"level":"info","message":"Direct [1]: Preview saved locally","timestamp":"2026-05-30T09:19:17.127Z"}
+{"level":"info","message":"Direct [1]: Step 3/4 — Uploading image to Strapi...","timestamp":"2026-05-30T09:19:17.127Z"}
+{"level":"info","message":"Strapi: Uploading image \"how-to-use-ai-tools-for-seo-and-keyword-research-646ex-banner.jpg\"...","timestamp":"2026-05-30T09:19:17.127Z"}
+{"level":"info","message":"Strapi: Image uploaded successfully — ID: 263, filename: \"how-to-use-ai-tools-for-seo-and-keyword-research-646ex-banner.jpg\"","timestamp":"2026-05-30T09:19:19.894Z"}
+{"level":"info","message":"Direct [1]: Image uploaded — Media ID: 263","timestamp":"2026-05-30T09:19:19.895Z"}
+{"level":"info","message":"Direct [1]: Step 4/4 — Publishing article...","timestamp":"2026-05-30T09:19:19.895Z"}
+{"level":"info","message":"Strapi: Fetching authors...","timestamp":"2026-05-30T09:19:19.896Z"}
+{"level":"info","message":"Strapi: Fetched 3 authors: [Ansh, Sharukh, Nikhil Chauhan]","timestamp":"2026-05-30T09:19:20.080Z"}
+{"level":"info","message":"Strapi: Creating article \"AI Tools for SEO and Keyword Research\"...","timestamp":"2026-05-30T09:19:20.081Z"}
+{"level":"info","message":"Strapi: Article created successfully — ID: 353, slug: \"ai-tools-for-seo-and-keyword-research\"","timestamp":"2026-05-30T09:19:21.193Z"}
+{"level":"info","message":"✅ Direct [1]: Published — Strapi ID: 353, slug: \"ai-tools-for-seo-and-keyword-research\"","timestamp":"2026-05-30T09:19:22.863Z"}
+{"level":"info","message":"✅ Scheduler: DIRECT MODE batch complete","timestamp":"2026-05-30T09:19:22.864Z"}
+{"level":"info","message":"Background manual batch completed: Manual batch triggered: 1 posts processed directly","timestamp":"2026-05-30T09:19:22.865Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-30T09:22:58.535Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-30T09:22:58.543Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-30T09:22:58.549Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-30T09:22:58.551Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-30T09:22:58.554Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED (Direct Mode)","timestamp":"2026-05-30T09:22:58.640Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis disabled — using DIRECT MODE (no queue, jobs run synchronously).","timestamp":"2026-05-30T09:22:58.647Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-30T09:22:58.648Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-30T09:22:58.661Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-30T09:22:58.670Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-30T09:22:58.670Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-30T09:22:58.671Z"}
+{"level":"info","message":"Manual trigger received — count: 1","timestamp":"2026-05-30T09:23:13.787Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-30T09:23:13.789Z"}
+{"level":"info","message":"🔄 Scheduler: Starting daily batch — 2026-05-30T09:23:13.789Z","timestamp":"2026-05-30T09:23:13.789Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-30T09:23:13.789Z"}
+{"level":"info","message":"TopicEngine: Generating 1 new topics...","timestamp":"2026-05-30T09:23:13.791Z"}
+{"level":"info","message":"TopicEngine: Syncing recent topics from Strapi...","timestamp":"2026-05-30T09:23:13.791Z"}
+{"level":"info","message":"Strapi: Fetching last 50 articles...","timestamp":"2026-05-30T09:23:13.792Z"}
+{"level":"info","message":"Strapi: Fetched 50 recent articles","timestamp":"2026-05-30T09:23:14.804Z"}
+{"level":"info","message":"TopicEngine: Strapi sync complete","timestamp":"2026-05-30T09:23:22.787Z"}
+{"level":"info","message":"TopicEngine: Static pool exhausted. Using AI to generate 1 fresh topics...","timestamp":"2026-05-30T09:23:23.120Z"}
+{"level":"info","message":"TopicEngine: Trying NVIDIA for AI topics...","timestamp":"2026-05-30T09:23:23.122Z"}
+{"level":"info","message":"TopicEngine: NVIDIA requesting model \"google/gemma-3-27b-it\"...","timestamp":"2026-05-30T09:23:23.122Z"}
+{"level":"warn","message":"TopicEngine: NVIDIA model \"google/gemma-3-27b-it\" failed — Request failed with status code 410","timestamp":"2026-05-30T09:23:23.528Z"}
+{"level":"info","message":"TopicEngine: NVIDIA requesting model \"meta/llama-3.1-8b-instruct\"...","timestamp":"2026-05-30T09:23:23.528Z"}
+{"level":"info","message":"TopicEngine: NVIDIA model \"meta/llama-3.1-8b-instruct\" succeeded.","timestamp":"2026-05-30T09:23:24.017Z"}
+{"level":"info","message":"TopicEngine: AI generated topic — \"Navigating the Digital Landscape: Essential Skills for Freelancers in India\" [freelancing]","timestamp":"2026-05-30T09:23:24.018Z"}
+{"level":"info","message":"TopicEngine: Successfully generated 1 topics","timestamp":"2026-05-30T09:23:24.117Z"}
+{"level":"info","message":"Scheduler: Generated 1 topics. Mode: DIRECT","timestamp":"2026-05-30T09:23:24.119Z"}
+{"level":"info","message":"🔧 Scheduler: DIRECT MODE — Processing 1 topics synchronously...","timestamp":"2026-05-30T09:23:24.120Z"}
+{"level":"info","message":"\n🚀 Direct [1/1]: Starting — \"Navigating the Digital Landscape: Essential Skills for Freelancers in India\"","timestamp":"2026-05-30T09:23:24.120Z"}
+{"level":"info","message":"Direct [1]: Step 1/4 — Generating content...","timestamp":"2026-05-30T09:23:24.221Z"}
+{"level":"info","message":"Strapi: Fetching categories...","timestamp":"2026-05-30T09:23:24.222Z"}
+{"level":"info","message":"Strapi: Fetched 4 categories","timestamp":"2026-05-30T09:23:24.594Z"}
+{"level":"info","message":"BlogGenerator: Generating content for \"Navigating the Digital Landscape: Essential Skills for Freelancers in India\" using NVIDIA...","timestamp":"2026-05-30T09:23:24.595Z"}
+{"level":"info","message":"BlogGenerator: Trying NVIDIA...","timestamp":"2026-05-30T09:23:24.596Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 1)...","timestamp":"2026-05-30T09:23:24.597Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 2)...","timestamp":"2026-05-30T09:23:24.734Z"}
+{"level":"warn","message":"BlogGenerator: NVIDIA model \"google/gemma-3-27b-it\" failed after 2 attempts. Trying next model...","timestamp":"2026-05-30T09:23:24.835Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"meta/llama-3.1-8b-instruct\" (attempt 1)...","timestamp":"2026-05-30T09:23:24.835Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA model \"meta/llama-3.1-8b-instruct\" succeeded.","timestamp":"2026-05-30T09:23:31.045Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA response received, parsing...","timestamp":"2026-05-30T09:23:31.046Z"}
+{"level":"info","message":"BlogGenerator: Humanizing text using second-pass LLM...","timestamp":"2026-05-30T09:23:31.047Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 1)...","timestamp":"2026-05-30T09:23:31.048Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 2)...","timestamp":"2026-05-30T09:23:31.184Z"}
+{"level":"warn","message":"BlogGenerator: NVIDIA model \"google/gemma-3-27b-it\" failed after 2 attempts. Trying next model...","timestamp":"2026-05-30T09:23:31.390Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"meta/llama-3.1-8b-instruct\" (attempt 1)...","timestamp":"2026-05-30T09:23:31.391Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA model \"meta/llama-3.1-8b-instruct\" succeeded.","timestamp":"2026-05-30T09:23:38.769Z"}
+{"level":"info","message":"BlogGenerator: Second-pass humanization complete.","timestamp":"2026-05-30T09:23:38.771Z"}
+{"level":"info","message":"BlogGenerator: Finalizing and enriching inline images with Gemini...","timestamp":"2026-05-30T09:23:38.775Z"}
+{"level":"info","message":"BlogGenerator: Found 1 Pollinations images to enrich.","timestamp":"2026-05-30T09:23:38.788Z"}
+{"level":"info","message":"BlogGenerator: Engineering prompt for inline image: \"student using laptop in hisar ...\"","timestamp":"2026-05-30T09:23:38.790Z"}
+{"level":"warn","message":"BlogGenerator: Gemini inline prompt failed ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\nPlease retry in 19.147453069s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\",\"quotaId\":\"GenerateContentInputTokensPerModelPerMinute-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"19s\"}]). Trying NVIDIA Llama...","timestamp":"2026-05-30T09:23:41.042Z"}
+{"level":"info","message":"BlogGenerator: Inline image enriched for \"student-using-laptop\"","timestamp":"2026-05-30T09:23:41.979Z"}
+{"level":"info","message":"BlogGenerator: Content generated successfully — \"Essential Skills for Freelancers in India\" (544 words)","timestamp":"2026-05-30T09:23:42.125Z"}
+{"level":"info","message":"Direct [1]: Content generated — \"Essential Skills for Freelancers in India\"","timestamp":"2026-05-30T09:23:42.294Z"}
+{"level":"info","message":"Direct [1]: Step 2/4 — Generating banner image...","timestamp":"2026-05-30T09:23:42.300Z"}
+{"level":"info","message":"ImageGenerator: Creating professional banner for \"Essential Skills for Freelancers in India\"...","timestamp":"2026-05-30T09:23:42.500Z"}
+{"level":"info","message":"ImageGenerator: Using Gemini to engineer a professional prompt...","timestamp":"2026-05-30T09:23:51.903Z"}
+{"level":"warn","message":"ImageGenerator: Gemini prompt engineering failed ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\nPlease retry in 7.262997383s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"model\":\"gemini-2.0-flash\",\"location\":\"global\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\",\"quotaId\":\"GenerateContentInputTokensPerModelPerMinute-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"7s\"}]). Trying NVIDIA Llama fallback...","timestamp":"2026-05-30T09:23:52.179Z"}
+{"level":"info","message":"ImageGenerator: Using NVIDIA Llama for prompt engineering...","timestamp":"2026-05-30T09:23:52.180Z"}
+{"level":"info","message":"ImageGenerator: NVIDIA Llama Prompt Engineering complete. Prompt: \"\"Generate a premium isometric conceptual design background for a blog banner featuring 'Essential Sk...\"","timestamp":"2026-05-30T09:23:54.098Z"}
+{"level":"info","message":"ImageGenerator: Cleaned prompt — \"Generate a premium isometric conceptual design background for a blog banner featuring 'Essential Ski...\"","timestamp":"2026-05-30T09:23:54.109Z"}
+{"level":"info","message":"ImageGenerator: Tier 1 - Requesting NVIDIA NIM for \"Essential Skills for Freelancers in India\"...","timestamp":"2026-05-30T09:23:54.113Z"}
+{"level":"info","message":"ImageGenerator: NVIDIA NIM using seed: 919958237","timestamp":"2026-05-30T09:23:54.329Z"}
+{"level":"info","message":"ImageGenerator: Loaded bgImage from NVIDIA NIM — Width: 1024, Height: 1024","timestamp":"2026-05-30T09:23:57.991Z"}
+{"level":"info","message":"ImageGenerator: Image brightness check — avg: 0.0/255 (21 samples)","timestamp":"2026-05-30T09:23:58.307Z"}
+{"level":"warn","message":"ImageGenerator: NVIDIA NIM returned a near-black image — rejecting and falling through...","timestamp":"2026-05-30T09:23:58.328Z"}
+{"level":"info","message":"ImageGenerator: Tier 2 - Requesting DALL-E 3 for \"Essential Skills for Freelancers in India\"...","timestamp":"2026-05-30T09:23:58.329Z"}
+{"level":"warn","message":"ImageGenerator: Tier 2 failed (401 Incorrect API key provided: sk-proj-********************************************************************************************************************************************************hBcA. You can find your API key at https://platform.openai.com/account/api-keys.). Moving to Tier 3 (Flux)...","timestamp":"2026-05-30T09:23:59.686Z"}
+{"level":"info","message":"ImageGenerator: Tier 2 - Requesting Flux (Attempt 1)...","timestamp":"2026-05-30T09:23:59.703Z"}
+{"level":"info","message":"ImageGenerator: Loaded bgImage from Flux — Width: 1059, Height: 556","timestamp":"2026-05-30T09:24:02.130Z"}
+{"level":"info","message":"ImageGenerator: Flux success","timestamp":"2026-05-30T09:24:02.280Z"}
+{"level":"info","message":"ImageGenerator: Banner created successfully (79.3 KB)","timestamp":"2026-05-30T09:24:02.324Z"}
+{"level":"info","message":"Direct [1]: Banner image generated","timestamp":"2026-05-30T09:24:02.324Z"}
+{"level":"info","message":"Direct [1]: Preview saved locally","timestamp":"2026-05-30T09:24:02.333Z"}
+{"level":"info","message":"Direct [1]: Step 3/4 — Uploading image to Strapi...","timestamp":"2026-05-30T09:24:02.335Z"}
+{"level":"info","message":"Strapi: Uploading image \"navigating-the-digital-landscape-essential-skills-for-freelancers-in-india-banner.jpg\"...","timestamp":"2026-05-30T09:24:02.337Z"}
+{"level":"info","message":"Strapi: Image uploaded successfully — ID: 264, filename: \"navigating-the-digital-landscape-essential-skills-for-freelancers-in-india-banner.jpg\"","timestamp":"2026-05-30T09:24:05.825Z"}
+{"level":"info","message":"Direct [1]: Image uploaded — Media ID: 264","timestamp":"2026-05-30T09:24:05.840Z"}
+{"level":"info","message":"Direct [1]: Step 4/4 — Publishing article...","timestamp":"2026-05-30T09:24:05.842Z"}
+{"level":"info","message":"Strapi: Fetching authors...","timestamp":"2026-05-30T09:24:05.862Z"}
+{"level":"info","message":"Strapi: Fetched 3 authors: [Ansh, Sharukh, Nikhil Chauhan]","timestamp":"2026-05-30T09:24:06.105Z"}
+{"level":"info","message":"Strapi: Creating article \"Essential Skills for Freelancers in India\"...","timestamp":"2026-05-30T09:24:06.115Z"}
+{"level":"info","message":"Strapi: Article created successfully — ID: 355, slug: \"essential-skills-for-freelancers-in-india\"","timestamp":"2026-05-30T09:24:07.333Z"}
+{"level":"info","message":"✅ Direct [1]: Published — Strapi ID: 355, slug: \"essential-skills-for-freelancers-in-india\"","timestamp":"2026-05-30T09:24:08.589Z"}
+{"level":"info","message":"✅ Scheduler: DIRECT MODE batch complete","timestamp":"2026-05-30T09:24:08.596Z"}
+{"level":"info","message":"Background manual batch completed: Manual batch triggered: 1 posts processed directly","timestamp":"2026-05-30T09:24:08.626Z"}
+{"level":"info","message":"Manual trigger received — count: 1","timestamp":"2026-05-30T09:25:19.639Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-30T09:25:19.640Z"}
+{"level":"info","message":"🔄 Scheduler: Starting daily batch — 2026-05-30T09:25:19.640Z","timestamp":"2026-05-30T09:25:19.640Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-30T09:25:19.640Z"}
+{"level":"info","message":"TopicEngine: Generating 1 new topics...","timestamp":"2026-05-30T09:25:19.641Z"}
+{"level":"info","message":"TopicEngine: Syncing recent topics from Strapi...","timestamp":"2026-05-30T09:25:19.641Z"}
+{"level":"info","message":"Strapi: Fetching last 50 articles...","timestamp":"2026-05-30T09:25:19.642Z"}
+{"level":"info","message":"Strapi: Fetched 50 recent articles","timestamp":"2026-05-30T09:25:20.547Z"}
+{"level":"info","message":"TopicEngine: Strapi sync complete","timestamp":"2026-05-30T09:25:29.034Z"}
+{"level":"info","message":"TopicEngine: Static pool exhausted. Using AI to generate 1 fresh topics...","timestamp":"2026-05-30T09:25:29.474Z"}
+{"level":"info","message":"TopicEngine: Trying NVIDIA for AI topics...","timestamp":"2026-05-30T09:25:29.474Z"}
+{"level":"info","message":"TopicEngine: NVIDIA requesting model \"google/gemma-3-27b-it\"...","timestamp":"2026-05-30T09:25:29.474Z"}
+{"level":"warn","message":"TopicEngine: NVIDIA model \"google/gemma-3-27b-it\" failed — Request failed with status code 410","timestamp":"2026-05-30T09:25:29.867Z"}
+{"level":"info","message":"TopicEngine: NVIDIA requesting model \"meta/llama-3.1-8b-instruct\"...","timestamp":"2026-05-30T09:25:29.868Z"}
+{"level":"info","message":"TopicEngine: NVIDIA model \"meta/llama-3.1-8b-instruct\" succeeded.","timestamp":"2026-05-30T09:25:30.482Z"}
+{"level":"info","message":"TopicEngine: AI generated topic — \"Embracing the Digital Shift: Essential Skills and Strategies for Aspiring Indian Freelancers\" [freelancing]","timestamp":"2026-05-30T09:25:30.483Z"}
+{"level":"info","message":"TopicEngine: Successfully generated 1 topics","timestamp":"2026-05-30T09:25:30.573Z"}
+{"level":"info","message":"Scheduler: Generated 1 topics. Mode: DIRECT","timestamp":"2026-05-30T09:25:30.573Z"}
+{"level":"info","message":"🔧 Scheduler: DIRECT MODE — Processing 1 topics synchronously...","timestamp":"2026-05-30T09:25:30.574Z"}
+{"level":"info","message":"\n🚀 Direct [1/1]: Starting — \"Embracing the Digital Shift: Essential Skills and Strategies for Aspiring Indian Freelancers\"","timestamp":"2026-05-30T09:25:30.574Z"}
+{"level":"info","message":"Direct [1]: Step 1/4 — Generating content...","timestamp":"2026-05-30T09:25:30.687Z"}
+{"level":"info","message":"Strapi: Fetching categories...","timestamp":"2026-05-30T09:25:30.687Z"}
+{"level":"info","message":"Strapi: Fetched 4 categories","timestamp":"2026-05-30T09:25:31.096Z"}
+{"level":"info","message":"BlogGenerator: Generating content for \"Embracing the Digital Shift: Essential Skills and Strategies for Aspiring Indian Freelancers\" using NVIDIA...","timestamp":"2026-05-30T09:25:31.096Z"}
+{"level":"info","message":"BlogGenerator: Trying NVIDIA...","timestamp":"2026-05-30T09:25:31.097Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 1)...","timestamp":"2026-05-30T09:25:31.098Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 2)...","timestamp":"2026-05-30T09:25:31.161Z"}
+{"level":"warn","message":"BlogGenerator: NVIDIA model \"google/gemma-3-27b-it\" failed after 2 attempts. Trying next model...","timestamp":"2026-05-30T09:25:31.301Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"meta/llama-3.1-8b-instruct\" (attempt 1)...","timestamp":"2026-05-30T09:25:31.301Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA model \"meta/llama-3.1-8b-instruct\" succeeded.","timestamp":"2026-05-30T09:25:36.626Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA response received, parsing...","timestamp":"2026-05-30T09:25:36.626Z"}
+{"level":"warn","message":"BlogGenerator: JSON parse failed, attempting super-robust brute-force extraction...","timestamp":"2026-05-30T09:25:36.627Z"}
+{"level":"info","message":"BlogGenerator: Brute-force succeeded for \"Embracing Digital Shift in Freelancing\"","timestamp":"2026-05-30T09:25:36.628Z"}
+{"level":"info","message":"BlogGenerator: Humanizing text using second-pass LLM...","timestamp":"2026-05-30T09:25:36.630Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 1)...","timestamp":"2026-05-30T09:25:36.630Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 2)...","timestamp":"2026-05-30T09:25:36.728Z"}
+{"level":"warn","message":"BlogGenerator: NVIDIA model \"google/gemma-3-27b-it\" failed after 2 attempts. Trying next model...","timestamp":"2026-05-30T09:25:36.800Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"meta/llama-3.1-8b-instruct\" (attempt 1)...","timestamp":"2026-05-30T09:25:36.801Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA model \"meta/llama-3.1-8b-instruct\" succeeded.","timestamp":"2026-05-30T09:25:41.136Z"}
+{"level":"info","message":"BlogGenerator: Second-pass humanization complete.","timestamp":"2026-05-30T09:25:41.136Z"}
+{"level":"info","message":"BlogGenerator: Finalizing and enriching inline images with Gemini...","timestamp":"2026-05-30T09:25:41.136Z"}
+{"level":"info","message":"BlogGenerator: Found 2 Pollinations images to enrich.","timestamp":"2026-05-30T09:25:41.137Z"}
+{"level":"info","message":"BlogGenerator: Engineering prompt for inline image: \"Student Using Laptop in Hisar...\"","timestamp":"2026-05-30T09:25:41.138Z"}
+{"level":"warn","message":"BlogGenerator: Gemini inline prompt failed ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\nPlease retry in 17.98725219s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\",\"quotaId\":\"GenerateContentInputTokensPerModelPerMinute-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"17s\"}]). Trying NVIDIA Llama...","timestamp":"2026-05-30T09:25:41.440Z"}
+{"level":"info","message":"BlogGenerator: Inline image enriched for \"Student Using Laptop in Hisar\"","timestamp":"2026-05-30T09:25:42.313Z"}
+{"level":"info","message":"BlogGenerator: Engineering prompt for inline image: \"Freelancer Working Remotely...\"","timestamp":"2026-05-30T09:25:42.315Z"}
+{"level":"warn","message":"BlogGenerator: Gemini inline prompt failed ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\nPlease retry in 16.864791249s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\",\"quotaId\":\"GenerateContentInputTokensPerModelPerMinute-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"16s\"}]). Trying NVIDIA Llama...","timestamp":"2026-05-30T09:25:42.527Z"}
+{"level":"info","message":"BlogGenerator: Inline image enriched for \"Freelancer Working Remotely\"","timestamp":"2026-05-30T09:25:43.282Z"}
+{"level":"info","message":"BlogGenerator: Content generated successfully — \"Embracing Digital Shift in Freelancing\" (399 words)","timestamp":"2026-05-30T09:25:43.283Z"}
+{"level":"info","message":"Direct [1]: Content generated — \"Embracing Digital Shift in Freelancing\"","timestamp":"2026-05-30T09:25:43.283Z"}
+{"level":"info","message":"Direct [1]: Step 2/4 — Generating banner image...","timestamp":"2026-05-30T09:25:43.284Z"}
+{"level":"info","message":"ImageGenerator: Creating professional banner for \"Embracing Digital Shift in Freelancing\"...","timestamp":"2026-05-30T09:25:43.284Z"}
+{"level":"info","message":"ImageGenerator: Using Gemini to engineer a professional prompt...","timestamp":"2026-05-30T09:25:43.297Z"}
+{"level":"warn","message":"ImageGenerator: Gemini prompt engineering failed ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\nPlease retry in 15.865155448s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\",\"quotaId\":\"GenerateContentInputTokensPerModelPerMinute-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"15s\"}]). Trying NVIDIA Llama fallback...","timestamp":"2026-05-30T09:25:43.487Z"}
+{"level":"info","message":"ImageGenerator: Using NVIDIA Llama for prompt engineering...","timestamp":"2026-05-30T09:25:43.488Z"}
+{"level":"info","message":"ImageGenerator: NVIDIA Llama Prompt Engineering complete. Prompt: \"\"Generate a premium, cinematic, and abstract 3D digital art background for a blog banner, featuring ...\"","timestamp":"2026-05-30T09:25:45.227Z"}
+{"level":"info","message":"ImageGenerator: Cleaned prompt — \"Generate a premium, cinematic, and abstract 3D digital art background for a blog banner, featuring a...\"","timestamp":"2026-05-30T09:25:45.228Z"}
+{"level":"info","message":"ImageGenerator: Tier 1 - Requesting NVIDIA NIM for \"Embracing Digital Shift in Freelancing\"...","timestamp":"2026-05-30T09:25:45.228Z"}
+{"level":"info","message":"ImageGenerator: NVIDIA NIM using seed: 1300523387","timestamp":"2026-05-30T09:25:45.229Z"}
+{"level":"info","message":"ImageGenerator: Loaded bgImage from NVIDIA NIM — Width: 1024, Height: 1024","timestamp":"2026-05-30T09:25:49.173Z"}
+{"level":"info","message":"ImageGenerator: Image brightness check — avg: 0.0/255 (21 samples)","timestamp":"2026-05-30T09:25:49.220Z"}
+{"level":"warn","message":"ImageGenerator: NVIDIA NIM returned a near-black image — rejecting and falling through...","timestamp":"2026-05-30T09:25:49.220Z"}
+{"level":"info","message":"ImageGenerator: Tier 2 - Requesting DALL-E 3 for \"Embracing Digital Shift in Freelancing\"...","timestamp":"2026-05-30T09:25:49.221Z"}
+{"level":"warn","message":"ImageGenerator: Tier 2 failed (401 Incorrect API key provided: sk-proj-********************************************************************************************************************************************************hBcA. You can find your API key at https://platform.openai.com/account/api-keys.). Moving to Tier 3 (Flux)...","timestamp":"2026-05-30T09:25:50.043Z"}
+{"level":"info","message":"ImageGenerator: Tier 2 - Requesting Flux (Attempt 1)...","timestamp":"2026-05-30T09:25:50.044Z"}
+{"level":"info","message":"ImageGenerator: Loaded bgImage from Flux — Width: 1059, Height: 556","timestamp":"2026-05-30T09:25:51.576Z"}
+{"level":"info","message":"ImageGenerator: Flux success","timestamp":"2026-05-30T09:25:51.604Z"}
+{"level":"info","message":"ImageGenerator: Banner created successfully (110.3 KB)","timestamp":"2026-05-30T09:25:51.620Z"}
+{"level":"info","message":"Direct [1]: Banner image generated","timestamp":"2026-05-30T09:25:51.621Z"}
+{"level":"info","message":"Direct [1]: Preview saved locally","timestamp":"2026-05-30T09:25:51.626Z"}
+{"level":"info","message":"Direct [1]: Step 3/4 — Uploading image to Strapi...","timestamp":"2026-05-30T09:25:51.627Z"}
+{"level":"info","message":"Strapi: Uploading image \"embracing-the-digital-shift-essential-skills-and-strategies-for-aspiring-indian-freelancers-banner.jpg\"...","timestamp":"2026-05-30T09:25:51.629Z"}
+{"level":"info","message":"Strapi: Image uploaded successfully — ID: 265, filename: \"embracing-the-digital-shift-essential-skills-and-strategies-for-aspiring-indian-freelancers-banner.jpg\"","timestamp":"2026-05-30T09:25:54.548Z"}
+{"level":"info","message":"Direct [1]: Image uploaded — Media ID: 265","timestamp":"2026-05-30T09:25:54.549Z"}
+{"level":"info","message":"Direct [1]: Step 4/4 — Publishing article...","timestamp":"2026-05-30T09:25:54.550Z"}
+{"level":"info","message":"Strapi: Fetching authors...","timestamp":"2026-05-30T09:25:54.551Z"}
+{"level":"info","message":"Strapi: Fetched 3 authors: [Ansh, Sharukh, Nikhil Chauhan]","timestamp":"2026-05-30T09:25:54.749Z"}
+{"level":"info","message":"Strapi: Creating article \"Embracing Digital Shift in Freelancing\"...","timestamp":"2026-05-30T09:25:54.753Z"}
+{"level":"info","message":"Strapi: Article created successfully — ID: 357, slug: \"embracing-digital-shift-in-freelancing\"","timestamp":"2026-05-30T09:25:55.871Z"}
+{"level":"info","message":"✅ Direct [1]: Published — Strapi ID: 357, slug: \"embracing-digital-shift-in-freelancing\"","timestamp":"2026-05-30T09:25:57.515Z"}
+{"level":"info","message":"✅ Scheduler: DIRECT MODE batch complete","timestamp":"2026-05-30T09:25:57.516Z"}
+{"level":"info","message":"Background manual batch completed: Manual batch triggered: 1 posts processed directly","timestamp":"2026-05-30T09:25:57.517Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-30T09:31:17.589Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-30T09:31:17.598Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-30T09:31:17.601Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-30T09:31:17.601Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-30T09:31:17.602Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED (Direct Mode)","timestamp":"2026-05-30T09:31:17.688Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis disabled — using DIRECT MODE (no queue, jobs run synchronously).","timestamp":"2026-05-30T09:31:17.688Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-30T09:31:17.689Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-30T09:31:17.707Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-30T09:31:17.720Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-30T09:31:17.720Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-30T09:31:17.721Z"}
+{"level":"info","message":"Manual trigger received — count: 1","timestamp":"2026-05-30T09:31:41.850Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-30T09:31:41.851Z"}
+{"level":"info","message":"🔄 Scheduler: Starting daily batch — 2026-05-30T09:31:41.851Z","timestamp":"2026-05-30T09:31:41.852Z"}
+{"level":"info","message":"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━","timestamp":"2026-05-30T09:31:41.852Z"}
+{"level":"info","message":"TopicEngine: Generating 1 new topics...","timestamp":"2026-05-30T09:31:41.853Z"}
+{"level":"info","message":"TopicEngine: Syncing recent topics from Strapi...","timestamp":"2026-05-30T09:31:41.854Z"}
+{"level":"info","message":"Strapi: Fetching last 50 articles...","timestamp":"2026-05-30T09:31:41.854Z"}
+{"level":"info","message":"Strapi: Fetched 50 recent articles","timestamp":"2026-05-30T09:31:42.693Z"}
+{"level":"info","message":"TopicEngine: Strapi sync complete","timestamp":"2026-05-30T09:31:49.875Z"}
+{"level":"info","message":"TopicEngine: Static pool exhausted. Using AI to generate 1 fresh topics...","timestamp":"2026-05-30T09:31:50.408Z"}
+{"level":"info","message":"TopicEngine: Trying NVIDIA for AI topics...","timestamp":"2026-05-30T09:31:50.409Z"}
+{"level":"info","message":"TopicEngine: NVIDIA requesting model \"google/gemma-3-27b-it\"...","timestamp":"2026-05-30T09:31:50.409Z"}
+{"level":"warn","message":"TopicEngine: NVIDIA model \"google/gemma-3-27b-it\" failed — Request failed with status code 410","timestamp":"2026-05-30T09:31:50.924Z"}
+{"level":"info","message":"TopicEngine: NVIDIA requesting model \"meta/llama-3.1-8b-instruct\"...","timestamp":"2026-05-30T09:31:50.925Z"}
+{"level":"info","message":"TopicEngine: NVIDIA model \"meta/llama-3.1-8b-instruct\" succeeded.","timestamp":"2026-05-30T09:31:51.410Z"}
+{"level":"info","message":"TopicEngine: AI generated topic — \"Crafting a Web Development Roadmap for Indian Professionals in 2026\" [web-development]","timestamp":"2026-05-30T09:31:51.411Z"}
+{"level":"info","message":"TopicEngine: Successfully generated 1 topics","timestamp":"2026-05-30T09:31:51.514Z"}
+{"level":"info","message":"Scheduler: Generated 1 topics. Mode: DIRECT","timestamp":"2026-05-30T09:31:51.514Z"}
+{"level":"info","message":"🔧 Scheduler: DIRECT MODE — Processing 1 topics synchronously...","timestamp":"2026-05-30T09:31:51.515Z"}
+{"level":"info","message":"\n🚀 Direct [1/1]: Starting — \"Crafting a Web Development Roadmap for Indian Professionals in 2026\"","timestamp":"2026-05-30T09:31:51.516Z"}
+{"level":"info","message":"Direct [1]: Step 1/4 — Generating content...","timestamp":"2026-05-30T09:31:51.623Z"}
+{"level":"info","message":"Strapi: Fetching categories...","timestamp":"2026-05-30T09:31:51.623Z"}
+{"level":"info","message":"Strapi: Fetched 4 categories","timestamp":"2026-05-30T09:31:52.025Z"}
+{"level":"info","message":"BlogGenerator: Generating content for \"Crafting a Web Development Roadmap for Indian Professionals in 2026\" using NVIDIA...","timestamp":"2026-05-30T09:31:52.026Z"}
+{"level":"info","message":"BlogGenerator: Trying NVIDIA...","timestamp":"2026-05-30T09:31:52.027Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 1)...","timestamp":"2026-05-30T09:31:52.027Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 2)...","timestamp":"2026-05-30T09:31:52.130Z"}
+{"level":"warn","message":"BlogGenerator: NVIDIA model \"google/gemma-3-27b-it\" failed after 2 attempts. Trying next model...","timestamp":"2026-05-30T09:31:52.186Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"meta/llama-3.1-8b-instruct\" (attempt 1)...","timestamp":"2026-05-30T09:31:52.186Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA model \"meta/llama-3.1-8b-instruct\" succeeded.","timestamp":"2026-05-30T09:31:57.147Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA response received, parsing...","timestamp":"2026-05-30T09:31:57.148Z"}
+{"level":"warn","message":"BlogGenerator: JSON parse failed, attempting super-robust brute-force extraction...","timestamp":"2026-05-30T09:31:57.149Z"}
+{"level":"info","message":"BlogGenerator: Brute-force succeeded for \"Crafting a Web Development Roadmap for Indian Professionals\"","timestamp":"2026-05-30T09:31:57.151Z"}
+{"level":"info","message":"BlogGenerator: Humanizing text using second-pass LLM...","timestamp":"2026-05-30T09:31:57.153Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 1)...","timestamp":"2026-05-30T09:31:57.154Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"google/gemma-3-27b-it\" (attempt 2)...","timestamp":"2026-05-30T09:31:57.249Z"}
+{"level":"warn","message":"BlogGenerator: NVIDIA model \"google/gemma-3-27b-it\" failed after 2 attempts. Trying next model...","timestamp":"2026-05-30T09:31:57.351Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA requesting model \"meta/llama-3.1-8b-instruct\" (attempt 1)...","timestamp":"2026-05-30T09:31:57.354Z"}
+{"level":"info","message":"BlogGenerator: NVIDIA model \"meta/llama-3.1-8b-instruct\" succeeded.","timestamp":"2026-05-30T09:32:02.673Z"}
+{"level":"info","message":"BlogGenerator: Second-pass humanization complete.","timestamp":"2026-05-30T09:32:02.727Z"}
+{"level":"info","message":"BlogGenerator: Finalizing and enriching inline images with Gemini...","timestamp":"2026-05-30T09:32:02.755Z"}
+{"level":"info","message":"BlogGenerator: Found 2 Pollinations images to enrich.","timestamp":"2026-05-30T09:32:02.767Z"}
+{"level":"info","message":"BlogGenerator: Engineering prompt for inline image: \"student using laptop in haryan...\"","timestamp":"2026-05-30T09:32:02.784Z"}
+{"level":"warn","message":"BlogGenerator: Gemini inline prompt failed ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\nPlease retry in 55.127959625s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\",\"quotaId\":\"GenerateContentInputTokensPerModelPerMinute-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"55s\"}]). Trying NVIDIA Llama...","timestamp":"2026-05-30T09:32:06.291Z"}
+{"level":"info","message":"BlogGenerator: Inline image enriched for \"Haryana Students Using Laptops\"","timestamp":"2026-05-30T09:32:07.000Z"}
+{"level":"info","message":"BlogGenerator: Engineering prompt for inline image: \"web developers working togethe...\"","timestamp":"2026-05-30T09:32:07.020Z"}
+{"level":"warn","message":"BlogGenerator: Gemini inline prompt failed ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\nPlease retry in 52.130903019s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\",\"quotaId\":\"GenerateContentInputTokensPerModelPerMinute-FreeTier\",\"quotaDimensions\":{\"model\":\"gemini-2.0-flash\",\"location\":\"global\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"model\":\"gemini-2.0-flash\",\"location\":\"global\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"model\":\"gemini-2.0-flash\",\"location\":\"global\"}}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"52s\"}]). Trying NVIDIA Llama...","timestamp":"2026-05-30T09:32:07.744Z"}
+{"level":"info","message":"BlogGenerator: Inline image enriched for \"Indian Web Developers Working Together\"","timestamp":"2026-05-30T09:32:08.369Z"}
+{"level":"info","message":"BlogGenerator: Content generated successfully — \"Crafting a Web Development Roadmap for Indian Professionals\" (573 words)","timestamp":"2026-05-30T09:32:08.411Z"}
+{"level":"info","message":"Direct [1]: Content generated — \"Crafting a Web Development Roadmap for Indian Professionals\"","timestamp":"2026-05-30T09:32:08.629Z"}
+{"level":"info","message":"Direct [1]: Step 2/4 — Generating banner image...","timestamp":"2026-05-30T09:32:08.755Z"}
+{"level":"info","message":"ImageGenerator: Creating professional banner for \"Crafting a Web Development Roadmap for Indian Professionals\"...","timestamp":"2026-05-30T09:32:08.765Z"}
+{"level":"info","message":"ImageGenerator: Using Gemini to engineer a professional prompt...","timestamp":"2026-05-30T09:32:09.441Z"}
+{"level":"warn","message":"ImageGenerator: Gemini prompt engineering failed ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\nPlease retry in 49.730481684s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\",\"quotaId\":\"GenerateContentInputTokensPerModelPerMinute-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}},{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.0-flash\"}}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"49s\"}]). Trying NVIDIA Llama fallback...","timestamp":"2026-05-30T09:32:09.611Z"}
+{"level":"info","message":"ImageGenerator: Using NVIDIA Llama for prompt engineering...","timestamp":"2026-05-30T09:32:09.612Z"}
+{"level":"info","message":"ImageGenerator: NVIDIA Llama Prompt Engineering complete. Prompt: \"A 3D isometric rendering of a stylized Indian-inspired map with a winding path or road leading to a ...\"","timestamp":"2026-05-30T09:32:10.480Z"}
+{"level":"info","message":"ImageGenerator: Cleaned prompt — \"A 3D isometric rendering of a stylized Indian-inspired map with a winding path or road leading to a ...\"","timestamp":"2026-05-30T09:32:10.480Z"}
+{"level":"info","message":"ImageGenerator: Tier 1 - Requesting NVIDIA NIM for \"Crafting a Web Development Roadmap for Indian Professionals\"...","timestamp":"2026-05-30T09:32:10.480Z"}
+{"level":"info","message":"ImageGenerator: NVIDIA NIM using seed: 530045198","timestamp":"2026-05-30T09:32:10.481Z"}
+{"level":"info","message":"ImageGenerator: Loaded bgImage from NVIDIA NIM — Width: 1024, Height: 1024","timestamp":"2026-05-30T09:32:14.901Z"}
+{"level":"info","message":"ImageGenerator: Image brightness check — avg: 73.0/255 (21 samples)","timestamp":"2026-05-30T09:32:14.935Z"}
+{"level":"info","message":"ImageGenerator: NVIDIA NIM success — brightness OK","timestamp":"2026-05-30T09:32:14.936Z"}
+{"level":"info","message":"ImageGenerator: Banner created successfully (99.9 KB)","timestamp":"2026-05-30T09:32:14.943Z"}
+{"level":"info","message":"Direct [1]: Banner image generated","timestamp":"2026-05-30T09:32:14.943Z"}
+{"level":"info","message":"Direct [1]: Preview saved locally","timestamp":"2026-05-30T09:32:14.947Z"}
+{"level":"info","message":"Direct [1]: Step 3/4 — Uploading image to Strapi...","timestamp":"2026-05-30T09:32:14.947Z"}
+{"level":"info","message":"Strapi: Uploading image \"crafting-a-web-development-roadmap-for-indian-professionals-in-2026-banner.jpg\"...","timestamp":"2026-05-30T09:32:14.948Z"}
+{"level":"info","message":"Strapi: Image uploaded successfully — ID: 266, filename: \"crafting-a-web-development-roadmap-for-indian-professionals-in-2026-banner.jpg\"","timestamp":"2026-05-30T09:32:17.909Z"}
+{"level":"info","message":"Direct [1]: Image uploaded — Media ID: 266","timestamp":"2026-05-30T09:32:18.024Z"}
+{"level":"info","message":"Direct [1]: Step 4/4 — Publishing article...","timestamp":"2026-05-30T09:32:18.154Z"}
+{"level":"info","message":"Strapi: Fetching authors...","timestamp":"2026-05-30T09:32:18.277Z"}
+{"level":"info","message":"Strapi: Fetched 3 authors: [Ansh, Sharukh, Nikhil Chauhan]","timestamp":"2026-05-30T09:32:18.696Z"}
+{"level":"info","message":"Strapi: Creating article \"Crafting a Web Development Roadmap for Indian Professionals\"...","timestamp":"2026-05-30T09:32:18.698Z"}
+{"level":"info","message":"Strapi: Article created successfully — ID: 359, slug: \"crafting-a-web-development-roadmap-for-indian-professionals\"","timestamp":"2026-05-30T09:32:19.955Z"}
+{"level":"info","message":"✅ Direct [1]: Published — Strapi ID: 359, slug: \"crafting-a-web-development-roadmap-for-indian-professionals\"","timestamp":"2026-05-30T09:32:22.106Z"}
+{"level":"info","message":"✅ Scheduler: DIRECT MODE batch complete","timestamp":"2026-05-30T09:32:22.227Z"}
+{"level":"info","message":"Background manual batch completed: Manual batch triggered: 1 posts processed directly","timestamp":"2026-05-30T09:32:22.350Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-30T09:41:17.157Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-30T09:41:17.166Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-30T09:41:17.170Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-30T09:41:17.171Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-30T09:41:17.172Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED (Direct Mode)","timestamp":"2026-05-30T09:41:17.261Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis disabled — using DIRECT MODE (no queue, jobs run synchronously).","timestamp":"2026-05-30T09:41:17.267Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-30T09:41:17.267Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-30T09:41:17.286Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-30T09:41:17.296Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-30T09:41:17.297Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-30T09:41:17.297Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-30T09:41:19.268Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-30T09:41:19.276Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-30T09:41:19.279Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-30T09:41:19.280Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-30T09:41:19.281Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED (Direct Mode)","timestamp":"2026-05-30T09:41:19.406Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis disabled — using DIRECT MODE (no queue, jobs run synchronously).","timestamp":"2026-05-30T09:41:19.408Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-30T09:41:19.409Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-30T09:41:19.435Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-30T09:41:19.445Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-30T09:41:19.445Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-30T09:41:19.446Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-30T09:41:21.036Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-30T09:41:21.044Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-30T09:41:21.048Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-30T09:41:21.049Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-30T09:41:21.050Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED (Direct Mode)","timestamp":"2026-05-30T09:41:21.146Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis disabled — using DIRECT MODE (no queue, jobs run synchronously).","timestamp":"2026-05-30T09:41:21.147Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-30T09:41:21.147Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-30T09:41:21.160Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-30T09:41:21.170Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-30T09:41:21.170Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-30T09:41:21.171Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-30T09:41:37.649Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-30T09:41:37.659Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-30T09:41:37.663Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-30T09:41:37.664Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-30T09:41:37.665Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED (Direct Mode)","timestamp":"2026-05-30T09:41:37.767Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis disabled — using DIRECT MODE (no queue, jobs run synchronously).","timestamp":"2026-05-30T09:41:37.767Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-30T09:41:37.768Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-30T09:41:37.781Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-30T09:41:37.800Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-30T09:41:37.801Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-30T09:41:37.802Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-30T09:41:59.568Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-30T09:41:59.576Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-30T09:41:59.579Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-30T09:41:59.580Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-30T09:41:59.581Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED (Direct Mode)","timestamp":"2026-05-30T09:41:59.660Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis disabled — using DIRECT MODE (no queue, jobs run synchronously).","timestamp":"2026-05-30T09:41:59.661Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-30T09:41:59.661Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-30T09:41:59.674Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-30T09:41:59.683Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-30T09:41:59.683Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-30T09:41:59.684Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-30T09:42:07.063Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-30T09:42:07.071Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-30T09:42:07.075Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-30T09:42:07.076Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-30T09:42:07.077Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED (Direct Mode)","timestamp":"2026-05-30T09:42:07.159Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis disabled — using DIRECT MODE (no queue, jobs run synchronously).","timestamp":"2026-05-30T09:42:07.160Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-30T09:42:07.161Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-30T09:42:07.178Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-30T09:42:07.188Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-30T09:42:07.189Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-30T09:42:07.189Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-30T09:42:11.108Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-30T09:42:11.115Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-30T09:42:11.119Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-30T09:42:11.119Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-30T09:42:11.123Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED (Direct Mode)","timestamp":"2026-05-30T09:42:11.200Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis disabled — using DIRECT MODE (no queue, jobs run synchronously).","timestamp":"2026-05-30T09:42:11.200Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-30T09:42:11.201Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-30T09:42:11.215Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-30T09:42:11.227Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-30T09:42:11.228Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-30T09:42:11.228Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-30T09:42:22.792Z"}
+{"level":"warn","message":"⚠️ MailService: No SMTP credentials found in .env. MailService will run in LOG-ONLY fallback mode.","timestamp":"2026-05-30T09:42:22.796Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-30T09:42:22.803Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-30T09:42:22.806Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-30T09:42:22.807Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-30T09:42:22.808Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED (Direct Mode)","timestamp":"2026-05-30T09:42:22.901Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis disabled — using DIRECT MODE (no queue, jobs run synchronously).","timestamp":"2026-05-30T09:42:22.910Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-30T09:42:22.911Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-30T09:42:22.930Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-30T09:42:22.942Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-30T09:42:22.942Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-30T09:42:22.944Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-30T09:43:19.629Z"}
+{"level":"warn","message":"⚠️ MailService: No SMTP credentials found in .env. MailService will run in LOG-ONLY fallback mode.","timestamp":"2026-05-30T09:43:19.643Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-30T09:43:19.651Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-30T09:43:19.670Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-30T09:43:19.671Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-30T09:43:19.672Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED (Direct Mode)","timestamp":"2026-05-30T09:43:19.778Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis disabled — using DIRECT MODE (no queue, jobs run synchronously).","timestamp":"2026-05-30T09:43:19.779Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-30T09:43:19.780Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-30T09:43:19.795Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-30T09:43:19.805Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-30T09:43:19.805Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-30T09:43:19.806Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-30T09:45:46.277Z"}
+{"level":"info","message":"📧 MailService: Using secure built-in SMTP fallback to ensure instant email delivery without any manual setup!","timestamp":"2026-05-30T09:45:46.280Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-30T09:45:46.284Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-30T09:45:46.287Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-30T09:45:46.288Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-30T09:45:46.289Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED (Direct Mode)","timestamp":"2026-05-30T09:45:46.348Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis disabled — using DIRECT MODE (no queue, jobs run synchronously).","timestamp":"2026-05-30T09:45:46.348Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-30T09:45:46.348Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-30T09:45:46.358Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-30T09:45:46.365Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-30T09:45:46.365Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-30T09:45:46.365Z"}
+{"level":"info","message":"StrapiService: Initialized with base URL — https://strapi-blog.innovaft.com/","timestamp":"2026-05-30T09:48:40.362Z"}
+{"level":"warn","message":"⚠️ MailService: No SMTP credentials found in .env. MailService will run in Ethereal Sandbox Mode.","timestamp":"2026-05-30T09:48:40.365Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/api}:","timestamp":"2026-05-30T09:48:40.370Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api, GET} route","timestamp":"2026-05-30T09:48:40.372Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2026-05-30T09:48:40.373Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/trigger, POST} route","timestamp":"2026-05-30T09:48:40.374Z"}
+{"level":"info","message":"📅 Scheduler: Initialized — Cron: \"0 */3 * * *\", Posts/day: 1, Redis: DISABLED (Direct Mode)","timestamp":"2026-05-30T09:48:40.440Z"}
+{"level":"warn","message":"⚠️  Scheduler: Redis disabled — using DIRECT MODE (no queue, jobs run synchronously).","timestamp":"2026-05-30T09:48:40.441Z"}
+{"level":"info","message":"📅 Scheduler: Waiting for next scheduled run...","timestamp":"2026-05-30T09:48:40.441Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-30T09:48:40.456Z"}
+{"level":"info","message":"🚀 AI Blog Automation Engine running on port 3002","timestamp":"2026-05-30T09:48:40.463Z"}
+{"level":"info","message":"📋 Health check: http://localhost:3002/api/health","timestamp":"2026-05-30T09:48:40.463Z"}
+{"level":"info","message":"🔧 Manual trigger: POST http://localhost:3002/api/trigger?count=1","timestamp":"2026-05-30T09:48:40.464Z"}

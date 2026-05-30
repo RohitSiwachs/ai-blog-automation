@@ -6,6 +6,7 @@ import { BlogGeneratorService } from '../blog-generator/blog-generator.service';
 import { ImageGeneratorService } from '../image-generator/image-generator.service';
 import { StrapiService } from '../strapi-service/strapi.service';
 import { ConfigService } from '@nestjs/config';
+import { MailService } from '../mail/mail.service';
 export interface BlogJobData {
     title: string;
     slug: string;
@@ -19,8 +20,9 @@ export declare class BlogJobProcessor extends WorkerHost {
     private readonly strapiService;
     private readonly prisma;
     private readonly configService;
+    private readonly mailService;
     private readonly logger;
-    constructor(blogGenerator: BlogGeneratorService, imageGenerator: ImageGeneratorService, strapiService: StrapiService, prisma: PrismaService, configService: ConfigService, logger: Logger);
+    constructor(blogGenerator: BlogGeneratorService, imageGenerator: ImageGeneratorService, strapiService: StrapiService, prisma: PrismaService, configService: ConfigService, mailService: MailService, logger: Logger);
     process(job: Job<BlogJobData>): Promise<void>;
     private processInlineImages;
     private updateBlogLog;
