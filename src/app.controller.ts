@@ -1,4 +1,5 @@
 // ============================================================
+//app
 // App Controller
 // Provides HTTP endpoints for health checks and manual triggers.
 // ============================================================
